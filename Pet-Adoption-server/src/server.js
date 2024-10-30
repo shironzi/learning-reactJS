@@ -1,5 +1,6 @@
 const express = require("express");
 const dotenv = require("dotenv");
+const cors = require("cors");
 
 const connectToDatabase = require("./database/mongoose");
 const router = require("./routes");
@@ -8,6 +9,7 @@ dotenv.config();
 
 const app = express();
 
+app.use(cors()); // Add this line to enable CORS
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
@@ -26,6 +28,7 @@ const createServer = async () => {
 };
 
 app.use("/", router);
+app.use("/uploads", express.static("uploads"));
 
 createServer();
 
