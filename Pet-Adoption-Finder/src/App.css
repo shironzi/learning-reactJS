@@ -22,7 +22,8 @@ body {
   width: 50%;
 }
 
-.searchForm form {
+.searchForm form,
+.form-container {
   background: linear-gradient(135deg, #e0e0e0, #f9f9f9);
   border-radius: 10px;
   padding: 30px;
@@ -32,8 +33,15 @@ body {
   transition: transform 0.3s ease;
 }
 
+.form-container {
+  width: 50%;
+  max-width: 500px;
+  margin: 50px auto;
+}
+
 .searchForm input[type="text"],
-.searchForm select {
+.searchForm select,
+.form-container input[type="text"] {
   width: 100%;
   padding: 10px;
   margin: 10px 0;
@@ -42,7 +50,8 @@ body {
   box-sizing: border-box;
 }
 
-.searchForm button {
+.searchForm button,
+.form-container-button {
   background-color: #4caf50;
   color: white;
   padding: 10px 20px;
@@ -53,12 +62,19 @@ body {
   width: 100%;
 }
 
-.searchForm button:hover {
+.searchForm button:hover,
+.form-container-button:hover {
   background-color: #45a049; /* Darker green on hover */
 }
 
 .searchResults {
   width: 60%;
+}
+
+.file-input {
+  display: block;
+  margin: 10px 0;
+  cursor: pointer;
 }
 
 .searchResults .pet {

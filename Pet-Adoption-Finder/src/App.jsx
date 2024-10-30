@@ -17,7 +17,7 @@ function App() {
       </div>
       <Routes>
         <Route path="/" element={<SearchForm />} />
-        <Route path="/add" element={<AddPet />} />
+        <Route path="/add-pet" element={<AddPet />} />
       </Routes>
     </BrowserRouter>
   );
