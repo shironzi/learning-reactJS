@@ -1,4 +1,6 @@
 import SearchForm from "./SearchFrom";
+import AddPet from "./AddPet";
+
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 
 import "./App.css";
@@ -15,6 +17,7 @@ function App() {
       </div>
       <Routes>
         <Route path="/" element={<SearchForm />} />
+        <Route path="/add" element={<AddPet />} />
       </Routes>
     </BrowserRouter>
   );
