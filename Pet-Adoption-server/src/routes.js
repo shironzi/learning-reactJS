@@ -1,10 +1,12 @@
 const express = require("express");
+const multer = require("multer");
 
 const Pet = require("./model/petSchema");
 
 const router = express.Router();
+const upload = multer({ dest: "uploads/" });
 
-router.get("/pets", async (req, res) => {
+router.get("/", async (req, res) => {
   try {
     const pets = await Pet.find();
     res.json(pets);
@@ -13,105 +15,23 @@ router.get("/pets", async (req, res) => {
   }
 });
 
-router.get("/pets?animal=:animal", async (req, res) => {
+router.get("/pets", async (req, res) => {
   try {
-    const pets = await Pet.find({ animal: req.params.animal });
-    if (!pets) {
-      res.status(404).json({ message: "No pets found" });
+    const { animal, breed, location } = req.query;
+    const query = {};
+    if (animal) query.animal = animal;
+    if (breed) query.breed = breed;
+    if (location) query.location = location;
+
+    const pets = await Pet.find(query);
+    if (!pets.length) {
+      return res.status(404).json({ message: "No pets found" });
     }
     res.json(pets);
   } catch (error) {
     res.status(500).json({ message: error.message });
   }
 });
-
-router.get("/pets?breed=:breed", async (req, res) => {
-  try {
-    const pets = await Pet.find({ breed: req.params.breed });
-    if (!pets) {
-      res.status(404).json({ message: "No pets found" });
-    }
-    res.status(200).json(pets);
-  } catch (error) {
-    res.status(500).json({ message: error.message });
-  }
-});
-
-router.get("/pets?location=:location", async (req, res) => {
-  try {
-    const pets = await Pet.find({ location: req.params.location });
-    if (!pets) {
-      res.status(404).json({ message: "No pets found" });
-    }
-    res.status(200).json(pets);
-  } catch (error) {
-    res.status(500).json({ message: error.message });
-  }
-});
-
-router.get("/pets?animal=:animal&breed=:breed", async (req, res) => {
-  try {
-    const pets = await Pet.find({
-      animal: req.params.animal,
-      breed: req.params.breed,
-    });
-    if (!pets) {
-      res.status(404).json({ message: "No pets found" });
-    }
-    res.status(200).json(pets);
-  } catch (error) {
-    res.status(500).json({ message: error.message });
-  }
-});
-
-router.get("/pets?animal=:animal&location=:location", async (req, res) => {
-  try {
-    const pets = await Pet.find({
-      animal: req.params.animal,
-      location: req.params.location,
-    });
-    if (!pets) {
-      res.status(404).json({ message: "No pets found" });
-    }
-    res.status(200).json(pets);
-  } catch (error) {
-    res.status(500).json({ message: error.message });
-  }
-});
-
-router.get("/pets?breed=:breed&location=:location", async (req, res) => {
-  try {
-    const pets = await Pet.find({
-      breed: req.params.breed,
-      location: req.params.location,
-    });
-    if (!pets) {
-      res.status(404).json({ message: "No pets found" });
-    }
-    res.status(200).json(pets);
-  } catch (error) {
-    res.status(500).json({ message: error.message });
-  }
-});
-
-router.get(
-  "/pets?animal=:animal&breed=:breed&location=:location",
-  async (req, res) => {
-    try {
-      const pets = await Pet.find({
-        animal: req.params.animal,
-        breed: req.params.breed,
-        location: req.params.location,
-      });
-      if (!pets) {
-        res.status(404).json({ message: "No pets found" });
-      }
-      res.status(200).json(pets);
-    } catch (error) {
-      res.status(500).json({ message: error.message });
-    }
-  }
-);
 
 router.get("/pets/:id", async (req, res) => {
   try {
@@ -125,10 +45,11 @@ router.get("/pets/:id", async (req, res) => {
   }
 });
 
-router.post("/add-pet", async (req, res) => {
-  const { name, location, animal, breed, images } = req.body;
+router.post("/add-pet", upload.array("images"), async (req, res) => {
+  const { name, location, animal, breed } = req.body;
+  const images = req.files.map((file) => file.path);
 
-  if (!name || !location || !animal || !breed || !images) {
+  if (!name || !location || !animal || !breed || !images.length) {
     return res.status(400).json({ message: "All fields are required" });
   }
 
