@@ -2,11 +2,6 @@ const mongoose = require("mongoose");
 const { Schema } = mongoose;
 
 const petSchema = new Schema({
-  id: {
-    type: Number,
-    autoIncrement: true,
-    primary: true,
-  },
   name: {
     type: String,
     required: true,
@@ -24,7 +19,7 @@ const petSchema = new Schema({
     required: true,
   },
   images: {
-    type: Array,
+    type: [String],
     required: true,
   },
 });
