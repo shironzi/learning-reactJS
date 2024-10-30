@@ -125,4 +125,27 @@ router.get("/pets/:id", async (req, res) => {
   }
 });
 
+router.post("/add-pet", async (req, res) => {
+  const { name, location, animal, breed, images } = req.body;
+
+  if (!name || !location || !animal || !breed || !images) {
+    return res.status(400).json({ message: "All fields are required" });
+  }
+
+  const newPet = new Pet({
+    name,
+    location,
+    animal,
+    breed,
+    images,
+  });
+
+  try {
+    const pet = await newPet.save();
+    res.status(201).json(pet);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+});
+
 module.exports = router;
