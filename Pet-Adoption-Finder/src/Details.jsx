@@ -44,6 +44,7 @@ const Details = () => {
         <h1>Pet Name: {pet.name}</h1>
         <h2>Breed: {pet.breed}</h2>
         <p>{pet.description}</p>
+        <button>Adopt Me!</button>
       </div>
     </div>
   );

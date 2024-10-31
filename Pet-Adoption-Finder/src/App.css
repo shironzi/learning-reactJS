@@ -51,7 +51,8 @@ body {
 }
 
 .searchForm button,
-.form-container-button {
+.form-container-button,
+.pet-details button {
   background-color: #4caf50;
   color: white;
   padding: 10px 20px;
@@ -63,7 +64,8 @@ body {
 }
 
 .searchForm button:hover,
-.form-container-button:hover {
+.form-container-button:hover,
+.pet-details button:hover {
   background-color: #45a049; /* Darker green on hover */
 }
 
