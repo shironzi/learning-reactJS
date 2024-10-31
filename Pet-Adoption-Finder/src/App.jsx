@@ -2,7 +2,7 @@ import SearchForm from "./SearchFrom";
 import AddPet from "./AddPet";
 import Details from "./Details";
 
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { BrowserRouter, Routes, Route, Link } from "react-router-dom";
 
 import "./App.css";
 
@@ -11,9 +11,9 @@ function App() {
     <BrowserRouter>
       <div className="App">
         <header>
-          <button>
+          <Link to={"/"}>
             <img src={"/logo.png"} className="App-logo" alt="logo" />
-          </button>
+          </Link>
         </header>
       </div>
       <Routes>

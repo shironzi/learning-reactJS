@@ -1,11 +1,13 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 const AddPet = () => {
-  const [name, setName] = useState("Aspin");
-  const [location, setLocation] = useState("Manila");
-  const [animal, setAnimal] = useState("Dog");
-  const [breed, setBreed] = useState("Aspin");
+  const [name, setName] = useState("");
+  const [location, setLocation] = useState("");
+  const [animal, setAnimal] = useState("");
+  const [breed, setBreed] = useState("");
   const [images, setImages] = useState([]);
+  const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -30,6 +32,7 @@ const AddPet = () => {
       });
       if (response.ok) {
         console.log("Pet added successfully");
+        navigate("/");
       } else {
         console.log("Failed to add pet");
       }
