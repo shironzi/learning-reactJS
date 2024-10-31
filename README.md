@@ -6,9 +6,6 @@ A simple web application built with React that allows users to find and save ado
 
 - Search Pets: Filter pets by type, breed, and location to find the perfect companion.
 - Pet Details: View detailed information and photos for each pet, including a photo carousel.
-- Favorite Pets: Mark pets as favorites to revisit later, using React Context for state management.
-- Error Handling: Error boundaries provide user-friendly error messages.
-- Modals and Portals: Confirm adoption inquiries with a modal.
 - React Router: Seamless navigation between different pages.
 
 ## Installation
@@ -54,3 +51,11 @@ Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
 - **React Router:** Enables client-side routing
 - **React Query:** Handles asynchronous data fetching and caching
 - **CSS Modules or Styled Components:** Modularized styling for components
+
+## Contributing
+
+Contributions are always welcome! Please follow the `code of conduct` and `contributing guidelines` for this project.
+
+## License
+
+This project is licensed under the MIT License. See the `LICENSE` file for more information.
