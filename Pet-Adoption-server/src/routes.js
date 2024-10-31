@@ -9,6 +9,10 @@ const upload = multer({ dest: "uploads/" });
 router.get("/", async (req, res) => {
   try {
     const pets = await Pet.find();
+
+    if (!pets.length) {
+      return res.status(404).json({ message: "No pets found" });
+    }
     res.json(pets);
   } catch (error) {
     res.status(500).json({ message: error.message });
@@ -17,11 +21,11 @@ router.get("/", async (req, res) => {
 
 router.get("/pets", async (req, res) => {
   try {
-    const { animal, breed, location } = req.query;
+    const { location, animal, breed } = req.query;
     const query = {};
-    if (animal) query.animal = animal;
-    if (breed) query.breed = breed;
-    if (location) query.location = location;
+    if (location) query.location = new RegExp(location, "i");
+    if (animal) query.animal = new RegExp(animal, "i");
+    if (breed) query.breed = new RegExp(breed, "i");
 
     const pets = await Pet.find(query);
     if (!pets.length) {
@@ -35,9 +39,10 @@ router.get("/pets", async (req, res) => {
 
 router.get("/pets/:id", async (req, res) => {
   try {
-    const pet = await Pet.findById(req.params.id);
+    const pet = await Pet.findOne((_id = req.params.id));
     if (!pet) {
       res.status(404).json({ message: "Pet not found" });
+      console.log("Pet not found");
     }
     res.json(pet);
   } catch (error) {

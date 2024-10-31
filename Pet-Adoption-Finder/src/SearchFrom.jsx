@@ -2,39 +2,46 @@ import { useEffect, useState } from "react";
 
 import Pet from "./Pet";
 
-const ANIMALS = ["dog", "cat", "bird", "reptile", "rabbit"];
+const ANIMALS = ["dog", "cat", "bird", "rabbit"];
 
 const SearchForm = () => {
   const [location, setLocation] = useState("");
   const [animal, setAnimal] = useState("");
   const [breed, setBreed] = useState("");
-  const [pets, setPets] = useState([]);
+  const [pets, setPets] = useState({
+    name: "",
+    animal: "",
+    breed: "",
+  });
 
-  const fetchPets = async (location, animal, breed) => {
+  const fetchPets = async (location = "", animal = "", breed = "") => {
     try {
-      const query = new URLSearchParams({
-        location,
-        type: animal,
-        breed,
-      }).toString();
+      const queryParams = new URLSearchParams();
+      if (location) queryParams.append("location", location);
+      if (animal) queryParams.append("animal", animal);
+      if (breed) queryParams.append("breed", breed);
 
       const response = await fetch(
-        `https://api.petfinder.com/v2/animals?${query}`
+        `http://localhost:5000/pets?${queryParams.toString()}`
       );
       const data = await response.json();
-      setPets(data.animals);
+      setPets(data);
     } catch (error) {
-      console.error(error);
+      console.error("Error:", error);
     }
   };
 
   const submitForm = (e) => {
     e.preventDefault();
-    fetchPets();
+    const cleanLocation = location.trim();
+    const cleanAnimal = animal.trim();
+    const cleanBreed = breed.trim();
+
+    fetchPets(cleanLocation, cleanAnimal, cleanBreed);
   };
 
   useEffect(() => {
-    fetchPets("", "", "");
+    fetchPets();
   }, []);
 
   return (
@@ -71,10 +78,10 @@ const SearchForm = () => {
         {pets.length > 0 ? (
           pets.map((pet) => (
             <Pet
-              key={pet.id}
+              key={pet._id}
               name={pet.name}
               animal={pet.animal}
-              breed={pet.breeds.primary}
+              breed={pet.breeds}
             />
           ))
         ) : (
