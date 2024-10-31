@@ -27,8 +27,8 @@ const createServer = async () => {
   }
 };
 
-app.use("/", router);
 app.use("/uploads", express.static("uploads"));
+app.use("/", router);
 
 createServer();
 

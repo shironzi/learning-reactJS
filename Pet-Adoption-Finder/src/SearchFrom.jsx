@@ -74,7 +74,6 @@ const SearchForm = () => {
         <button type="submit">Submit</button>
       </form>
       <div className="searchResults">
-        <h1>Search Results</h1>
         {pets.length > 0 ? (
           pets.map((pet) => (
             <Pet
@@ -87,7 +86,10 @@ const SearchForm = () => {
             />
           ))
         ) : (
-          <p>No pets found</p>
+          <div className="no-pets-found">
+            <i className="fas fa-paw"></i>
+            <p>No pets found</p>
+          </div>
         )}
       </div>
     </div>

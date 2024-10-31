@@ -102,6 +102,16 @@ body {
   color: #999;
 }
 
+.pet {
+  width: fit-content;
+  max-width: 40vw;
+}
+
+.pet img {
+  width: 100%;
+  border-radius: 10px;
+}
+
 .pet:hover {
   box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
 }
@@ -152,4 +162,51 @@ body {
   font-size: 16px;
   color: #666;
   text-align: center;
+}
+
+.no-pets-found {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin: 20px 0;
+  padding: 20px;
+  background-color: #f9f9f9;
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  color: #666;
+}
+
+.no-pets-found i {
+  font-size: 48px;
+  color: #4caf50;
+  margin-bottom: 10px;
+}
+
+.no-pets-found p {
+  font-size: 18px;
+  margin: 0;
+}
+
+.loading-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh; /* Full viewport height */
+  background-color: #f9f9f9;
+}
+
+.loading-image {
+  width: 100px; /* Adjust the size as needed */
+  height: 100px; /* Adjust the size as needed */
+  animation: spin 2s linear infinite;
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
 }
