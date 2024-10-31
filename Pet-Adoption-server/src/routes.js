@@ -39,7 +39,7 @@ router.get("/pets", async (req, res) => {
 
 router.get("/pets/:id", async (req, res) => {
   try {
-    const pet = await Pet.findOne((_id = req.params.id));
+    const pet = await Pet.findById(req.params.id);
     if (!pet) {
       res.status(404).json({ message: "Pet not found" });
       console.log("Pet not found");

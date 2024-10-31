@@ -82,6 +82,8 @@ const SearchForm = () => {
               name={pet.name}
               animal={pet.animal}
               breed={pet.breeds}
+              image={pet.images[0]}
+              id={pet._id}
             />
           ))
         ) : (

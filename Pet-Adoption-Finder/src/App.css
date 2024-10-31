@@ -101,3 +101,55 @@ body {
   font-size: 1em;
   color: #999;
 }
+
+.pet:hover {
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+}
+
+.pet-more-info {
+  background-color: #4caf50;
+  color: white;
+  padding: 10px 20px;
+  margin: 10px 0;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  width: 100%;
+  text-decoration: none;
+}
+
+.pet-more-info:hover {
+  background-color: #45a049;
+}
+
+.pet-details {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 20px auto;
+  width: 90%;
+  max-width: 800px;
+  background: linear-gradient(135deg, #e0e0e0, #f9f9f9);
+  padding: 20px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  border-radius: 10px;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.pet-details img {
+  max-width: 100%;
+  border-radius: 10px;
+  margin-bottom: 20px;
+}
+
+.pet-details h2 {
+  margin: 10px 0;
+  font-size: 24px;
+  color: #333;
+}
+
+.pet-details p {
+  font-size: 16px;
+  color: #666;
+  text-align: center;
+}
