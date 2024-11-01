@@ -1,7 +1,3 @@
-Here's the merged **README** with all sections combined, cleaned up, and formatted for clarity:
-
----
-
 # Pet Adoption Finder 🐾
 
 A user-friendly web application for discovering adoptable pets! Search for pets by type, breed, and location, view pet details, and save favorites. **Upcoming updates** will add powerful new features, including user authentication, a favorites management system, and a full backend built with Node.js and Express.
@@ -9,7 +5,7 @@ A user-friendly web application for discovering adoptable pets! Search for pets 
 ## Features
 
 - **Search Pets**: Easily filter pets by type, breed, and location to find the perfect match.
-- **Pet Details**: View pet profiles with additional info and a photo carousel.
+- **Pet Details**: View pet profiles with additional info.
 - **Favorite Pets**: Save pets to a local favorites list for easy access.
 - **Responsive Design**: Optimized for viewing on desktop and mobile devices.
 
@@ -165,7 +161,3 @@ Contributions are always welcome! Please follow the `code of conduct` and `contr
 ## License
 
 This project is licensed under the MIT License. See the `LICENSE` file for more information.
-
----
-
-This README now combines all key information into one well-organized document that can easily be updated as new features are added! Let me know if you'd like further customization or additions.
