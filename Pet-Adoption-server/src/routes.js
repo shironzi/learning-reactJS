@@ -38,6 +38,45 @@ router.get("/pets", async (req, res) => {
   }
 });
 
+// Route to get animals list
+router.get("/pets/animals", async (req, res) => {
+  try {
+    const animals = await Pet.find()
+      .where("animal")
+      .ne(null)
+      .distinct("animal");
+    if (!animals.length) {
+      return res.status(404).json({ message: "No animals found" });
+    }
+    res.json(animals);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+});
+
+// Route to get breeds list
+router.get("/pets/breeds", async (req, res) => {
+  try {
+    const { animal } = req.query;
+
+    if (!animal) {
+      return res.status(400).json({ message: "Animal is required" });
+    }
+
+    const breeds = await Pet.find({ animal })
+      .select({ breed: 1, _id: 0 })
+      .distinct("breed");
+
+    if (!breeds.length) {
+      return res.status(404).json({ message: "No breeds found" });
+    }
+
+    res.json(breeds);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+});
+
 // Route to get pet by id
 router.get("/pets/:id", async (req, res) => {
   try {

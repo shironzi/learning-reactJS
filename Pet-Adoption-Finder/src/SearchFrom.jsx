@@ -1,48 +1,68 @@
 import { useEffect, useState } from "react";
 
 import Pet from "./Pet";
-
-const ANIMALS = ["dog", "cat", "bird", "rabbit"];
+import { fetchPets, fetchAnimalsList, fetchBreedsList } from "./fetch/fetch";
 
 const SearchForm = () => {
   const [location, setLocation] = useState("");
   const [animal, setAnimal] = useState("");
   const [breed, setBreed] = useState("");
-  const [pets, setPets] = useState({
-    name: "",
-    animal: "",
-    breed: "",
-  });
+  const [pets, setPets] = useState([]);
+  const [animals, setAnimals] = useState([]);
+  const [breeds, setBreeds] = useState([]);
 
-  const fetchPets = async (location = "", animal = "", breed = "") => {
-    try {
-      const queryParams = new URLSearchParams();
-      if (location) queryParams.append("location", location);
-      if (animal) queryParams.append("animal", animal);
-      if (breed) queryParams.append("breed", breed);
-
-      const response = await fetch(
-        `http://localhost:5000/pets?${queryParams.toString()}`
-      );
-      const data = await response.json();
-      setPets(data);
-    } catch (error) {
-      console.error("Error:", error);
-    }
-  };
-
-  const submitForm = (e) => {
+  const submitForm = async (e) => {
     e.preventDefault();
     const cleanLocation = location.trim();
     const cleanAnimal = animal.trim();
     const cleanBreed = breed.trim();
 
-    fetchPets(cleanLocation, cleanAnimal, cleanBreed);
+    try {
+      const fetchedPets = await fetchPets(
+        cleanLocation,
+        cleanAnimal,
+        cleanBreed
+      );
+      setPets(fetchedPets);
+    } catch (error) {
+      console.error("Error fetching pets:", error);
+    }
   };
 
   useEffect(() => {
-    fetchPets();
+    const fetchInitialPets = async () => {
+      try {
+        const fetchedPets = await fetchPets();
+        setPets(fetchedPets);
+      } catch (error) {
+        console.error("Error fetching pets:", error);
+      }
+    };
+
+    const fetchAnimals = async () => {
+      const fetchedAnimals = await fetchAnimalsList();
+      if (fetchedAnimals.length !== 0) {
+        setAnimals(fetchedAnimals);
+      }
+    };
+
+    fetchAnimals();
+    fetchInitialPets();
   }, []);
+
+  useEffect(() => {
+    const fetchBreeds = async () => {
+      if (!animal) return;
+      try {
+        const fetchedBreeds = await fetchBreedsList(animal);
+        setBreeds(fetchedBreeds);
+      } catch (error) {
+        console.error("Error fetching breeds:", error);
+      }
+    };
+
+    fetchBreeds();
+  }, [animal]);
 
   return (
     <div className="searchForm">
@@ -59,7 +79,7 @@ const SearchForm = () => {
         <label htmlFor="animal">Animal</label>
         <select value={animal} onChange={(e) => setAnimal(e.target.value)}>
           <option value="">Select Animal</option>
-          {ANIMALS.map((animal) => (
+          {animals.map((animal) => (
             <option key={animal} value={animal}>
               {animal}
             </option>
@@ -67,8 +87,24 @@ const SearchForm = () => {
         </select>
         <br />
         <label htmlFor="breed">Breed</label>
-        <select value={breed} onChange={(e) => setBreed(e.target.value)}>
+        <label htmlFor="breed">Breed</label>
+        <select
+          value={breed}
+          onChange={(e) => setBreed(e.target.value)}
+          disabled={breeds.length === 0 || animal === ""}
+        >
           <option value="">Select Breed</option>
+          {breeds.length > 0 && animal !== "" ? (
+            breeds.map((breed) => (
+              <option key={breed} value={breed}>
+                {breed}
+              </option>
+            ))
+          ) : (
+            <option value={""} disabled>
+              No breeds available
+            </option>
+          )}
         </select>
         <br />
         <button type="submit">Submit</button>
