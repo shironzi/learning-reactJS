@@ -18,44 +18,42 @@ const Header = () => {
   };
 
   return (
-    <div className="header">
-      <header className="header-container">
-        <Link to={"/"}>
-          <img src={"/logo.png"} className="header-logo" alt="logo" />
-        </Link>
-        <Fab
-          className="floating-button"
-          id="demo-positioned-button"
-          aria-controls={open ? "demo-positioned-menu" : undefined}
-          aria-haspopup="true"
-          aria-expanded={open ? "true" : undefined}
-          onClick={handleClick}
-          size="small"
-        >
-          <Avatar sx={{ width: 42, height: 42 }} />
-        </Fab>
+    <header className="header-container">
+      <Link to={"/"}>
+        <img src={"/logo.png"} className="header-logo" alt="logo" />
+      </Link>
+      <Fab
+        className="floating-button"
+        id="demo-positioned-button"
+        aria-controls={open ? "demo-positioned-menu" : undefined}
+        aria-haspopup="true"
+        aria-expanded={open ? "true" : undefined}
+        onClick={handleClick}
+        size="small"
+      >
+        <Avatar sx={{ width: 42, height: 42 }} />
+      </Fab>
 
-        <Menu
-          id="demo-positioned-menu"
-          aria-labelledby="demo-positioned-button"
-          anchorEl={anchorEl}
-          open={open}
-          onClose={handleClose}
-          anchorOrigin={{
-            vertical: "top",
-            horizontal: "left",
-          }}
-          transformOrigin={{
-            vertical: "top",
-            horizontal: "left",
-          }}
-        >
-          <MenuItem onClick={handleClose}>Profile</MenuItem>
-          <MenuItem onClick={handleClose}>My account</MenuItem>
-          <MenuItem onClick={handleClose}>Logout</MenuItem>
-        </Menu>
-      </header>
-    </div>
+      <Menu
+        id="demo-positioned-menu"
+        aria-labelledby="demo-positioned-button"
+        anchorEl={anchorEl}
+        open={open}
+        onClose={handleClose}
+        anchorOrigin={{
+          vertical: "top",
+          horizontal: "left",
+        }}
+        transformOrigin={{
+          vertical: "top",
+          horizontal: "left",
+        }}
+      >
+        <MenuItem onClick={handleClose}>Profile</MenuItem>
+        <MenuItem onClick={handleClose}>My account</MenuItem>
+        <MenuItem onClick={handleClose}>Logout</MenuItem>
+      </Menu>
+    </header>
   );
 };
 

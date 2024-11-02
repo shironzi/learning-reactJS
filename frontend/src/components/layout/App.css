@@ -1,27 +1,22 @@
 body {
-  background-image: url("../../assets/background.jpg");
+  /* background-image: url("../../assets/background.jpg"); */
   background-repeat: no-repeat;
   background-position: center;
   background-size: cover;
+  background-color: #e1f0fa;
   margin: 0;
-  height: auto;
+  font-family: "Roboto", sans-serif;
+  font: #000000;
 }
 
 .App {
   text-align: center;
 }
 
-.header {
-  color: white;
-  padding: 10px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  background-color: #dadada;
-  width: 100%;
-  justify-content: center;
-  align-items: center;
-}
-
 .header-container {
+  box-shadow: 0 12px 12px rgba(0, 0, 0, 0.1);
+  background-color: #f3f7ec;
+  padding: 10px 0;
   position: relative;
   display: flex;
   justify-content: space-around;
@@ -31,12 +26,6 @@ body {
 
 .header-logo {
   width: 150px;
-}
-
-.floating-button {
-  position: absolute;
-  top: 10px;
-  right: 10px;
 }
 
 .header-container Link {
@@ -55,7 +44,7 @@ body {
 
 .searchForm form,
 .form-container {
-  background: linear-gradient(135deg, #e0e0e0, #f9f9f9);
+  background: #f3f7ec;
   border-radius: 10px;
   padding: 30px;
   border: 2px solid #ccc;
@@ -84,7 +73,7 @@ body {
 .searchForm button,
 .form-container-button,
 .pet-details button {
-  background-color: #4caf50;
+  background-color: #03346e;
   color: white;
   padding: 10px 20px;
   margin: 10px 0;
@@ -97,11 +86,7 @@ body {
 .searchForm button:hover,
 .form-container-button:hover,
 .pet-details button:hover {
-  background-color: #45a049; /* Darker green on hover */
-}
-
-.searchResults {
-  width: 60%;
+  background-color: #021526;
 }
 
 .file-input {
@@ -111,12 +96,12 @@ body {
 }
 
 .searchResults {
-  background-color: #fff;
+  background-color: #f3f7ec;
   border: 1px solid #ccc;
   border-radius: 10px;
   padding: 20px;
-  margin: 10px 0;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  width: 60%;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
   text-align: center;
 }
 
@@ -157,7 +142,7 @@ body {
 }
 
 .pet-more-info {
-  background-color: #4caf50;
+  background-color: #03346e;
   color: white;
   padding: 10px 20px;
   margin: 10px 0;
@@ -169,19 +154,19 @@ body {
 }
 
 .pet-more-info:hover {
-  background-color: #45a049;
+  background-color: #021526;
 }
 
 .pet-details {
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin: 20px auto;
+  margin: 50px auto;
   width: 90%;
   max-width: 800px;
-  background: linear-gradient(135deg, #e0e0e0, #f9f9f9);
+  background: #f3f7ec;
   padding: 20px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
   border-radius: 10px;
   transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
@@ -219,7 +204,7 @@ body {
 
 .no-pets-found i {
   font-size: 48px;
-  color: #4caf50;
+  color: #03346e;
   margin-bottom: 10px;
 }
 
