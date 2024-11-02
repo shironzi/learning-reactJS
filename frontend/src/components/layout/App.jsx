@@ -10,9 +10,7 @@ import Header from "../Header";
 function App() {
   return (
     <BrowserRouter>
-      <div className="App">
-        <Header />
-      </div>
+      <Header />
       <Routes>
         <Route path="/" element={<SearchForm />} />
         <Route path="/add-pet" element={<AddPet />} />

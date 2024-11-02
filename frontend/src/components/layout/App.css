@@ -11,15 +11,46 @@ body {
   text-align: center;
 }
 
-.App-logo {
-  height: 10vmin;
+.header {
+  color: white;
+  padding: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  background-color: #dadada;
+  width: 100%;
+  justify-content: center;
+  align-items: center;
+}
+
+.header-container {
+  position: relative;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  flex-direction: row;
+}
+
+.header-logo {
+  width: 150px;
+}
+
+.floating-button {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+}
+
+.header-container Link {
+  color: white;
+  text-decoration: none;
+  justify-content: center;
+  align-items: center;
 }
 
 .searchForm {
   display: flex;
-  justify-content: space-between;
-  margin: 30px auto;
-  width: 50%;
+  justify-content: space-around;
+  margin: 50px auto;
+  width: 70%;
 }
 
 .searchForm form,
@@ -79,7 +110,7 @@ body {
   cursor: pointer;
 }
 
-.searchResults .pet {
+.searchResults {
   background-color: #fff;
   border: 1px solid #ccc;
   border-radius: 10px;
@@ -89,33 +120,40 @@ body {
   text-align: center;
 }
 
-.searchResults .pet h1 {
+.searchResults h1 {
   font-size: 1.5em;
   color: #333;
 }
 
-.searchResults .pet h2 {
+.searchResults h2 {
   font-size: 1.2em;
   color: #666;
 }
 
-.searchResults .pet h3 {
+.searchResults h3 {
   font-size: 1em;
   color: #999;
 }
 
 .pet {
-  width: fit-content;
-  max-width: 40vw;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  width: 100%;
+  margin-bottom: 20px;
+}
+
+.pet div {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
 }
 
 .pet img {
-  width: 100%;
+  max-width: 250px;
+  max-height: 250px;
   border-radius: 10px;
-}
-
-.pet:hover {
-  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
 }
 
 .pet-more-info {

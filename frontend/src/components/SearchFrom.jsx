@@ -130,7 +130,7 @@ const SearchForm = () => {
               key={pet._id}
               name={pet.name}
               animal={pet.animal}
-              breed={pet.breeds}
+              breed={pet.breed}
               image={pet.images[0]}
               id={pet._id}
             />
