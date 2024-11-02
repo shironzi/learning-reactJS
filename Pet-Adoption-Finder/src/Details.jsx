@@ -1,9 +1,21 @@
 import { useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 
+import CustomDialog from "./components/Dialog";
+
 const Details = () => {
   const { id } = useParams();
   const [pet, setPet] = useState(null);
+
+  const [open, setOpen] = useState(false);
+
+  const handleAdopt = () => {
+    setOpen(true);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+  };
 
   useEffect(() => {
     const fetchPet = async () => {
@@ -44,7 +56,8 @@ const Details = () => {
         <h1>Pet Name: {pet.name}</h1>
         <h2>Breed: {pet.breed}</h2>
         <p>{pet.description}</p>
-        <button>Adopt Me!</button>
+        <button onClick={handleAdopt}>Adopt Me!</button>
+        <CustomDialog open={open} onClose={handleClose} pet={pet} />
       </div>
     </div>
   );

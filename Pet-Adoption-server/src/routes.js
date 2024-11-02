@@ -24,9 +24,9 @@ router.get("/pets", async (req, res) => {
   try {
     const { location, animal, breed } = req.query;
     const query = {};
-    if (location) query.location = new RegExp(location, "i");
-    if (animal) query.animal = new RegExp(animal, "i");
-    if (breed) query.breed = new RegExp(breed, "i");
+    if (location) query.location = { $regex: location, $options: "i" };
+    if (animal) query.animal = { $regex: animal, $options: "i" };
+    if (breed) query.breed = { $regex: breed, $options: "i" };
 
     const pets = await Pet.find(query);
     if (!pets.length) {
