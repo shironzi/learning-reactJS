@@ -36,3 +36,13 @@ export const fetchPets = async (location = "", animal = "", breed = "") => {
     console.error("Error:", error);
   }
 };
+
+export const fetchPetById = async (id) => {
+  try {
+    const response = await fetch(`http://localhost:5000/pets/${id}`);
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    console.error("Error:", error);
+  }
+};

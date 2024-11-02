@@ -1,7 +1,8 @@
 import { useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 
-import CustomDialog from "./components/Dialog";
+import CustomDialog from "./CustomDialog";
+import { fetchPetById } from "../services/petApiService";
 
 const Details = () => {
   const { id } = useParams();
@@ -20,8 +21,7 @@ const Details = () => {
   useEffect(() => {
     const fetchPet = async () => {
       try {
-        const response = await fetch(`http://localhost:5000/pets/${id}`);
-        const data = await response.json();
+        const data = await fetchPetById(id);
         setPet(data);
       } catch (error) {
         console.error("Error:", error);

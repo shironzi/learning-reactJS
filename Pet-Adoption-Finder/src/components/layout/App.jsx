@@ -1,6 +1,6 @@
-import SearchForm from "./SearchFrom";
-import AddPet from "./AddPet";
-import Details from "./Details";
+import SearchForm from "../SearchFrom";
+import AddPet from "../AddPet";
+import Details from "../Details";
 
 import { BrowserRouter, Routes, Route, Link } from "react-router-dom";
 

@@ -1,7 +1,11 @@
 import { useEffect, useState } from "react";
 
 import Pet from "./Pet";
-import { fetchPets, fetchAnimalsList, fetchBreedsList } from "./fetch/fetch";
+import {
+  fetchPets,
+  fetchAnimalsList,
+  fetchBreedsList,
+} from "../services/petApiService";
 
 const SearchForm = () => {
   const [location, setLocation] = useState("");
@@ -69,7 +73,7 @@ const SearchForm = () => {
   }, [animal]);
 
   useEffect(() => {
-    if (breeds.length === 0 || animal === "") {
+    if (breeds.length <= 1 || animal === "") {
       setBreed("");
     }
   }, [animal, breeds]);
