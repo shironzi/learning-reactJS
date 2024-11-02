@@ -1,6 +1,9 @@
+let requestCount = 0;
+
 const express = require("express");
 const dotenv = require("dotenv");
 const cors = require("cors");
+const morgan = require("morgan");
 
 const connectToDatabase = require("./database/mongoose");
 const router = require("./routes");
@@ -12,6 +15,7 @@ const app = express();
 app.use(cors()); // Add this line to enable CORS
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+app.use(morgan("combined"));
 
 const createServer = async () => {
   try {

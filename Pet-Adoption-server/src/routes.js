@@ -1,3 +1,5 @@
+let requestCount = 0;
+
 const express = require("express");
 const multer = require("multer");
 
@@ -5,6 +7,12 @@ const Pet = require("./model/petSchema");
 
 const router = express.Router();
 const upload = multer({ dest: "uploads/" });
+
+router.use((req, res, next) => {
+  requestCount++;
+  console.log(`Total requests received: ${requestCount}`);
+  next();
+});
 
 // Route to get all pets
 router.get("/", async (req, res) => {

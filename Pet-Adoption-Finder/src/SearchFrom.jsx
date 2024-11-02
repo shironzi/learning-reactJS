@@ -40,9 +40,13 @@ const SearchForm = () => {
     };
 
     const fetchAnimals = async () => {
-      const fetchedAnimals = await fetchAnimalsList();
-      if (fetchedAnimals.length !== 0) {
-        setAnimals(fetchedAnimals);
+      try {
+        const fetchedAnimals = await fetchAnimalsList();
+        if (fetchedAnimals.length !== 0) {
+          setAnimals(fetchedAnimals);
+        }
+      } catch (error) {
+        console.error("Error fetching animals:", error);
       }
     };
 
@@ -63,6 +67,12 @@ const SearchForm = () => {
 
     fetchBreeds();
   }, [animal]);
+
+  useEffect(() => {
+    if (breeds.length === 0 || animal === "") {
+      setBreed("");
+    }
+  }, [animal, breeds]);
 
   return (
     <div className="searchForm">
@@ -101,7 +111,7 @@ const SearchForm = () => {
               </option>
             ))
           ) : (
-            <option value={""} disabled>
+            <option value="" disabled>
               No breeds available
             </option>
           )}
