@@ -2,19 +2,16 @@ import SearchForm from "../SearchFrom";
 import AddPet from "../AddPet";
 import Details from "../Details";
 
-import { BrowserRouter, Routes, Route, Link } from "react-router-dom";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
 
 import "./App.css";
+import Header from "../Header";
 
 function App() {
   return (
     <BrowserRouter>
       <div className="App">
-        <header>
-          <Link to={"/"}>
-            <img src={"/logo.png"} className="App-logo" alt="logo" />
-          </Link>
-        </header>
+        <Header />
       </div>
       <Routes>
         <Route path="/" element={<SearchForm />} />
