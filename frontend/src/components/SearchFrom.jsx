@@ -37,7 +37,9 @@ const SearchForm = () => {
     const fetchInitialPets = async () => {
       try {
         const fetchedPets = await fetchPets();
-        setPets(fetchedPets);
+        if (fetchedPets.length !== 0) {
+          setPets(fetchedPets);
+        }
       } catch (error) {
         console.error("Error fetching pets:", error);
       }
@@ -73,7 +75,7 @@ const SearchForm = () => {
   }, [animal]);
 
   useEffect(() => {
-    if (breeds.length <= 1 || animal === "") {
+    if (breeds.length <= 0 || animal === "") {
       setBreed("");
     }
   }, [animal, breeds]);
@@ -93,11 +95,17 @@ const SearchForm = () => {
         <label htmlFor="animal">Animal</label>
         <select value={animal} onChange={(e) => setAnimal(e.target.value)}>
           <option value="">Select Animal</option>
-          {animals.map((animal) => (
-            <option key={animal} value={animal}>
-              {animal}
+          {animals.length > 0 ? (
+            animals.map((animal) => (
+              <option key={animal} value={animal}>
+                {animal}
+              </option>
+            ))
+          ) : (
+            <option value="" disabled>
+              No animals available
             </option>
-          ))}
+          )}
         </select>
         <br />
         <label htmlFor="breed">Breed</label>

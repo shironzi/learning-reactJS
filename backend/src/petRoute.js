@@ -3,6 +3,8 @@ let requestCount = 0;
 const express = require("express");
 const multer = require("multer");
 
+const Pet = require("./model/petSchema");
+
 const router = express.Router();
 const upload = multer({ dest: "uploads/" });
 
@@ -15,7 +17,6 @@ const upload = multer({ dest: "uploads/" });
 
 // Route to get all pets
 router.get("/", async (req, res) => {
-  const Pet = require("../model/petSchema");
   try {
     const pets = await Pet.find();
     if (!pets.length) {
@@ -29,7 +30,6 @@ router.get("/", async (req, res) => {
 
 // Route to get pets by query
 router.get("/pets", async (req, res) => {
-  const Pet = require("../model/petSchema");
   try {
     const { location, animal, breed } = req.query;
     const query = {};
@@ -49,7 +49,6 @@ router.get("/pets", async (req, res) => {
 
 // Route to get animals list
 router.get("/pets/animals", async (req, res) => {
-  const Pet = require("../model/petSchema");
   try {
     const animals = await Pet.find()
       .where("animal")
@@ -66,7 +65,6 @@ router.get("/pets/animals", async (req, res) => {
 
 // Route to get breeds list
 router.get("/pets/breeds", async (req, res) => {
-  const Pet = require("../model/petSchema");
   try {
     const { animal } = req.query;
 
@@ -90,7 +88,6 @@ router.get("/pets/breeds", async (req, res) => {
 
 // Route to get pet by id
 router.get("/pets/:id", async (req, res) => {
-  const Pet = require("../model/petSchema");
   try {
     const pet = await Pet.findById(req.params.id);
     if (!pet) {
@@ -104,7 +101,6 @@ router.get("/pets/:id", async (req, res) => {
 
 // Route to add a pet
 router.post("/add-pet", upload.array("images"), async (req, res) => {
-  const Pet = require("../model/petSchema");
   const { name, location, animal, breed } = req.body;
   const images = req.files.map((file) => file.path);
 

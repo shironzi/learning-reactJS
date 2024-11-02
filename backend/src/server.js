@@ -2,10 +2,9 @@ const express = require("express");
 const dotenv = require("dotenv");
 const cors = require("cors");
 const morgan = require("morgan");
-const helmet = require("helmet");
 
 const connectToDatabase = require("./database/mongoose");
-const pets = require("./routes/petRoute");
+const pets = require("./petRoute");
 const user = require("./routes/authRoute");
 const errorHandler = require("./util/errorHandler");
 
@@ -13,23 +12,21 @@ dotenv.config();
 
 const app = express();
 
-let requestCount = 0;
-
 // Middleware
-app.use(cors()); // Add this line to enable CORS
-app.use(helmet());
+app.use(cors()); // Enable CORS for all routes
+// app.use(morgan("combined")); // Log HTTP requests
+app.use(morgan("dev"));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-app.use(morgan("combined"));
+
+// Serve static files with CORS headers
+app.use("/uploads", express.static("uploads"));
 
 // Routes
-
-app.use("/uploads", express.static("uploads"));
 app.use("/", pets);
 app.use("/auth", user);
 
 // Error handler
-
 app.use(errorHandler);
 
 const createServer = async () => {
@@ -39,22 +36,6 @@ const createServer = async () => {
     await connectToDatabase();
     const server = app.listen(port, () => {
       console.log(`Server is running on port ${port}`);
-    });
-
-    process.on("SIGTERM", () => {
-      console.log("SIGTERM signal received: closing HTTP server");
-      server.close(() => {
-        console.log("HTTP server closed");
-        process.exit(0);
-      });
-    });
-
-    process.on("SIGINT", () => {
-      console.log("SIGINT signal received: closing HTTP server");
-      server.close(() => {
-        console.log("HTTP server closed");
-        process.exit(0);
-      });
     });
   } catch (error) {
     console.error(`Error: ${error.message}`);
