@@ -3,7 +3,7 @@ let requestCount = 0;
 const express = require("express");
 const multer = require("multer");
 
-const Pet = require("./model/petSchema");
+const Pet = require("../model/petSchema");
 
 const router = express.Router();
 const upload = multer({ dest: "uploads/" });
@@ -41,6 +41,7 @@ router.get("/pets", async (req, res) => {
     if (!pets.length) {
       return res.status(404).json({ message: "No pets found" });
     }
+
     res.json(pets);
   } catch (error) {
     res.status(500).json({ message: error.message });
@@ -57,6 +58,17 @@ router.get("/pets/animals", async (req, res) => {
     if (!animals.length) {
       return res.status(404).json({ message: "No animals found" });
     }
+
+    // sorting the animals list
+    animals = animals.map((animal) => animal.toLowerCase());
+    animals.sort();
+
+    // Capitalizing the first letter of each animal
+    animals = animals.map(
+      (animal) => animal.charAt(0).toUpperCase() + animal.slice(1)
+    );
+
+    // Sending the animals list
     res.json(animals);
   } catch (error) {
     res.status(500).json({ message: error.message });
@@ -79,7 +91,16 @@ router.get("/pets/breeds", async (req, res) => {
     if (!breeds.length) {
       return res.status(404).json({ message: "No breeds found" });
     }
+    // sorting the breeds list
+    breeds = breeds.map((breed) => breed.toLowerCase());
+    breeds.sort();
 
+    // Capitalizing the first letter of each breed
+    breeds = breeds.map(
+      (breed) => breed.charAt(0).toUpperCase() + breed.slice(1)
+    );
+
+    // Sending the breeds list
     res.json(breeds);
   } catch (error) {
     res.status(500).json({ message: error.message });

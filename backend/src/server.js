@@ -4,7 +4,7 @@ const cors = require("cors");
 const morgan = require("morgan");
 
 const connectToDatabase = require("./database/mongoose");
-const pets = require("./petRoute");
+const pets = require("./routes/petRoute");
 const user = require("./routes/authRoute");
 const errorHandler = require("./util/errorHandler");
 
