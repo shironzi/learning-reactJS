@@ -74,12 +74,6 @@ const SearchForm = () => {
     fetchBreeds();
   }, [animal]);
 
-  useEffect(() => {
-    if (breeds.length <= 0 || animal === "") {
-      setBreed("");
-    }
-  }, [animal, breeds]);
-
   return (
     <div className="searchForm">
       <form onSubmit={submitForm}>
@@ -93,7 +87,13 @@ const SearchForm = () => {
         />
         <br />
         <label htmlFor="animal">Animal</label>
-        <select value={animal} onChange={(e) => setAnimal(e.target.value)}>
+        <select
+          value={animal}
+          onChange={(e) => {
+            setAnimal(e.target.value);
+            setBreed("");
+          }}
+        >
           <option value="">Select Animal</option>
           {animals.length > 0 ? (
             animals.map((animal) => (
@@ -112,7 +112,9 @@ const SearchForm = () => {
         <label htmlFor="breed">Breed</label>
         <select
           value={breed}
-          onChange={(e) => setBreed(e.target.value)}
+          onChange={(e) => {
+            setBreed(e.target.value);
+          }}
           disabled={breeds.length === 0 || animal === ""}
         >
           <option value="">Select Breed</option>
