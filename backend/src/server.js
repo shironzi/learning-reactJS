@@ -2,6 +2,7 @@ const express = require("express");
 const dotenv = require("dotenv");
 const cors = require("cors");
 const morgan = require("morgan");
+const compression = require("compression");
 
 const connectToDatabase = require("./database/mongoose");
 const pets = require("./routes/petRoute");
@@ -19,9 +20,15 @@ app.use(cors()); // Enable CORS for all routes
 app.use(morgan("dev"));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+app.use(compression()); // Compress all responses
 
 // Serve static files with CORS headers
-app.use("/uploads", express.static("uploads"));
+app.use(
+  "/uploads",
+  express.static("uploads", {
+    maxAge: "1d",
+  })
+);
 
 // Authenticate token for all routes except /auth/login and /auth/register
 app.use((req, res, next) => {

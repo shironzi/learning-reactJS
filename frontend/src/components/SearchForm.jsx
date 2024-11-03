@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import React, { useEffect, useState, memo } from "react";
 import { useNavigate } from "react-router-dom";
 
 import Pet from "./Pet";
@@ -26,33 +26,28 @@ const SearchForm = () => {
       return;
     }
 
-    const fetchInitialPets = async () => {
+    const fetchData = async () => {
       try {
-        const fetchedPets = await fetchPets();
+        const [fetchedPets, fetchedAnimals] = await Promise.all([
+          fetchPets(),
+          fetchAnimalsList(),
+        ]);
         if (fetchedPets.length !== 0) {
           setPets(fetchedPets);
         }
-      } catch (error) {
-        console.error("Error fetching pets:", error);
-      }
-    };
-
-    const fetchAnimals = async () => {
-      try {
-        const fetchedAnimals = await fetchAnimalsList();
         if (fetchedAnimals.length !== 0) {
           setAnimals(fetchedAnimals);
         }
       } catch (error) {
-        console.error("Error fetching animals:", error);
+        console.error("Error fetching data:", error);
       }
     };
 
-    fetchAnimals();
-    fetchInitialPets();
-  }, []);
+    fetchData();
+  }, [navigate]);
 
   useEffect(() => {
+    if (!animal) return;
     const fetchBreeds = async () => {
       if (!animal) return;
       try {
@@ -166,4 +161,4 @@ const SearchForm = () => {
   );
 };
 
-export default SearchForm;
+export default memo(SearchForm);

@@ -1,4 +1,4 @@
-import SearchForm from "../SearchFrom";
+import SearchForm from "../SearchForm";
 import AddPet from "../AddPet";
 import Details from "../Details";
 
