@@ -20,7 +20,9 @@ function Login() {
     try {
       const result = await login(email, password);
       if (result.status === 200) {
+        console.log("Login successful");
         dispatch(loginSuccess(email));
+        localStorage.getItem("token");
         navigate("/");
       } else {
         result.json().then((data) => {
@@ -29,6 +31,7 @@ function Login() {
         setIsInvalid(true);
       }
     } catch (error) {
+      setErrorMsg("An error occurred while trying to log in.");
       console.error("Error:", error);
     }
   };

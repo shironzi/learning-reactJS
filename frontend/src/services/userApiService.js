@@ -7,6 +7,11 @@ const login = async (email, password) => {
     body: JSON.stringify({ email, password }),
   });
 
+  if (response.ok) {
+    const data = await response.json();
+    localStorage.setItem("token", data.token);
+  }
+
   return response;
 };
 
@@ -51,6 +56,7 @@ const logout = async () => {
     localStorage.removeItem("token");
     return response;
   } catch (error) {
+    localStorage.removeItem("token");
     console.error("Error:", error);
   }
 };
