@@ -1,7 +1,10 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { register } from "../services/userApiService";
+import { useNavigate } from "react-router-dom";
 
 function Register() {
+  const navigate = useNavigate();
+
   const [formData, setFormData] = useState({
     email: "",
     password: "",
@@ -9,27 +12,47 @@ function Register() {
     firstName: "",
     lastName: "",
   });
+  const [isInvalid, setIsInvalid] = useState(false);
+  const [errorMsg, setErrorMsg] = useState("");
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
     try {
-      await register(
+      const result = await register(
         formData.email,
         formData.password,
         formData.confirmPassword,
         formData.firstName,
         formData.lastName
       );
+
+      if (result.status === 200) {
+        navigate("/login");
+      } else {
+        result.json().then((data) => {
+          setErrorMsg(data["errors"][0]["msg"]);
+        });
+        setIsInvalid(true);
+      }
     } catch (error) {
       console.log(error);
     }
   };
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+    if (token) {
+      navigate("/");
+    }
+  }, [navigate]);
 
   return (
     <div className="register">
       <h1>Register</h1>
       <form onSubmit={handleSubmit}>
+        {isInvalid ? (
+          <label className="auth-invalid-input">{errorMsg}</label>
+        ) : null}
         <input
           name="firstName"
           id="firstName"

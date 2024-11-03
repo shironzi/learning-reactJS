@@ -1,31 +1,52 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
+import { useDispatch } from "react-redux";
+import { loginSuccess } from "../reducers/userReducer";
 import { login } from "../services/userApiService";
 
 function Login() {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [isInvalid, setIsInvalid] = useState(false);
+  const [errorMsg, setErrorMsg] = useState("");
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
     try {
       const result = await login(email, password);
-      if (result) {
+      if (result.status === 200) {
+        dispatch(loginSuccess(email));
         navigate("/");
+      } else {
+        result.json().then((data) => {
+          setErrorMsg(data["message"]);
+        });
+        setIsInvalid(true);
       }
     } catch (error) {
       console.error("Error:", error);
     }
   };
 
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+    if (token) {
+      navigate("/");
+    }
+  }, [navigate]);
+
   return (
     <div className="login">
       <form onSubmit={handleSubmit}>
         <h1>Login</h1>
+        {isInvalid ? (
+          <label className="auth-invalid-input">{errorMsg}</label>
+        ) : null}
         <input
           type="email"
           id="email"

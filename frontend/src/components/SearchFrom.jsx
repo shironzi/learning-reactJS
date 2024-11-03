@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 import Pet from "./Pet";
 import {
@@ -8,6 +9,8 @@ import {
 } from "../services/petApiService";
 
 const SearchForm = () => {
+  const navigate = useNavigate();
+
   const [location, setLocation] = useState("");
   const [animal, setAnimal] = useState("");
   const [breed, setBreed] = useState("");
@@ -15,25 +18,13 @@ const SearchForm = () => {
   const [animals, setAnimals] = useState([]);
   const [breeds, setBreeds] = useState([]);
 
-  const submitForm = async (e) => {
-    e.preventDefault();
-    const cleanLocation = location.trim();
-    const cleanAnimal = animal.trim();
-    const cleanBreed = breed.trim();
-
-    try {
-      const fetchedPets = await fetchPets(
-        cleanLocation,
-        cleanAnimal,
-        cleanBreed
-      );
-      setPets(fetchedPets);
-    } catch (error) {
-      console.error("Error fetching pets:", error);
-    }
-  };
-
   useEffect(() => {
+    const token = localStorage.getItem("token");
+    if (!token) {
+      navigate("/auth/login");
+      return;
+    }
+
     const fetchInitialPets = async () => {
       try {
         const fetchedPets = await fetchPets();
@@ -73,6 +64,24 @@ const SearchForm = () => {
 
     fetchBreeds();
   }, [animal]);
+
+  const submitForm = async (e) => {
+    e.preventDefault();
+    const cleanLocation = location.trim();
+    const cleanAnimal = animal.trim();
+    const cleanBreed = breed.trim();
+
+    try {
+      const fetchedPets = await fetchPets(
+        cleanLocation,
+        cleanAnimal,
+        cleanBreed
+      );
+      setPets(fetchedPets);
+    } catch (error) {
+      console.error("Error fetching pets:", error);
+    }
+  };
 
   return (
     <div className="searchForm">

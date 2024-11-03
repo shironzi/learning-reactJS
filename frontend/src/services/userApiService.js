@@ -1,24 +1,13 @@
 const login = async (email, password) => {
-  try {
-    const response = await fetch("http://localhost:5000/auth/login", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ email, password }),
-    });
+  const response = await fetch("http://localhost:5000/auth/login", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({ email, password }),
+  });
 
-    const data = await response.json();
-
-    if (response.ok) {
-      localStorage.setItem("token", data.token);
-      return data;
-    } else {
-      console.log("Failed to login", data.message);
-    }
-  } catch (error) {
-    console.error("Error:", error);
-  }
+  return response;
 };
 
 const register = async (
@@ -43,13 +32,7 @@ const register = async (
       }),
     });
 
-    const data = await response.json();
-
-    if (response.ok) {
-      return data;
-    } else {
-      console.log("Failed to register", data.message);
-    }
+    return response;
   } catch (error) {
     console.error("Error:", error);
   }

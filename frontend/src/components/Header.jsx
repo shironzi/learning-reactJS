@@ -1,17 +1,21 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import Avatar from "@mui/material/Avatar";
 import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
 import Fab from "@mui/material/Fab";
+import { useDispatch } from "react-redux";
 
 import { logout } from "../services/userApiService";
+import { logout as logoutAction } from "../reducers/userReducer";
 
 const Header = () => {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const token = localStorage.getItem("token");
+  const isAuthenticated = token ? true : false;
 
   const [anchorEl, setAnchorEl] = useState(null);
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
 
   const open = Boolean(anchorEl);
   const handleClick = (event) => {
@@ -25,17 +29,13 @@ const Header = () => {
   const handleLogout = async () => {
     const response = await logout();
     if (response.ok) {
+      dispatch(logoutAction());
+      handleClose();
       navigate("/auth/login");
-      setIsAuthenticated(false);
     } else {
       console.log("Failed to logout", response.message);
     }
   };
-
-  useEffect(() => {
-    const token = localStorage.getItem("token");
-    setIsAuthenticated(!!token);
-  }, []);
 
   return (
     <header className="header-container">
