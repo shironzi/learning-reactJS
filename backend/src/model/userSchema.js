@@ -4,7 +4,12 @@ const { route } = require("../server");
 const { Schema } = mongoose;
 
 const UserSchema = new Schema({
-  assword: {
+  email: {
+    type: String,
+    required: true,
+    unique: true,
+  },
+  password: {
     type: String,
     required: true,
   },

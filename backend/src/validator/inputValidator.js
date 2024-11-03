@@ -1,68 +1,51 @@
-const validator = require("validator");
+const { body, validationResult } = require("express-validator");
 
-const registerValidator = (req, res, next) => {
-  const { email, password, confirmPassword, firstName, lastName } = req.body;
-
-  const trimmedEmail = email.trim();
-  const trimmedFirstName = firstName.trim();
-  const trimmedLastName = lastName.trim();
-
-  if (
-    !trimmedEmail ||
-    !password ||
-    !confirmPassword ||
-    !trimmedFirstName ||
-    !trimmedLastName
-  ) {
-    return res.status(400).json({ message: "All fields are required" });
-  }
-
-  if (!validator.isEmail(trimmedEmail)) {
-    return res.status(400).json({ message: "Invalid email" });
-  }
-
-  if (
-    !validator.isStrongPassword(password, {
+const registerValidator = [
+  body("email").isEmail().normalizeEmail().withMessage("Invalid email"),
+  body("firstName")
+    .escape()
+    .trim()
+    .notEmpty()
+    .withMessage("First name is required"),
+  body("lastName")
+    .escape()
+    .trim()
+    .notEmpty()
+    .withMessage("Last name is required"),
+  body("password")
+    .isStrongPassword({
       minLength: 8,
       minSymbols: 1,
       minNumbers: 1,
       minLowercase: 1,
       minUppercase: 1,
     })
-  ) {
-    return res.status(400).json({
-      message:
-        "Password must be at least 8 characters long and contain at least one uppercase letter, one lowercase letter, one number, and one special character",
-    });
-  }
+    .withMessage(
+      "Password must be at least 8 characters long and include at least one symbol, one number, one lowercase letter, and one uppercase letter"
+    ),
+  body("confirmPassword")
+    .custom((value, { req }) => value === req.body.password)
+    .withMessage("Passwords do not match"),
+  (req, res, next) => {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      return res.status(400).json({ errors: errors.array() });
+    }
+    next();
+  },
+];
 
-  if (password !== confirmPassword) {
-    return res.status(400).json({ message: "Passwords do not match" });
-  }
+const loginValidation = [
+  body("email").isEmail().normalizeEmail().withMessage("Invalid email"),
+  body("password").notEmpty().withMessage("Password is required"),
 
-  req.body.email = validator.normalizeEmail(trimmedEmail);
-  req.body.firstName = validator.escape(trimmedFirstName);
-  req.body.lastName = validator.escape(trimmedLastName);
+  (req, res, next) => {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      return res.status(400).json({ errors: errors.array() });
+    }
+    next();
+  },
+];
 
-  next();
-};
-
-const loginValidator = (req, res, next) => {
-  const { email, password } = req.body;
-
-  const trimmedEmail = email.trim();
-
-  if (!trimmedEmail || !password) {
-    return res.status(400).json({ message: "All fields are required" });
-  }
-
-  if (!validator.isEmail(trimmedEmail)) {
-    return res.status(400).json({ message: "Invalid email" });
-  }
-
-  req.body.email = validator.normalizeEmail(trimmedEmail);
-
-  next();
-};
-
-module.exports = { registerValidator, loginValidator };
+module.exports = { registerValidator, loginValidation };
