@@ -1,8 +1,12 @@
+const getToken = () => localStorage.getItem("token");
+
 export const fetchAnimalsList = async () => {
   try {
-    const response = await fetch("http://localhost:5000/pets/animals");
+    const response = await fetch("http://localhost:5000/pets/animals", {
+      method: "GET",
+      headers: { Authorization: `Bearer ${getToken()}` },
+    });
     const data = await response.json();
-    console.log(data);
     return data;
   } catch (error) {
     console.error("Error:", error);
@@ -12,7 +16,11 @@ export const fetchAnimalsList = async () => {
 export const fetchBreedsList = async (animal) => {
   try {
     const response = await fetch(
-      `http://localhost:5000/pets/breeds?animal=${animal}`
+      `http://localhost:5000/pets/breeds?animal=${animal}`,
+      {
+        method: "GET",
+        headers: { Authorization: `Bearer ${getToken()}` },
+      }
     );
     const data = await response.json();
     return data;
@@ -29,7 +37,11 @@ export const fetchPets = async (location = "", animal = "", breed = "") => {
     if (breed) queryParams.append("breed", breed);
 
     const response = await fetch(
-      `http://localhost:5000/pets?${queryParams.toString()}`
+      `http://localhost:5000/pets?${queryParams.toString()}`,
+      {
+        method: "GET",
+        headers: { Authorization: `Bearer ${getToken()}` },
+      }
     );
     const data = await response.json();
     return data;
@@ -40,7 +52,10 @@ export const fetchPets = async (location = "", animal = "", breed = "") => {
 
 export const fetchPetById = async (id) => {
   try {
-    const response = await fetch(`http://localhost:5000/pets/${id}`);
+    const response = await fetch(`http://localhost:5000/pets/${id}`, {
+      method: "GET",
+      headers: { Authorization: `Bearer ${getToken()}` },
+    });
     const data = await response.json();
     return data;
   } catch (error) {

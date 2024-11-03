@@ -1,6 +1,6 @@
 const express = require("express");
 
-const { Register, Login } = require("../Controller/authController");
+const { register, login, logout } = require("../Controller/authController");
 const {
   registerValidator,
   loginValidation,
@@ -9,9 +9,11 @@ const {
 const router = express.Router();
 
 // Route for Register
-router.post("/register", registerValidator, Register);
+router.post("/register", registerValidator, register);
 
 // Route for Login
-router.post("/login", loginValidation, Login);
+router.post("/login", loginValidation, login);
+
+router.post("/logout", logout);
 
 module.exports = router;

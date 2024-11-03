@@ -7,6 +7,7 @@ const connectToDatabase = require("./database/mongoose");
 const pets = require("./routes/petRoute");
 const user = require("./routes/authRoute");
 const errorHandler = require("./util/errorHandler");
+const authenticateToken = require("./middleware/authenticateToken");
 
 dotenv.config();
 
@@ -21,6 +22,14 @@ app.use(express.urlencoded({ extended: true }));
 
 // Serve static files with CORS headers
 app.use("/uploads", express.static("uploads"));
+
+// Authenticate token for all routes except /auth/login and /auth/register
+app.use((req, res, next) => {
+  if (req.path === "/auth/login" || req.path === "/auth/register") {
+    return next();
+  }
+  authenticateToken(req, res, next);
+});
 
 // Routes
 app.use("/", pets);

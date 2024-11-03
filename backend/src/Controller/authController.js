@@ -1,7 +1,9 @@
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 
-const Register = async (req, res, next) => {
+const tokenBlacklist = require("../util/tokenBlacklist");
+
+const register = async (req, res, next) => {
   const User = require("../model/userSchema");
   const { email, password, firstName, lastName } = req.body;
 
@@ -29,13 +31,14 @@ const Register = async (req, res, next) => {
   }
 };
 
-const Login = async (req, res, next) => {
+const login = async (req, res, next) => {
   const User = require("../model/userSchema");
   const { email, password } = req.body;
   try {
     const user = await User.findOne({ email });
 
     if (!user) {
+      console.log("Login failed");
       return res.status(400).json({ message: "Invalid credentials" });
     }
 
@@ -51,10 +54,24 @@ const Login = async (req, res, next) => {
       { expiresIn: "1h" }
     );
 
-    res.json({ message: "Login successful" });
+    console.log("Login successful");
+    res.json({ message: "Login successful", token });
   } catch (error) {
     next(error);
   }
 };
 
-module.exports = { Register, Login };
+const logout = async (req, res, next) => {
+  const authHeader = req.headers["authorization"];
+  const token = authHeader && authHeader.split(" ")[1];
+
+  if (token) {
+    tokenBlacklist.add(token);
+  }
+
+  console.log("Logged out successfully");
+
+  res.status(200).json({ message: "Logged out successfully" });
+};
+
+module.exports = { register, login, logout };
