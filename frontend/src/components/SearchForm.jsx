@@ -1,8 +1,9 @@
-import React, { useEffect, useState, memo } from "react";
+import React, { useEffect, useState, memo, Suspense } from "react";
 import { useNavigate } from "react-router-dom";
 
-import Pet from "./Pet";
 import { fetchPets, getPets, getBreeds } from "../services/petApiService";
+
+const LazySearchResult = React.lazy(() => import("./SearchResult"));
 
 const SearchForm = () => {
   const navigate = useNavigate();
@@ -83,6 +84,7 @@ const SearchForm = () => {
         <input
           type="text"
           name="location"
+          id="location"
           placeholder="Location"
           value={location}
           onChange={(e) => setLocation(e.target.value)}
@@ -90,6 +92,8 @@ const SearchForm = () => {
         <br />
         <label htmlFor="animal">Animal</label>
         <select
+          name="animal"
+          id="animal"
           value={animal}
           onChange={(e) => {
             setAnimal(e.target.value);
@@ -113,6 +117,8 @@ const SearchForm = () => {
         <label htmlFor="breed">Breed</label>
         <label htmlFor="breed">Breed</label>
         <select
+          name="breed"
+          id="breed"
           value={breed}
           onChange={(e) => {
             setBreed(e.target.value);
@@ -135,25 +141,9 @@ const SearchForm = () => {
         <br />
         <button type="submit">Submit</button>
       </form>
-      <div className="searchResults">
-        {pets.length > 0 ? (
-          pets.map((pet) => (
-            <Pet
-              key={pet._id}
-              name={pet.name}
-              animal={pet.animal}
-              breed={pet.breed}
-              image={pet.images[0]}
-              id={pet._id}
-            />
-          ))
-        ) : (
-          <div className="no-pets-found">
-            <i className="fas fa-paw"></i>
-            <p>No pets found</p>
-          </div>
-        )}
-      </div>
+      <Suspense fallback={<div>Loading...</div>}>
+        <LazySearchResult pets={pets} />
+      </Suspense>
     </div>
   );
 };

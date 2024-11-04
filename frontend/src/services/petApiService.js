@@ -27,7 +27,6 @@ export const getPets = async (data) => {
     const uniqueAnimals = [...new Set(animals)];
 
     uniqueAnimals.sort();
-    console.log(animals);
     return uniqueAnimals;
   } catch (error) {
     console.error("Error:", error);
