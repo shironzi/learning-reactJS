@@ -2,11 +2,7 @@ import React, { useEffect, useState, memo } from "react";
 import { useNavigate } from "react-router-dom";
 
 import Pet from "./Pet";
-import {
-  fetchPets,
-  fetchAnimalsList,
-  fetchBreedsList,
-} from "../services/petApiService";
+import { fetchPets, getPets, getBreeds } from "../services/petApiService";
 
 const SearchForm = () => {
   const navigate = useNavigate();
@@ -28,16 +24,15 @@ const SearchForm = () => {
 
     const fetchData = async () => {
       try {
-        const [fetchedPets, fetchedAnimals] = await Promise.all([
-          fetchPets(),
-          fetchAnimalsList(),
-        ]);
-        if (fetchedPets.length !== 0) {
-          setPets(fetchedPets);
+        const fetchedPets = await fetchPets();
+
+        if (!fetchedPets) {
+          return;
         }
-        if (fetchedAnimals.length !== 0) {
-          setAnimals(fetchedAnimals);
-        }
+        const petList = await getPets(fetchedPets);
+
+        setPets(fetchedPets);
+        setAnimals(petList);
       } catch (error) {
         console.error("Error fetching data:", error);
       }
@@ -48,18 +43,20 @@ const SearchForm = () => {
 
   useEffect(() => {
     if (!animal) return;
-    const fetchBreeds = async () => {
-      if (!animal) return;
+    const getBreedsList = async () => {
       try {
-        const fetchedBreeds = await fetchBreedsList(animal);
+        const fetchedBreeds = await getBreeds(pets, animal);
+        if (fetchedBreeds.length === 0) {
+          return;
+        }
         setBreeds(fetchedBreeds);
       } catch (error) {
         console.error("Error fetching breeds:", error);
       }
     };
 
-    fetchBreeds();
-  }, [animal]);
+    getBreedsList();
+  }, [animal, pets]);
 
   const submitForm = async (e) => {
     e.preventDefault();

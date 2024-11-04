@@ -20,7 +20,7 @@ app.use(cors()); // Enable CORS for all routes
 app.use(morgan("dev"));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-app.use(compression()); // Compress all responses
+app.use(compression());
 
 // Serve static files with CORS headers
 app.use(

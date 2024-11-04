@@ -1,35 +1,6 @@
-const getToken = () => localStorage.getItem("token");
-
-export const fetchAnimalsList = async () => {
-  try {
-    const response = await fetch("http://localhost:5000/pets/animals", {
-      method: "GET",
-      headers: { Authorization: `Bearer ${getToken()}` },
-    });
-    const data = await response.json();
-    return data;
-  } catch (error) {
-    console.error("Error:", error);
-  }
-};
-
-export const fetchBreedsList = async (animal) => {
-  try {
-    const response = await fetch(
-      `http://localhost:5000/pets/breeds?animal=${animal}`,
-      {
-        method: "GET",
-        headers: { Authorization: `Bearer ${getToken()}` },
-      }
-    );
-    const data = await response.json();
-    return data;
-  } catch (error) {
-    console.error("Error:", error);
-  }
-};
-
 export const fetchPets = async (location = "", animal = "", breed = "") => {
+  const getToken = () => localStorage.getItem("token");
+  const token = getToken();
   try {
     const queryParams = new URLSearchParams();
     if (location) queryParams.append("location", location);
@@ -40,7 +11,7 @@ export const fetchPets = async (location = "", animal = "", breed = "") => {
       `http://localhost:5000/pets?${queryParams.toString()}`,
       {
         method: "GET",
-        headers: { Authorization: `Bearer ${getToken()}` },
+        headers: { Authorization: `Bearer ${token}` },
       }
     );
     const data = await response.json();
@@ -50,15 +21,48 @@ export const fetchPets = async (location = "", animal = "", breed = "") => {
   }
 };
 
+export const getPets = async (data) => {
+  try {
+    const animals = data.map((pet) => pet.animal);
+    const uniqueAnimals = [...new Set(animals)];
+
+    uniqueAnimals.sort();
+    console.log(animals);
+    return uniqueAnimals;
+  } catch (error) {
+    console.error("Error:", error);
+  }
+};
+
+export const getBreeds = async (pets, animal) => {
+  try {
+    const breedsList = pets
+      .filter((pet) => pet.animal === animal)
+      .map((pet) => {
+        return pet.breed;
+      });
+
+    const uniqueBreeds = [...new Set(breedsList)];
+    uniqueBreeds.sort();
+    return uniqueBreeds;
+  } catch (error) {
+    console.error("Error:", error);
+    return [];
+  }
+};
+
 export const fetchPetById = async (id) => {
+  const getToken = () => localStorage.getItem("token");
+  const token = getToken();
   try {
     const response = await fetch(`http://localhost:5000/pets/${id}`, {
       method: "GET",
-      headers: { Authorization: `Bearer ${getToken()}` },
+      headers: { Authorization: `Bearer ${token}` },
     });
     const data = await response.json();
     return data;
   } catch (error) {
     console.error("Error:", error);
+    return null;
   }
 };
