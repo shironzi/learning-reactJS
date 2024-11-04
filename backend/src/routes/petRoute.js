@@ -6,8 +6,6 @@ const path = require("path");
 const {
   fetchPets,
   searchPets,
-  getAnimalsList,
-  getBreedsList,
   getPetById,
   addPet,
 } = require("../Controller/PetController");
@@ -27,12 +25,6 @@ router.get("/", fetchPets);
 
 // Route to search pets
 router.get("/pets", searchPets);
-
-// Route to get animals list
-router.get("/pets/animals", getAnimalsList);
-
-// Route to get breeds list
-router.get("/pets/breeds", getBreedsList);
 
 // Route to get pet by id
 router.get("/pets/:id", getPetById);

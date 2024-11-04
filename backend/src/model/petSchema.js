@@ -24,4 +24,6 @@ const petSchema = new Schema({
   },
 });
 
+petSchema.index({ animal: 1, breed: 1, location: 1 });
+
 module.exports = mongoose.model("Pet", petSchema);

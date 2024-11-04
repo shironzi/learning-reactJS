@@ -6,7 +6,9 @@ const upload = multer({ dest: "uploads/" });
 
 const fetchPets = async (req, res) => {
   try {
-    const pets = await Pet.find();
+    const pets = await Pet.find()
+      .select("name location animal breed images")
+      .exec();
     if (!pets.length) {
       return res.status(404).json({ message: "No pets found" });
     }
@@ -24,73 +26,17 @@ const searchPets = async (req, res) => {
     if (animal) query.animal = { $regex: animal, $options: "i" };
     if (breed) query.breed = { $regex: breed, $options: "i" };
 
-    const pets = await Pet.find(query);
+    const pets = await Pet.find(query)
+      .select("name location animal breed images")
+      .skip(0)
+      .limit(10)
+      .exec();
+
     if (!pets.length) {
       return res.status(404).json({ message: "No pets found" });
     }
 
     res.json(pets);
-  } catch (error) {
-    res.status(500).json({ message: error.message });
-  }
-};
-
-const getAnimalsList = async (req, res) => {
-  try {
-    const animals = await Pet.where("animal").distinct("animal");
-    if (!animals.length) {
-      return res.status(404).json({ message: "No animals found" });
-    }
-
-    // sorting the animals
-    animals.forEach((animal, index) => {
-      animals[index] = animal.toLowerCase();
-    });
-
-    animals.sort();
-
-    // Capitalizing the first letter of each animal
-    animals.forEach((animal, index) => {
-      animals[index] = animal.charAt(0).toUpperCase() + animal.slice(1);
-    });
-
-    res.json(animals);
-  } catch (error) {
-    res.status(500).json({ message: error.message });
-  }
-};
-
-const getBreedsList = async (req, res) => {
-  try {
-    const { animal } = req.query;
-
-    if (!animal) {
-      return res.status(400).json({ message: "Animal is required" });
-    }
-
-    const animalRegex = { $regex: animal, $options: "i" };
-
-    const breeds = await Pet.find({ animal: animalRegex })
-      .select({ breed: 1, _id: 0 })
-      .distinct("breed");
-
-    if (!breeds.length) {
-      return res.status(404).json({ message: "No breeds found" });
-    }
-
-    // sorting the breeds
-    breeds.forEach((breed, index) => {
-      breeds[index] = breed.toLowerCase();
-    });
-
-    breeds.sort();
-
-    // Capitalizing the first letter of each breed
-    breeds.forEach((breed, index) => {
-      breeds[index] = breed.charAt(0).toUpperCase() + breed.slice(1);
-    });
-
-    res.json(breeds);
   } catch (error) {
     res.status(500).json({ message: error.message });
   }
@@ -141,8 +87,6 @@ const addPet = [
 module.exports = {
   fetchPets,
   searchPets,
-  getAnimalsList,
-  getBreedsList,
   getPetById,
   addPet,
 };
