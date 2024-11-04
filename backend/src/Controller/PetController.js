@@ -8,6 +8,7 @@ const fetchPets = async (req, res) => {
   try {
     const pets = await Pet.find()
       .select("name location animal breed images")
+      .lean()
       .exec();
     if (!pets.length) {
       return res.status(404).json({ message: "No pets found" });
@@ -28,6 +29,7 @@ const searchPets = async (req, res) => {
 
     const pets = await Pet.find(query)
       .select("name location animal breed images")
+      .lean()
       .skip(0)
       .limit(10)
       .exec();

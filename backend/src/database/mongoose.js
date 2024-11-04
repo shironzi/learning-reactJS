@@ -6,7 +6,7 @@ dotenv.config();
 const connectDB = async () => {
   try {
     const connection = await mongoose.connect(process.env.MONGO_URI, {
-      maxPoolSize: 10,
+      minPoolSize: 10,
     });
     console.log("Database connected:", connection.connection.name);
   } catch (error) {
