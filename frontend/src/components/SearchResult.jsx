@@ -1,3 +1,4 @@
+import { memo } from "react";
 import Pet from "./Pet";
 
 function SearchResult(props) {
@@ -26,4 +27,4 @@ function SearchResult(props) {
   );
 }
 
-export default SearchResult;
+export default memo(SearchResult);

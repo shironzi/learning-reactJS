@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { memo, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import Avatar from "@mui/material/Avatar";
 import Menu from "@mui/material/Menu";
@@ -40,7 +40,12 @@ const Header = () => {
   return (
     <header className="header-container">
       <Link to={"/"}>
-        <img src={"/logo.png"} className="header-logo" alt="logo" />
+        <img
+          src={"/logo.png"}
+          className="header-logo"
+          alt="logo"
+          loading="lazy"
+        />
       </Link>
       {isAuthenticated ? (
         <>
@@ -92,4 +97,4 @@ const Header = () => {
   );
 };
 
-export default Header;
+export default memo(Header);

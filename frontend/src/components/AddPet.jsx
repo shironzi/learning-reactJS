@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useCallback, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 const AddPet = () => {
@@ -9,37 +9,40 @@ const AddPet = () => {
   const [images, setImages] = useState([]);
   const navigate = useNavigate();
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    if (!name || !location || !animal || !breed || images.length === 0) {
-      console.log("Form is incomplete");
-      return;
-    }
-
-    const formData = new FormData();
-    formData.append("name", name);
-    formData.append("location", location);
-    formData.append("animal", animal);
-    formData.append("breed", breed);
-    images.forEach((image) => {
-      formData.append("images", image); // Use "images" as the field name
-    });
-
-    try {
-      const response = await fetch("http://localhost:5000/add-pet", {
-        method: "POST",
-        body: formData,
-      });
-      if (response.ok) {
-        console.log("Pet added successfully");
-        navigate("/");
-      } else {
-        console.log("Failed to add pet");
+  const handleSubmit = useCallback(
+    async (e) => {
+      e.preventDefault();
+      if (!name || !location || !animal || !breed || images.length === 0) {
+        console.log("Form is incomplete");
+        return;
       }
-    } catch (error) {
-      console.error("Error:", error);
-    }
-  };
+
+      const formData = new FormData();
+      formData.append("name", name);
+      formData.append("location", location);
+      formData.append("animal", animal);
+      formData.append("breed", breed);
+      images.forEach((image) => {
+        formData.append("images", image); // Use "images" as the field name
+      });
+
+      try {
+        const response = await fetch("http://localhost:5000/add-pet", {
+          method: "POST",
+          body: formData,
+        });
+        if (response.ok) {
+          console.log("Pet added successfully");
+          navigate("/");
+        } else {
+          console.log("Failed to add pet");
+        }
+      } catch (error) {
+        console.error("Error:", error);
+      }
+    },
+    [name, location, animal, breed, images, navigate]
+  );
 
   return (
     <form
