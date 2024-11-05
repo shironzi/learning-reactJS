@@ -1,4 +1,4 @@
-import React from "react";
+import React, { memo } from "react";
 import Dialog from "@mui/material/Dialog";
 import DialogTitle from "@mui/material/DialogTitle";
 import DialogContent from "@mui/material/DialogContent";
@@ -26,4 +26,4 @@ const CustomDialog = ({ open, onClose, pet }) => {
   );
 };
 
-export default CustomDialog;
+export default memo(CustomDialog);

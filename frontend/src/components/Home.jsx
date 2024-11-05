@@ -1,18 +1,26 @@
-import { memo, useCallback, useEffect, useState } from "react";
+import {
+  lazy,
+  memo,
+  useCallback,
+  useEffect,
+  useState,
+  Suspense,
+  useRef,
+} from "react";
 import { fetchPets } from "../services/petApiService";
-import SearchResult from "./SearchResult";
-import SearchForm from "./SearchForm";
+import debounce from "lodash.debounce";
 
-// working on search form and search result
+const SearchResults = lazy(() => import("./SearchResult"));
+const SearchForm = lazy(() => import("./SearchForm"));
 
 const Home = () => {
   const [pets, setPets] = useState([]);
   const [SearchedPets, setSearchedPets] = useState([]);
+  const prevFormValues = useRef({ location: "", animal: "", breed: "" });
 
   const fetchPetsData = useCallback(async () => {
     try {
       const data = await fetchPets();
-      console.log("Fetching data");
       setPets(data);
       setSearchedPets(data);
     } catch (error) {
@@ -20,18 +28,22 @@ const Home = () => {
     }
   }, []);
 
-  const formSubmit = useCallback(
-    (location = "", animal = "", breed = "") => {
-      const filteredPets = pets.filter(
-        (pet) =>
-          (location ? pet.location.includes(location) : true) &&
-          (animal ? pet.animal === animal : true) &&
-          (breed ? pet.breed === breed : true)
-      );
-      console.log(location);
+  const formSubmit = debounce(
+    async (location = "", animal = "", breed = "") => {
+      if (
+        prevFormValues.current.location === location &&
+        prevFormValues.current.animal === animal &&
+        prevFormValues.current.breed === breed
+      ) {
+        return;
+      }
+
+      prevFormValues.current = { location, animal, breed };
+
+      const filteredPets = await fetchPets(location, animal, breed);
       setSearchedPets(filteredPets);
     },
-    [pets]
+    300
   );
 
   useEffect(() => {
@@ -40,8 +52,10 @@ const Home = () => {
 
   return (
     <div className="searchForm">
-      <SearchForm pets={pets} onSubmit={formSubmit} />
-      <SearchResult pets={SearchedPets} />
+      <Suspense fallback={<div>Loading...</div>}>
+        <SearchForm pets={pets} onSubmit={formSubmit} />
+        <SearchResults pets={SearchedPets} />
+      </Suspense>
     </div>
   );
 };

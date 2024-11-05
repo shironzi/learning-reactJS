@@ -21,37 +21,6 @@ export const fetchPets = async (location = "", animal = "", breed = "") => {
   }
 };
 
-export const petsData = [fetchPets()];
-
-export const getPets = async (data) => {
-  try {
-    const animals = data.map((pet) => pet.animal);
-    const uniqueAnimals = [...new Set(animals)];
-
-    uniqueAnimals.sort();
-    return uniqueAnimals;
-  } catch (error) {
-    console.error("Error:", error);
-  }
-};
-
-export const getBreeds = async (pets, animal) => {
-  try {
-    const breedsList = pets
-      .filter((pet) => pet.animal === animal)
-      .map((pet) => {
-        return pet.breed;
-      });
-
-    const uniqueBreeds = [...new Set(breedsList)];
-    uniqueBreeds.sort();
-    return uniqueBreeds;
-  } catch (error) {
-    console.error("Error:", error);
-    return [];
-  }
-};
-
 export const fetchPetById = async (id) => {
   const getToken = () => localStorage.getItem("token");
   const token = getToken();

@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from "react";
+import React, { memo, useCallback, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 const AddPet = () => {
@@ -98,4 +98,4 @@ const AddPet = () => {
   );
 };
 
-export default AddPet;
+export default memo(AddPet);

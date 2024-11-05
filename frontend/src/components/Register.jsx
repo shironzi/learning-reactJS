@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, memo } from "react";
 import { register } from "../services/userApiService";
 import { useNavigate } from "react-router-dom";
 
@@ -112,4 +112,4 @@ function Register() {
   );
 }
 
-export default Register;
+export default memo(Register);

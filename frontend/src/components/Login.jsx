@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { memo, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 import { useDispatch } from "react-redux";
@@ -72,4 +72,4 @@ function Login() {
   );
 }
 
-export default Login;
+export default memo(Login);

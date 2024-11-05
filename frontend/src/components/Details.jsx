@@ -1,5 +1,5 @@
 import { useParams } from "react-router-dom";
-import { useEffect, useState } from "react";
+import { memo, useEffect, useState } from "react";
 
 import CustomDialog from "./CustomDialog";
 import { fetchPetById } from "../services/petApiService";
@@ -63,4 +63,4 @@ const Details = () => {
   );
 };
 
-export default Details;
+export default memo(Details);
