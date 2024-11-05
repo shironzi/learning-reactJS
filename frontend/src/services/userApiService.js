@@ -1,18 +1,25 @@
 const login = async (email, password) => {
-  const response = await fetch("http://localhost:5000/auth/login", {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify({ email, password }),
-  });
+  try {
+    const response = await fetch("http://localhost:5000/auth/login", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ email, password }),
+    });
 
-  if (response.ok) {
-    const data = await response.json();
-    localStorage.setItem("token", data.token);
+    if (response.ok) {
+      const data = await response.json();
+      localStorage.setItem("token", data.token);
+      return data;
+    } else {
+      const errorData = await response.json();
+      throw new Error(errorData.message);
+    }
+  } catch (error) {
+    console.error("Login error:", error);
+    throw error;
   }
-
-  return response;
 };
 
 const register = async (
@@ -53,11 +60,18 @@ const logout = async () => {
       },
     });
 
-    localStorage.removeItem("token");
+    if (response.ok) {
+      localStorage.removeItem("token");
+    } else {
+      const errorData = await response.json();
+      throw new Error(errorData.message);
+    }
+
     return response;
   } catch (error) {
     localStorage.removeItem("token");
-    console.error("Error:", error);
+    console.error("Logout error:", error);
+    throw error;
   }
 };
 

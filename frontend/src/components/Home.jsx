@@ -15,7 +15,7 @@ const SearchForm = lazy(() => import("./SearchForm"));
 
 const Home = () => {
   const [pets, setPets] = useState([]);
-  const [SearchedPets, setSearchedPets] = useState([]);
+  const [searchedPets, setSearchedPets] = useState([]);
   const prevFormValues = useRef({ location: "", animal: "", breed: "" });
 
   const fetchPetsData = useCallback(async () => {
@@ -28,8 +28,8 @@ const Home = () => {
     }
   }, []);
 
-  const formSubmit = debounce(
-    async (location = "", animal = "", breed = "") => {
+  const formSubmit = useCallback(
+    debounce(async (location = "", animal = "", breed = "") => {
       if (
         prevFormValues.current.location === location &&
         prevFormValues.current.animal === animal &&
@@ -40,10 +40,14 @@ const Home = () => {
 
       prevFormValues.current = { location, animal, breed };
 
-      const filteredPets = await fetchPets(location, animal, breed);
-      setSearchedPets(filteredPets);
-    },
-    300
+      try {
+        const filteredPets = await fetchPets(location, animal, breed);
+        setSearchedPets(filteredPets);
+      } catch (error) {
+        console.error("Error fetching filtered pets:", error);
+      }
+    }, 300),
+    []
   );
 
   useEffect(() => {
@@ -54,7 +58,7 @@ const Home = () => {
     <div className="searchForm">
       <Suspense fallback={<div>Loading...</div>}>
         <SearchForm pets={pets} onSubmit={formSubmit} />
-        <SearchResults pets={SearchedPets} />
+        <SearchResults pets={searchedPets} />
       </Suspense>
     </div>
   );

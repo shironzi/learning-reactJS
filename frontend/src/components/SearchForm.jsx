@@ -4,7 +4,7 @@ function SearchForm({ pets, onSubmit }) {
   const [location, setLocation] = useState("");
   const [animal, setAnimal] = useState("");
   const [breed, setBreed] = useState("");
-  const [avaliableBreeds, setAvaliableBreeds] = useState([]);
+  const [availableBreeds, setAvailableBreeds] = useState([]);
 
   const memoizedPets = useMemo(() => {
     return pets;
@@ -30,7 +30,7 @@ function SearchForm({ pets, onSubmit }) {
 
     const breedList = Array.from(uniqueBreeds);
     breedList.sort();
-    setAvaliableBreeds(breedList);
+    setAvailableBreeds(breedList);
   }, [animal, memoizedPets]);
 
   // Fetch breeds when animal changes
@@ -91,11 +91,11 @@ function SearchForm({ pets, onSubmit }) {
         onChange={(e) => {
           setBreed(e.target.value);
         }}
-        disabled={avaliableBreeds.length === 0 || animal === ""}
+        disabled={availableBreeds.length === 0 || animal === ""}
       >
         <option value="">Select Breed</option>
-        {avaliableBreeds.length > 0 && animal !== "" ? (
-          avaliableBreeds.map((breed) => (
+        {availableBreeds.length > 0 && animal !== "" ? (
+          availableBreeds.map((breed) => (
             <option key={breed} value={breed}>
               {breed}
             </option>
