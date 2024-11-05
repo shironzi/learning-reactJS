@@ -3,6 +3,8 @@ import { fetchPets } from "../services/petApiService";
 import SearchResult from "./SearchResult";
 import SearchForm from "./SearchForm";
 
+// working on search form and search result
+
 const Home = () => {
   const [pets, setPets] = useState([]);
 
