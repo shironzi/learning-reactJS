@@ -1,19 +1,16 @@
 import React, { useEffect, useState, memo, Suspense } from "react";
 import { useNavigate } from "react-router-dom";
 
-import { fetchPets, getPets, getBreeds } from "../services/petApiService";
+import { fetchPets, getBreeds } from "../services/petApiService";
 
-const LazySearchResult = React.lazy(() => import("./SearchResult"));
-
-const SearchForm = () => {
+const SearchForm = ({ pets }) => {
   const navigate = useNavigate();
 
   const [location, setLocation] = useState("");
   const [animal, setAnimal] = useState("");
   const [breed, setBreed] = useState("");
-  const [pets, setPets] = useState([]);
-  const [animals, setAnimals] = useState([]);
   const [breeds, setBreeds] = useState([]);
+  const animals = ["Dog", "Cat", "Bird", "Rabbit", "Reptile"];
 
   useEffect(() => {
     const token = localStorage.getItem("token");
@@ -22,24 +19,6 @@ const SearchForm = () => {
       navigate("/auth/login");
       return;
     }
-
-    const fetchData = async () => {
-      try {
-        const fetchedPets = await fetchPets();
-
-        if (!fetchedPets) {
-          return;
-        }
-        const petList = await getPets(fetchedPets);
-
-        setPets(fetchedPets);
-        setAnimals(petList);
-      } catch (error) {
-        console.error("Error fetching data:", error);
-      }
-    };
-
-    fetchData();
   }, [navigate]);
 
   useEffect(() => {
@@ -71,7 +50,7 @@ const SearchForm = () => {
         cleanAnimal,
         cleanBreed
       );
-      setPets(fetchedPets);
+      // setPets(fetchedPets);
     } catch (error) {
       console.error("Error fetching pets:", error);
     }
@@ -141,9 +120,6 @@ const SearchForm = () => {
         <br />
         <button type="submit">Submit</button>
       </form>
-      <Suspense fallback={<div>Loading...</div>}>
-        <LazySearchResult pets={pets} />
-      </Suspense>
     </div>
   );
 };

@@ -15,11 +15,13 @@ export const fetchPets = async (location = "", animal = "", breed = "") => {
       }
     );
     const data = await response.json();
-    return data;
+    return await data;
   } catch (error) {
     console.error("Error:", error);
   }
 };
+
+export const petsData = [fetchPets()];
 
 export const getPets = async (data) => {
   try {

@@ -9,6 +9,7 @@ import "./App.css";
 import Header from "../Header";
 import Login from "../Login";
 import Register from "../Register";
+import Home from "../Home";
 
 const LazyAddPet = React.lazy(() => import("../AddPet"));
 
@@ -19,6 +20,7 @@ function App() {
       <Suspense fallback={<div>Loading...</div>}>
         <Routes>
           <Route path="/" element={<SearchForm />} />
+          <Route path="/home" element={<Home />} />1
           <Route path="/add-pet" element={<LazyAddPet />} />
           <Route path="/pets/:id" element={<Details />} />
           <Route path="/auth/login" element={<Login />} />
