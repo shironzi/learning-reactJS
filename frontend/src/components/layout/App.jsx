@@ -1,4 +1,3 @@
-import SearchForm from "../SearchForm";
 import Details from "../Details";
 
 import { BrowserRouter, Routes, Route } from "react-router-dom";
@@ -19,8 +18,7 @@ function App() {
       <Header />
       <Suspense fallback={<div>Loading...</div>}>
         <Routes>
-          <Route path="/" element={<SearchForm />} />
-          <Route path="/home" element={<Home />} />1
+          <Route path="/" element={<Home />} />
           <Route path="/add-pet" element={<LazyAddPet />} />
           <Route path="/pets/:id" element={<Details />} />
           <Route path="/auth/login" element={<Login />} />
