@@ -50,6 +50,22 @@ const register = async (
   }
 };
 
+export function setToken(token, expiresIn) {
+  const expirationTime = new Date().getTime() + expiresIn * 1000;
+  localStorage.setItem("token", token);
+  localStorage.setItem("expirationTime", expirationTime);
+}
+
+export function getToken() {
+  const token = localStorage.getItem("token");
+  const expirationTime = localStorage.getItem("expirationTime");
+  if (new Date().getTime() > expirationTime) {
+    logout();
+    return null;
+  }
+  return token;
+}
+
 const logout = async () => {
   try {
     const response = await fetch("http://localhost:5000/auth/logout", {
@@ -62,6 +78,7 @@ const logout = async () => {
 
     if (response.ok) {
       localStorage.removeItem("token");
+      localStorage.removeItem("expirationTime");
     } else {
       const errorData = await response.json();
       throw new Error(errorData.message);
@@ -70,9 +87,30 @@ const logout = async () => {
     return response;
   } catch (error) {
     localStorage.removeItem("token");
+    localStorage.removeItem("expirationTime");
     console.error("Logout error:", error);
     throw error;
   }
 };
+
+export async function fetchWithAuth(url, options = {}) {
+  const token = getToken();
+  if (!token) {
+    logout();
+    return;
+  }
+
+  const headers = {
+    ...options.headers,
+    Authorization: `Bearer ${token}`,
+  };
+
+  const response = await fetch(url, { ...options, headers });
+  if (response.status === 401) {
+    logout();
+  }
+
+  return response;
+}
 
 export { login, register, logout };
