@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 
 import { useDispatch } from "react-redux";
 import { loginSuccess } from "../reducers/userReducer";
-import { login } from "../services/userApiService";
+import { login } from "../apis/auth";
 
 function Login() {
   const navigate = useNavigate();
