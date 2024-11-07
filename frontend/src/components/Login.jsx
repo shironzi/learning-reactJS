@@ -21,8 +21,7 @@ function Login() {
       const result = await login(email, password);
       if (result.status === 200) {
         console.log("Login successful");
-        dispatch(loginSuccess(email));
-        localStorage.getItem("token");
+        dispatch(loginSuccess({ email }));
         navigate("/");
       } else {
         result.json().then((data) => {
