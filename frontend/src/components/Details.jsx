@@ -2,7 +2,7 @@ import { useParams } from "react-router-dom";
 import { memo, useEffect, useState } from "react";
 
 import CustomDialog from "./CustomDialog";
-import { fetchPetById } from "../services/petApiService";
+import { fetchPetById } from "../apis/pets";
 
 const Details = () => {
   const { id } = useParams();

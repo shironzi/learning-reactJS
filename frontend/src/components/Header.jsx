@@ -6,7 +6,7 @@ import MenuItem from "@mui/material/MenuItem";
 import Fab from "@mui/material/Fab";
 import { useDispatch, useSelector } from "react-redux";
 
-import { logout } from "../services/userApiService";
+import { logout } from "../apis/auth";
 import { logout as logoutAction } from "../reducers/userReducer";
 
 const Header = () => {

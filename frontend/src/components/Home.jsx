@@ -1,5 +1,5 @@
 import { lazy, memo, useCallback, useEffect, useState, Suspense } from "react";
-import { fetchPets } from "../services/petApiService";
+import { fetchPets } from "../apis/pets";
 
 const SearchResults = lazy(() => import("./SearchResult"));
 const SearchForm = lazy(() => import("./SearchForm"));
