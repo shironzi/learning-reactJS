@@ -67,7 +67,7 @@ cd pet-adoption-finder
 Navigate to the frontend directory and install dependencies:
 
 ```bash
-cd client
+cd frontend
 npm install
 ```
 
@@ -76,7 +76,7 @@ npm install
 When the backend is added, you will also install dependencies for the server:
 
 ```bash
-cd ../server
+cd ../backend
 npm install
 ```
 
