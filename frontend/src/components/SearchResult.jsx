@@ -1,6 +1,8 @@
 import { memo } from "react";
 import Pet from "./Pet";
 
+// to do adding a component scroll to the results https://www.youtube.com/watch?v=31icbDtaO-k
+
 function SearchResult(props) {
   const { pets } = props;
 
