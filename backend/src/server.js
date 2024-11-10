@@ -7,6 +7,7 @@ const compression = require("compression");
 const connectToDatabase = require("./database/mongoose");
 const pets = require("./routes/petRoute");
 const user = require("./routes/authRoute");
+const admin = require("./routes/adminRoutes");
 const errorHandler = require("./util/errorHandler");
 const authenticateToken = require("./middleware/authenticateToken");
 
@@ -31,16 +32,17 @@ app.use(
 );
 
 // Authenticate token for all routes except /auth/login and /auth/register
-app.use((req, res, next) => {
-  if (req.path === "/auth/login" || req.path === "/auth/register") {
-    return next();
-  }
-  authenticateToken(req, res, next);
-});
+// app.use((req, res, next) => {
+//   if (req.path === "/auth/login" || req.path === "/auth/register") {
+//     return next();
+//   }
+//   authenticateToken(req, res, next);
+// });
 
 // Routes
 app.use("/", pets);
 app.use("/auth", user);
+app.use("/admin", admin);
 
 // Error handler
 app.use(errorHandler);
