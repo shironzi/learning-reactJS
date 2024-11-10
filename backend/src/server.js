@@ -32,12 +32,12 @@ app.use(
 );
 
 // Authenticate token for all routes except /auth/login and /auth/register
-// app.use((req, res, next) => {
-//   if (req.path === "/auth/login" || req.path === "/auth/register") {
-//     return next();
-//   }
-//   authenticateToken(req, res, next);
-// });
+app.use((req, res, next) => {
+  if (req.path === "/auth/login" || req.path === "/auth/register") {
+    return next();
+  }
+  authenticateToken(req, res, next);
+});
 
 // Routes
 app.use("/", pets);

@@ -2,6 +2,7 @@ const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 
 const tokenBlacklist = require("../util/tokenBlacklist");
+const userSchema = require("../model/userSchema");
 
 const register = async (req, res, next) => {
   const User = require("../model/userSchema");
@@ -54,7 +55,8 @@ const login = async (req, res, next) => {
       { expiresIn: "1h" }
     );
 
-    console.log("Login successful");
+    user.lastLogin = new Date();
+    await user.save();
     res.json({ message: "Login successful", token });
   } catch (error) {
     next(error);
@@ -65,13 +67,29 @@ const logout = async (req, res, next) => {
   const authHeader = req.headers["authorization"];
   const token = authHeader && authHeader.split(" ")[1];
 
-  if (token) {
-    tokenBlacklist.add(token);
+  if (!token) {
+    return res.status(401).json({ message: "Token not provided" });
   }
 
-  console.log("Logged out successfully");
+  const user = req.user;
 
-  res.status(200).json({ message: "Logged out successfully" });
+  if (!user) {
+    return res.status(401).json({ message: "User not authenticated" });
+  }
+
+  tokenBlacklist.add(token);
+
+  try {
+    await userSchema.updateOne(
+      { _id: user._id },
+      { $unset: { lastLogin: "" } }
+    );
+    console.log("Logged out successfully");
+
+    res.status(200).json({ message: "Logged out successfully" });
+  } catch (error) {
+    next(error);
+  }
 };
 
 module.exports = { register, login, logout };

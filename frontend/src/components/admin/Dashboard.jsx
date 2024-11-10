@@ -121,12 +121,16 @@ function Admin() {
 
   const [usersCount, setUsersCount] = React.useState(0);
   const [petsCount, setPetsCount] = React.useState(0);
+  const [newUserCount, setNewUserCount] = React.useState(0);
+  const [activeUsersCount, setActiveUsersCount] = React.useState(0);
 
   const fetchData = useCallback(async () => {
     try {
       const data = await getData();
       setUsersCount(data.users);
       setPetsCount(data.pets);
+      setNewUserCount(data.newUsers);
+      setActiveUsersCount(data.activeUsers);
     } catch (error) {
       console.log(error);
     }
@@ -152,7 +156,7 @@ function Admin() {
             <PersonIcon className="custom-card-header-icon" />
             <h3>New Users</h3>
           </div>
-          <div className="custom-card-content">20</div>
+          <div className="custom-card-content">{newUserCount}</div>
         </div>
 
         <div className="custom-card">
@@ -160,7 +164,7 @@ function Admin() {
             <PersonAddIcon className="custom-card-header-icon" />
             <h3>Active Users</h3>
           </div>
-          <div className="custom-card-content">5</div>
+          <div className="custom-card-content">{activeUsersCount}</div>
         </div>
 
         <div className="custom-card">
