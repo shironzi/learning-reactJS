@@ -6,22 +6,20 @@ A user-friendly web application for discovering adoptable pets! Search for pets 
 
 - **Search Pets**: Easily filter pets by type, breed, and location to find the perfect match.
 - **Pet Details**: View pet profiles with additional info.
-- **Favorite Pets**: Save pets to a local favorites list for easy access.
 - **Responsive Design**: Optimized for viewing on desktop and mobile devices.
+- **Admin Dashboard**: Manage pet listings, add new pets, and view adoption requests.
+- **User Authentication**: Securely log in and register users with JWT-based authentication.
 
 ## Upcoming Features
+
+- **Favorite Pets**: Save pets to a local favorites list for easy access.
+- **Adoption Requests**: Submit and track adoption requests.
 
 ### Full Backend (Node.js + Express) 🚀
 
 - **Custom API**: Handle pet data, favorites, and adoption requests.
 - **Database Integration**: Store user data, pets, and favorites in a database.
 - **RESTful Endpoints**: Manage user profiles, search and filter pets, and submit adoption requests.
-
-### User Authentication 🔒
-
-- **JWT-based Authentication**: Securely log in and register users.
-- **User Profiles**: Allow users to create accounts, log in, and save pets to their favorites across sessions.
-- **"My Account" Section**: View saved pets and track adoption requests.
 
 ### Advanced Search and Filtering 🐶
 
@@ -40,12 +38,10 @@ A user-friendly web application for discovering adoptable pets! Search for pets 
 - **Confirmation Modal**: Enhance user experience with adoption request confirmation.
 - **Custom Portals**: Render modals outside the main DOM hierarchy for better control.
 
-### Admin Dashboard 📊
+### Admin Access Control 🔒
 
 - **Admin Interface**: Manage pet listings, add new pets, and view adoption requests.
-- **Admin Access Control**: Restrict dashboard access to authenticated admins only.
-
----
+- **Role-based Access Control**: Restrict dashboard access to authenticated admins only.
 
 ## Installation
 
@@ -55,10 +51,9 @@ Follow these steps to set up the project locally.
 
 Clone the project to your local machine:
 
-```bash
+````bash
 git clone https://github.com/shironzi/learning-reactJS.git
 cd pet-adoption-finder
-```
 
 ### 2. **Install Dependencies**
 
@@ -69,7 +64,7 @@ Navigate to the frontend directory and install dependencies:
 ```bash
 cd frontend
 npm install
-```
+````
 
 #### Backend (Coming Soon)
 
@@ -85,7 +80,7 @@ npm install
 Create a `.env` file in the `server` directory and add the necessary environment variables for database and JWT configuration:
 
 ```plaintext
-# .env file in server directory
+# .env file in backend directory
 DATABASE_URL=<your-database-url>
 JWT_SECRET=<your-jwt-secret>
 PORT=5000
