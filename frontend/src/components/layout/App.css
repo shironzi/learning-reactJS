@@ -339,3 +339,21 @@ body {
   transition: opacity 0.5s ease-in-out, visibility 0.5s ease-in-out;
   border-radius: 4px;
 }
+
+.cards {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 50px auto;
+  width: 90%;
+  max-width: 800px;
+  background: #f3f7ec;
+  padding: 20px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  border-radius: 10px;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.custom-card {
+  background-color: #000000;
+}
