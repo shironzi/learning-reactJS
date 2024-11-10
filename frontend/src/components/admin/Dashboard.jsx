@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useCallback } from "react";
 import { Bar, Pie } from "react-chartjs-2";
 import PetsIcon from "@mui/icons-material/Pets";
 import PersonIcon from "@mui/icons-material/Person";
@@ -14,6 +14,8 @@ import {
   Tooltip,
   Legend,
 } from "chart.js";
+
+import { getData } from "../../apis/admin";
 
 ChartJS.register(
   CategoryScale,
@@ -117,6 +119,23 @@ function Admin() {
     },
   };
 
+  const [usersCount, setUsersCount] = React.useState(0);
+  const [petsCount, setPetsCount] = React.useState(0);
+
+  const fetchData = useCallback(async () => {
+    try {
+      const data = await getData();
+      setUsersCount(data.users);
+      setPetsCount(data.pets);
+    } catch (error) {
+      console.log(error);
+    }
+  }, []);
+
+  React.useEffect(() => {
+    fetchData();
+  }, [fetchData]);
+
   return (
     <div className="admin-dashboard">
       <div className="cards">
@@ -125,7 +144,7 @@ function Admin() {
             <PetsIcon className="custom-card-header-icon" />
             <h3>Total Users</h3>
           </div>
-          <div className="custom-card-content">10</div>
+          <div className="custom-card-content">{usersCount}</div>
         </div>
 
         <div className="custom-card">
@@ -149,7 +168,7 @@ function Admin() {
             <PetsIcon className="custom-card-header-icon" />
             <h3>Total Pets</h3>
           </div>
-          <div className="custom-card-content">5</div>
+          <div className="custom-card-content">{petsCount}</div>
         </div>
       </div>
 
