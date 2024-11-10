@@ -3,6 +3,7 @@ import { Bar, Pie } from "react-chartjs-2";
 import PetsIcon from "@mui/icons-material/Pets";
 import PersonIcon from "@mui/icons-material/Person";
 import PersonAddIcon from "@mui/icons-material/PersonAdd";
+import TrendingUpIcon from "@mui/icons-material/TrendingUp";
 import {
   Chart as ChartJS,
   CategoryScale,
@@ -55,7 +56,7 @@ function Admin() {
       },
       title: {
         display: true,
-        text: "Dashboard Statistics",
+        text: "Pets Adoption Statistics",
       },
     },
   };
@@ -107,22 +108,22 @@ function Admin() {
     responsive: true,
     plugins: {
       legend: {
-        position: "top",
+        position: "bottom",
       },
       title: {
         display: true,
-        text: "Pie Chart Example",
+        text: "Pets categories",
       },
     },
   };
 
   return (
-    <div>
+    <div className="admin-dashboard">
       <div className="cards">
         <div className="custom-card">
           <div className="custom-card-header">
             <PetsIcon className="custom-card-header-icon" />
-            <h2>Total Pets</h2>
+            <h3>Total Users</h3>
           </div>
           <div className="custom-card-content">10</div>
         </div>
@@ -130,7 +131,7 @@ function Admin() {
         <div className="custom-card">
           <div className="custom-card-header">
             <PersonIcon className="custom-card-header-icon" />
-            <h2>Total Users</h2>
+            <h3>New Users</h3>
           </div>
           <div className="custom-card-content">20</div>
         </div>
@@ -138,21 +139,55 @@ function Admin() {
         <div className="custom-card">
           <div className="custom-card-header">
             <PersonAddIcon className="custom-card-header-icon" />
-            <h2>New Users</h2>
+            <h3>Active Users</h3>
+          </div>
+          <div className="custom-card-content">5</div>
+        </div>
+
+        <div className="custom-card">
+          <div className="custom-card-header">
+            <PetsIcon className="custom-card-header-icon" />
+            <h3>Total Pets</h3>
           </div>
           <div className="custom-card-content">5</div>
         </div>
       </div>
 
       <div className="charts">
+        {/* Adoption rate over time */}
         <div className="chart-container">
           <Bar data={data} options={options} />
         </div>
-        <div className="chart-container">
-          <Bar data={data} options={options} />
-        </div>
+        {/* Pets categories */}
         <div className="chart-container">
           <Pie data={pieData} options={pieOptions} />
+        </div>
+      </div>
+
+      <div className="cards">
+        <div className="custom-card">
+          <div className="custom-card-header">
+            <PersonIcon className="custom-card-header-icon" />
+            <h3>Pending Applications</h3>
+          </div>
+          <div className="custom-card-content">20</div>
+        </div>
+
+        <div className="custom-card">
+          <div className="custom-card-header">
+            <PersonAddIcon className="custom-card-header-icon" />
+            <h3>Adoption Success Rate</h3>
+          </div>
+          <div className="custom-card-content">5</div>
+        </div>
+
+        {/* Display metrics like average session duration and pages per session. */}
+        <div className="custom-card">
+          <div className="custom-card-header">
+            <TrendingUpIcon className="custom-card-header-icon" />
+            <h3>User Engagement</h3>
+          </div>
+          <div className="custom-card-content">10</div>
         </div>
       </div>
     </div>

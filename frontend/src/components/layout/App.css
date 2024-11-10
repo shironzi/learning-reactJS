@@ -340,10 +340,14 @@ body {
   border-radius: 4px;
 }
 
+.admin-dashboard {
+  color: #03346e;
+}
+
 .cards {
   display: flex;
   flex-direction: row;
-  width: 80%;
+  max-width: 90%;
   gap: 20px;
   margin: 50px auto;
 }
@@ -386,7 +390,7 @@ body {
 .charts {
   display: flex;
   flex-direction: row;
-  width: 80%;
+  max-width: 90%;
   margin: 50px auto;
   gap: 20px;
 }
@@ -396,4 +400,9 @@ body {
   border-radius: 20px;
   padding: 30px;
   width: 100%;
+  height: 450px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
