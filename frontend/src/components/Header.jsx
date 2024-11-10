@@ -4,15 +4,15 @@ import Avatar from "@mui/material/Avatar";
 import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
 import Fab from "@mui/material/Fab";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 
-import { logout } from "../apis/auth";
+import { getToken, logout } from "../apis/auth";
 import { logout as logoutAction } from "../reducers/userReducer";
 
 const Header = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const isAuthenticated = useSelector((state) => state.user.isAuthenticated);
+  const isAuthenticated = getToken();
 
   const [anchorEl, setAnchorEl] = useState(null);
 

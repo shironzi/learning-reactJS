@@ -80,10 +80,11 @@ const logout = async () => {
       localStorage.removeItem("token");
       localStorage.removeItem("expirationTime");
     } else {
+      localStorage.removeItem("token");
+      localStorage.removeItem("expirationTime");
       const errorData = await response.json();
-      throw new Error(errorData.message);
+      console.log(errorData);
     }
-
     return response;
   } catch (error) {
     localStorage.removeItem("token");
@@ -96,7 +97,7 @@ const logout = async () => {
 export async function fetchWithAuth(url, options = {}) {
   const token = getToken();
   if (!token) {
-    logout();
+    await logout();
     return;
   }
 
@@ -107,7 +108,7 @@ export async function fetchWithAuth(url, options = {}) {
 
   const response = await fetch(url, { ...options, headers });
   if (response.status === 401) {
-    logout();
+    await logout();
   }
 
   return response;

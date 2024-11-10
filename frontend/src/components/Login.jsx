@@ -2,8 +2,7 @@ import { memo, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 import { useDispatch } from "react-redux";
-import { loginSuccess } from "../reducers/userReducer";
-import { login } from "../apis/auth";
+import { login, setToken } from "../apis/auth";
 
 function Login() {
   const navigate = useNavigate();
@@ -11,27 +10,18 @@ function Login() {
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [isInvalid, setIsInvalid] = useState(false);
-  const [errorMsg, setErrorMsg] = useState("");
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-
+  const handleSubmit = async (event) => {
+    event.preventDefault();
     try {
       const result = await login(email, password);
-      if (result.status === 200) {
-        console.log("Login successful");
-        dispatch(loginSuccess({ email }));
+      if (result.token) {
+        setToken(result.token, result.expiresIn);
+        dispatch({ type: "user/login", payload: result });
         navigate("/");
-      } else {
-        result.json().then((data) => {
-          setErrorMsg(data["message"]);
-        });
-        setIsInvalid(true);
       }
     } catch (error) {
-      setErrorMsg("An error occurred while trying to log in.");
-      console.error("Error:", error);
+      console.error("Login error:", error);
     }
   };
 
@@ -45,24 +35,19 @@ function Login() {
   return (
     <div className="login">
       <form onSubmit={handleSubmit}>
-        <h1>Login</h1>
-        {isInvalid ? (
-          <label className="auth-invalid-input">{errorMsg}</label>
-        ) : null}
         <input
           type="email"
-          id="email"
-          name="email"
-          placeholder="Email"
+          value={email}
           onChange={(e) => setEmail(e.target.value)}
+          placeholder="Email"
+          autoComplete="login-email"
           required
         />
         <input
           type="password"
-          id="Password"
-          name="password"
-          placeholder="Password"
+          value={password}
           onChange={(e) => setPassword(e.target.value)}
+          placeholder="Password"
           required
         />
         <button type="submit">Login</button>
