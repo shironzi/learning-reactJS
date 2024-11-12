@@ -1,50 +1,36 @@
-import { lazy, memo, useCallback, useEffect, useState, Suspense } from "react";
+import { lazy, memo, useCallback, Suspense } from "react";
 import { fetchPets } from "../apis/pets";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
 
 const SearchResults = lazy(() => import("./SearchResult"));
 const SearchForm = lazy(() => import("./SearchForm"));
 
 const Home = () => {
-  const [pets, setPets] = useState([]);
-  const [searchedPets, setSearchedPets] = useState([]);
+  const {
+    data: pets,
+    error,
+    isLoading,
+  } = useQuery({ queryKey: ["pets"], queryFn: fetchPets });
 
-  const fetchPetsData = useCallback(async () => {
-    try {
-      const data = await fetchPets();
-      setPets(data);
-      setSearchedPets(data);
-    } catch (error) {
-      console.error("Error:", error);
-    }
-  }, []);
+  const queryClient = useQueryClient();
 
   const formSubmit = useCallback(
     async (location = "", animal = "", breed = "") => {
-      try {
-        if (
-          searchedPets.location === location &&
-          searchedPets.animal === animal &&
-          searchedPets.breed === breed
-        )
-          return;
-        const filteredPets = await fetchPets(location, animal, breed);
-        setSearchedPets(filteredPets);
-      } catch (error) {
-        console.error("Error fetching filtered pets:", error);
-      }
+      queryClient.fetchQuery(["pets", { location, animal, breed }], () =>
+        fetchPets(location, animal, breed)
+      );
     },
-    [searchedPets]
+    [queryClient]
   );
 
-  useEffect(() => {
-    fetchPetsData();
-  }, [fetchPetsData]);
+  if (isLoading) return <div>Loading...</div>;
+  if (error) return <div>Error: {error.message}</div>;
 
   return (
     <div className="searchForm">
       <Suspense fallback={<div>Loading...</div>}>
         <SearchForm pets={pets} onSubmit={formSubmit} />
-        <SearchResults pets={searchedPets} />
+        <SearchResults pets={pets} />
       </Suspense>
     </div>
   );
