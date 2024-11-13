@@ -15,7 +15,8 @@ const Home = () => {
     isLoading,
   } = useQuery({
     queryKey: ["pets"],
-    queryFn: fetchPets,
+    queryFn: ({ location = "", animal = "", breed = "" }) =>
+      fetchPets(location, animal, breed),
   });
 
   const queryClient = useQueryClient();
