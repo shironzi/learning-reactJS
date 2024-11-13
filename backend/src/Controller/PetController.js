@@ -6,21 +6,6 @@ const upload = multer({ dest: "uploads/" });
 
 const fetchPets = async (req, res) => {
   try {
-    const pets = await Pet.find()
-      .select("name location animal breed images")
-      .lean()
-      .exec();
-    if (!pets.length) {
-      return res.status(404).json({ message: "No pets found" });
-    }
-    res.json(pets);
-  } catch (error) {
-    res.status(500).json({ message: error.message });
-  }
-};
-
-const searchPets = async (req, res) => {
-  try {
     const { location, animal, breed } = req.query;
     const query = {};
     if (location) query.location = { $regex: location, $options: "i" };
@@ -34,11 +19,12 @@ const searchPets = async (req, res) => {
       .limit(10)
       .exec();
 
-    if (!pets.length) {
-      return res.status(404).json({ message: "No pets found" });
-    }
+    const animalsAndBreeds = await Pet.find()
+      .select("animal breed")
+      .lean()
+      .exec();
 
-    res.json(pets);
+    res.status(200).json({ pets, animalsAndBreeds });
   } catch (error) {
     res.status(500).json({ message: error.message });
   }
@@ -88,7 +74,6 @@ const addPet = [
 
 module.exports = {
   fetchPets,
-  searchPets,
   getPetById,
   addPet,
 };

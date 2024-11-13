@@ -7,20 +7,38 @@ const SearchForm = lazy(() => import("./SearchForm"));
 
 const Home = () => {
   const {
-    data: pets,
+    data: { pets = [], animalsAndBreeds = [] } = {
+      pets: [],
+      animalsAndBreeds: [],
+    },
     error,
     isLoading,
-  } = useQuery({ queryKey: ["pets"], queryFn: fetchPets });
+  } = useQuery({
+    queryKey: ["pets"],
+    queryFn: fetchPets,
+  });
 
   const queryClient = useQueryClient();
 
   const formSubmit = useCallback(
     async (location = "", animal = "", breed = "") => {
-      queryClient.fetchQuery(["pets", { location, animal, breed }], () =>
-        fetchPets(location, animal, breed)
-      );
+      try {
+        const { pets: filteredPets, animalsAndBreeds } =
+          await queryClient.fetchQuery({
+            queryKey: ["pets", { location, animal, breed }],
+            queryFn: () => fetchPets(location, animal, breed),
+          });
+
+        queryClient.setQueryData(["pets"], {
+          pets: filteredPets,
+          animalsAndBreeds,
+        });
+      } catch (error) {
+        console.error("Error fetching pets:", error);
+        queryClient.setQueryData(["pets"], { pets: [], animalsAndBreeds });
+      }
     },
-    [queryClient]
+    [queryClient, animalsAndBreeds]
   );
 
   if (isLoading) return <div>Loading...</div>;
@@ -29,7 +47,7 @@ const Home = () => {
   return (
     <div className="searchForm">
       <Suspense fallback={<div>Loading...</div>}>
-        <SearchForm pets={pets} onSubmit={formSubmit} />
+        <SearchForm pets={animalsAndBreeds} onSubmit={formSubmit} />
         <SearchResults pets={pets} />
       </Suspense>
     </div>

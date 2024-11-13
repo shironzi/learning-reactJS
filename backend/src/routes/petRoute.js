@@ -5,7 +5,6 @@ const path = require("path");
 
 const {
   fetchPets,
-  searchPets,
   getPetById,
   addPet,
 } = require("../Controller/PetController");
@@ -24,7 +23,7 @@ router.use((req, res, next) => {
 router.get("/", fetchPets);
 
 // Route to search pets
-router.get("/pets", searchPets);
+router.get("/pets", fetchPets);
 
 // Route to get pet by id
 router.get("/pets/:id", getPetById);
