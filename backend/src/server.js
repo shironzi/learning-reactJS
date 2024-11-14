@@ -5,11 +5,11 @@ const morgan = require("morgan");
 const compression = require("compression");
 
 const connectToDatabase = require("./database/mongoose");
+const errorHandler = require("./util/errorHandler");
+const authenticateToken = require("./middleware/authenticateToken");
 const pets = require("./routes/petRoute");
 const user = require("./routes/authRoute");
 const admin = require("./routes/adminRoutes");
-const errorHandler = require("./util/errorHandler");
-const authenticateToken = require("./middleware/authenticateToken");
 
 dotenv.config();
 
