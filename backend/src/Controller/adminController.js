@@ -24,6 +24,7 @@ exports.getData = async (req, res) => {
 
     res.status(200).json({ users, pets, activeUsers, newUsers });
   } catch (error) {
+    res.status(500).json({ message: error.message });
     console.log(error);
   }
 };
