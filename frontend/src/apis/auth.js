@@ -11,7 +11,6 @@ const login = async (email, password) => {
     if (response.ok) {
       const data = await response.json();
       localStorage.setItem("token", data.token);
-      console.log(data.token);
       return data;
     } else {
       const errorData = await response.json();
@@ -83,8 +82,6 @@ const logout = async () => {
     } else {
       localStorage.removeItem("token");
       localStorage.removeItem("expirationTime");
-      const errorData = await response.json();
-      console.log(errorData);
     }
     return response;
   } catch (error) {

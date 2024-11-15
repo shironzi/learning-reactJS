@@ -10,6 +10,7 @@ function Login() {
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [loginError, setLoginError] = useState("");
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -19,9 +20,12 @@ function Login() {
         setToken(result.token, result.expiresIn);
         dispatch({ type: "user/login", payload: result });
         navigate("/");
+      } else {
+        const errorData = await result.message;
+        setLoginError(errorData);
       }
     } catch (error) {
-      console.error("Login error:", error);
+      setLoginError("An unexpected error occurred. Please try again.");
     }
   };
 
@@ -35,6 +39,7 @@ function Login() {
   return (
     <div className="login">
       <form onSubmit={handleSubmit}>
+        {loginError && <div className="auth-invalid-input">{loginError}</div>}
         <input
           type="email"
           value={email}
