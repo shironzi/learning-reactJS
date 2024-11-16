@@ -7,7 +7,7 @@ dotenv.config();
 const connectDB = async () => {
   const start = performanceNow();
   try {
-    const connection = await mongoose.connect(process.env.MONGO_URI, {
+    await mongoose.connect(process.env.MONGO_URI, {
       minPoolSize: 10,
       maxPoolSize: 100,
     });

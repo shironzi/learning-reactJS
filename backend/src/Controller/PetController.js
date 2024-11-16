@@ -36,7 +36,7 @@ const getPetById = async (req, res) => {
     if (!pet) {
       res.status(404).json({ message: "Pet not found" });
     }
-    res.json(pet);
+    res.status(200).json(pet);
   } catch (error) {
     next(error);
   }
