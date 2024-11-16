@@ -26,7 +26,7 @@ const fetchPets = async (req, res) => {
 
     res.status(200).json({ pets, animalsAndBreeds });
   } catch (error) {
-    res.status(500).json({ message: error.message });
+    next(error);
   }
 };
 
@@ -38,7 +38,7 @@ const getPetById = async (req, res) => {
     }
     res.json(pet);
   } catch (error) {
-    res.status(500).json({ message: error.message });
+    next(error);
   }
 };
 
@@ -67,7 +67,7 @@ const addPet = [
       res.status(201).json(pet);
       console.log("Pet added successfully");
     } catch (error) {
-      res.status(500).json({ message: error.message });
+      next(error);
     }
   },
 ];

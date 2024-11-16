@@ -6,7 +6,7 @@ const authenticateToken = async (req, res, next) => {
   const token = authHeader && authHeader.split(" ")[1];
 
   if (!token) {
-    return res.status(401).json({ message: "not authorized" });
+    return res.status(401).json({ message: "Not Authorized" });
   }
 
   try {
