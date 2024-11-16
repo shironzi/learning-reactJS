@@ -139,11 +139,8 @@ Open [http://localhost:3000](http://localhost:3000) to view the app in your brow
 
 ## Tech Stack
 
-- **React**: Core UI library for building user interfaces
-- **Redux Toolkit**: For managing global application state
-- **React Router**: Enables client-side routing
-- **React Query**: Handles asynchronous data fetching and caching
-- **CSS Modules** or **Styled Components**: Modularized styling for components
+1. **Frontend Technologies**: The existing frontend technologies are listed under the "Frontend" section.
+2. **Backend Technologies**: The backend technologies are listed under the "Backend" section, including Node.js, Express, MongoDB, Mongoose, JWT, bcrypt, dotenv, express-validator, multer, cors, morgan, and compression.
 
 ---
 
