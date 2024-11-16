@@ -4,7 +4,6 @@ const cors = require("cors");
 const morgan = require("morgan");
 const compression = require("compression");
 
-const connectToDatabase = require("./database/mongoose");
 const errorHandler = require("./util/errorHandler");
 const authenticateToken = require("./middleware/authenticateToken");
 const pets = require("./routes/petRoute");
@@ -16,14 +15,13 @@ dotenv.config();
 const app = express();
 
 // Middleware
-app.use(cors()); // Enable CORS for all routes
-// app.use(morgan("combined")); // Log HTTP requests
+app.use(cors()); // Allow CORS for all routes
 app.use(morgan("dev"));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(compression());
 
-// Serve static files with CORS headers
+// Serve static files from the uploads folder
 app.use(
   "/uploads",
   express.static("uploads", {
@@ -46,21 +44,5 @@ app.use("/admin", admin);
 
 // Error handler
 app.use(errorHandler);
-
-const createServer = async () => {
-  try {
-    const port = process.env.PORT || 5000;
-
-    await connectToDatabase();
-    app.listen(port, () => {
-      console.log(`Server is running on port ${port}`);
-    });
-  } catch (error) {
-    console.error(`Error: ${error.message}`);
-    process.exit(1);
-  }
-};
-
-createServer();
 
 module.exports = app;
