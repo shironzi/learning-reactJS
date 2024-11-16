@@ -58,6 +58,7 @@ const login = async (req, res, next) => {
     await user.save();
     res.json({ message: "Login successful", token });
   } catch (error) {
+    error.type = "Invalid credentials";
     next(error);
   }
 };
