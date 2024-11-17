@@ -1,4 +1,4 @@
-import React, { memo, useState } from "react";
+import React, { memo, useCallback, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import Avatar from "@mui/material/Avatar";
 import Menu from "@mui/material/Menu";
@@ -8,12 +8,11 @@ import { useDispatch } from "react-redux";
 
 import { getToken, logout } from "../apis/auth";
 import { logout as logoutAction } from "../reducers/userReducer";
-import Favorites from "./Favorites";
 
 const Header = () => {
-  const navigate = useNavigate();
   const dispatch = useDispatch();
   const isAuthenticated = getToken();
+  const navigate = useNavigate();
 
   const [anchorEl, setAnchorEl] = useState(null);
 
@@ -26,7 +25,7 @@ const Header = () => {
     setAnchorEl(null);
   };
 
-  const handleLogout = async () => {
+  const handleLogout = useCallback(async () => {
     const response = await logout();
     if (response.ok) {
       dispatch(logoutAction());
@@ -35,7 +34,7 @@ const Header = () => {
     } else {
       console.log("Failed to logout", response.message);
     }
-  };
+  }, [dispatch, navigate]);
 
   return (
     <header className="header-container">

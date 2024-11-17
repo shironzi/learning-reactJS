@@ -1,5 +1,4 @@
 import CloseIcon from "@mui/icons-material/Close";
-import { updatefavoritesPets } from "../apis/pets";
 import { memo } from "react";
 
 function FavoritePet(props) {

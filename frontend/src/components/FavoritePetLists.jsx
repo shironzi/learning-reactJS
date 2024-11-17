@@ -1,4 +1,3 @@
-import { updatefavoritesPets } from "../apis/pets";
 import FavoritePet from "./FavoritePet";
 import { memo } from "react";
 
