@@ -157,6 +157,27 @@ const requestAdoptPet = async (req, res, next) => {
   }
 };
 
+const fetchAdoptionRequests = async (req, res, next) => {
+  try {
+    const adoptionRequests = await User.find({
+      adoptionRequests: { $exists: true, $ne: [] },
+    })
+      .populate("adoptionRequests")
+      .select("adoptionRequests")
+      .lean()
+      .exec();
+
+    const pet = adoptionRequests.map((request) => request.adoptionRequests.pet);
+    const status = adoptionRequests.map(
+      (request) => request.adoptionRequests.status
+    );
+
+    res.status(200).json({ pet, status });
+  } catch (error) {
+    next(error);
+  }
+};
+
 module.exports = {
   fetchPets,
   getPetById,
@@ -164,4 +185,5 @@ module.exports = {
   fetchFavoritePets,
   addFavoritePet,
   requestAdoptPet,
+  fetchAdoptionRequests,
 };

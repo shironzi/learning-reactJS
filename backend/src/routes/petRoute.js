@@ -10,6 +10,7 @@ const {
   addFavoritePet,
   fetchFavoritePets,
   requestAdoptPet,
+  fetchAdoptionRequests,
 } = require("../Controller/PetController");
 const authenticateToken = require("../middleware/authenticateToken");
 
@@ -24,19 +25,14 @@ router.use((req, res, next) => {
 
 // Route to get all pets
 router.get("/", fetchPets);
-
 // Route to search pets
 router.get("/pets", fetchPets);
-
 // Route to get pet by id
 router.get("/pets/:id", getPetById);
-
 router.get("/favorites", fetchFavoritePets);
-
 router.post("/pets/:id", getPetById);
-
 router.put("/updatefavoritesPets/:id", addFavoritePet);
-
+router.get("adoption-request", fetchAdoptionRequests);
 router.post("/requestAdoptPet", requestAdoptPet);
 
 // Route to serve protected uploads

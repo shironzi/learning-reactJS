@@ -39,8 +39,15 @@ const UserSchema = new Schema({
     ref: "Pet",
   },
   adoptionRequests: {
-    type: [Schema.Types.ObjectId],
-    ref: "Pet",
+    pet: {
+      type: Schema.Types.ObjectId,
+      ref: "Pet",
+    },
+    status: {
+      type: String,
+      enum: ["Pending", "Approved", "Rejected"],
+      default: "Pending",
+    },
   },
 });
 
