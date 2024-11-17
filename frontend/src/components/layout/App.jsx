@@ -15,6 +15,9 @@ const LazyLogin = React.lazy(() => import("../Login"));
 const LazyRegister = React.lazy(() => import("../Register"));
 const LazyAddPet = React.lazy(() => import("../AddPet"));
 const LazyHeader = React.lazy(() => import("../Header"));
+const LazyPetAdoptionReqeuest = React.lazy(() =>
+  import("../admin/PetAdoptionRequset")
+);
 
 function App() {
   return (
@@ -53,6 +56,8 @@ function MainRoutes() {
         <Route path="/auth/login" element={<LazyLogin />} />
         <Route path="/auth/register" element={<LazyRegister />} />
         <Route path="/admin" element={<Admin />} />
+        <Route path="/admin/requests" element={<LazyPetAdoptionReqeuest />} />
+        <Route path="*" element={<div>Not Found</div>} />
       </Routes>
     </>
   );

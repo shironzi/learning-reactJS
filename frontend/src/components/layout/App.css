@@ -546,6 +546,86 @@ body {
   cursor: pointer;
 }
 
+.adoption-request-card {
+  display: block;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  background-color: #f3f7ec;
+  width: 70%;
+  padding: 20px 50px;
+  margin: 20px auto;
+  border-radius: 20px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.adoption-request-header {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.adoption-request-header-link {
+  border: none;
+  text-decoration: none;
+  cursor: pointer;
+  color: #03346e;
+}
+
+.adoption-request-content {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  padding: 20px;
+}
+
+.adoption-request-content img {
+  width: 200px;
+  height: 200px;
+  object-fit: cover;
+  border-radius: 10px;
+}
+
+.adoption-request-approve {
+  color: #008000;
+  border: 1px solid transparent;
+  padding: 5px 10px;
+  background-color: transparent;
+  cursor: pointer;
+  transition: color 0.3s, transform 0.3s ease, box-shadow 0.3s;
+  margin: 0 5px;
+}
+
+.adoption-request-approve:hover {
+  color: #ffffff;
+  border: 1px solid #008000;
+  background-color: #008000;
+  border-radius: 50%;
+  transform: scale(1.1);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.adoption-request-reject {
+  color: #ff0000;
+  border: 1px solid transparent;
+  padding: 5px 10px;
+  background-color: transparent;
+  cursor: pointer;
+  transition: color 0.3s, transform 0.3s ease, box-shadow 0.3s;
+  margin: 0 5px;
+}
+
+.adoption-request-reject:hover {
+  color: #ffffff;
+  border: 1px solid #ff0000;
+  background-color: #ff0000;
+  border-radius: 50%;
+  transform: scale(1.1);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
 @media (max-width: 1200px) {
   .searchResults {
     max-width: 80%;

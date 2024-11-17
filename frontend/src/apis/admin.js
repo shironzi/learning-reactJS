@@ -17,4 +17,21 @@ const getData = async () => {
   }
 };
 
-export { getData };
+const getAdoptionRequests = async () => {
+  try {
+    const response = await fetchWithAuth(
+      "http://localhost:5000/admin/adoptionRequest",
+      {
+        method: "GET",
+      }
+    );
+
+    const data = await response.json();
+    console.log(data.adoptionRequest);
+    return data.adoptionRequest;
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export { getData, getAdoptionRequests };
