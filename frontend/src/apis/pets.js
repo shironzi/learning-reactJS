@@ -83,3 +83,27 @@ export const updatefavoritesPets = async (petId) => {
     throw error;
   }
 };
+
+export const requestAdoptPet = async (petId) => {
+  try {
+    const response = await fetchWithAuth(
+      `http://localhost:5000/requestAdoptPet`,
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ petId }),
+      }
+    );
+
+    if (!response.ok) {
+      throw new Error("Failed to request pet adoption");
+    }
+
+    return response;
+  } catch (error) {
+    console.error("Error:", error);
+    throw error;
+  }
+};
