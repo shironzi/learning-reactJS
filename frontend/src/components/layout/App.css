@@ -90,8 +90,7 @@ body {
 }
 
 .searchForm button,
-.form-container-button,
-.pet-details button {
+.form-container-button {
   background-color: #03346e;
   color: white;
   padding: 10px 20px;
@@ -103,8 +102,7 @@ body {
 }
 
 .searchForm button:hover,
-.form-container-button:hover,
-.pet-details button:hover {
+.form-container-button:hover {
   background-color: #021526;
 }
 
@@ -182,7 +180,7 @@ body {
 .pet-details {
   display: flex;
   flex-direction: column;
-  align-items: center;
+  justify-content: center;
   margin: 50px auto;
   width: 90%;
   max-width: 800px;
@@ -193,22 +191,69 @@ body {
   transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
-.pet-details img {
-  max-width: 100%;
-  border-radius: 10px;
+.pet-details-about {
+  display: flex;
+  flex-direction: column;
+  width: 75%;
+  margin: 50px auto;
+}
+
+.pet-details-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
   margin-bottom: 20px;
 }
 
-.pet-details h2 {
+.pet-details-isFavorite {
+  border: none;
+  background: none;
+  cursor: pointer;
+}
+
+.pet-details-favorite {
+  border: none;
+  background: none;
+  color: #ff0000;
+  cursor: pointer;
+}
+
+.pet-details-image-container {
+  justify-content: center;
+  align-items: center;
+  margin: auto;
+}
+
+.pet-details img {
+  max-width: 400px;
+  max-height: 400px;
+  object-fit: cover;
+  border-radius: 10px;
+}
+
+.pet-details h4 {
   margin: 10px 0;
-  font-size: 24px;
   color: #333;
 }
 
 .pet-details p {
   font-size: 16px;
   color: #666;
-  text-align: center;
+}
+
+.pet-details-adoption-button {
+  background-color: #03346e;
+  color: white;
+  padding: 10px 20px;
+  margin: 10px 0;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  width: 100%;
+}
+
+.pet-details-adoption-button:hover {
+  background-color: #021526;
 }
 
 .no-pets-found {

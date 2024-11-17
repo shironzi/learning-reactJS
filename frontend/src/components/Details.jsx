@@ -1,5 +1,8 @@
 import { useParams } from "react-router-dom";
-import { memo, useEffect, useState } from "react";
+import { memo, useCallback, useEffect, useState } from "react";
+
+import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
+import FavoriteIcon from "@mui/icons-material/Favorite";
 
 import CustomDialog from "./CustomDialog";
 import { fetchPetById } from "../apis/pets";
@@ -7,16 +10,16 @@ import { fetchPetById } from "../apis/pets";
 const Details = () => {
   const { id } = useParams();
   const [pet, setPet] = useState(null);
-
   const [open, setOpen] = useState(false);
+  const [isFavorite, setIsFavorite] = useState(false);
 
-  const handleAdopt = () => {
-    setOpen(true);
-  };
+  const handleAdopt = useCallback(() => {
+    setOpen(!open);
+  }, [open]);
 
-  const handleClose = () => {
-    setOpen(false);
-  };
+  const handleFavorite = useCallback(() => {
+    setIsFavorite(!isFavorite);
+  }, [isFavorite]);
 
   useEffect(() => {
     const fetchPet = async () => {
@@ -29,7 +32,6 @@ const Details = () => {
     };
 
     fetchPet();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [id]);
 
   if (!pet) {
@@ -42,7 +44,7 @@ const Details = () => {
 
   return (
     <div className="pet-details">
-      <div>
+      <div className="pet-details-image-container">
         {pet.images &&
           pet.images.map((image, index) => (
             <img
@@ -52,12 +54,31 @@ const Details = () => {
             />
           ))}
       </div>
-      <div>
-        <h1>Pet Name: {pet.name}</h1>
-        <h2>Breed: {pet.breed}</h2>
-        <p>{pet.description}</p>
-        <button onClick={handleAdopt}>Adopt Me!</button>
-        <CustomDialog open={open} onClose={handleClose} pet={pet} />
+      <div className="pet-details-about">
+        <div className="pet-details-header">
+          <h1>{pet.name}</h1>
+          <button
+            className={
+              isFavorite ? "pet-details-favorite" : "pet-details-isFavorite"
+            }
+            onClick={handleFavorite}
+          >
+            {isFavorite ? <FavoriteIcon /> : <FavoriteBorderIcon />}
+          </button>
+        </div>
+        <h4>Breed: {pet.breed}</h4>
+        <h2>Description</h2>
+        <p>{pet.description ? pet.description : "No description available"}</p>
+        <h1>About</h1>
+        <h4>HEALTH</h4>
+        <p>Vaccinations up to date, spayed / neutered.</p>
+
+        <h4>Adoption fee</h4>
+        <p>$100.00</p>
+        <button className="pet-details-adoption-button" onClick={handleAdopt}>
+          Adopt Me!
+        </button>
+        <CustomDialog open={open} onClose={handleAdopt} pet={pet} />
       </div>
     </div>
   );
