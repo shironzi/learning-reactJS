@@ -34,6 +34,10 @@ const UserSchema = new Schema({
   lastLogin: {
     type: Date,
   },
+  favoritePets: {
+    type: [Schema.Types.ObjectId],
+    ref: "Pet",
+  },
 });
 
 module.exports = mongoose.model("User", UserSchema);

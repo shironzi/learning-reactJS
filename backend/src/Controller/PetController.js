@@ -1,6 +1,7 @@
 const multer = require("multer");
 
 const Pet = require("../model/petSchema");
+const User = require("../model/userSchema");
 
 const upload = multer({ dest: "uploads/" });
 
@@ -72,8 +73,28 @@ const addPet = [
   },
 ];
 
+const addFavoritePet = async (req, res, next) => {
+  const { petId } = req.body;
+  const { userId } = req;
+
+  try {
+    const user = await User.findById(userId);
+
+    if (!user) {
+      return res.status(404).json({ message: "User not found" });
+    }
+
+    user.favoritePets.push(petId);
+    await user.save();
+    res.status(200).json({ message: "Pet added to favorites" });
+  } catch (error) {
+    next(error);
+  }
+};
+
 module.exports = {
   fetchPets,
   getPetById,
   addPet,
+  addFavoritePet,
 };

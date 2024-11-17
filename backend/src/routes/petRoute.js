@@ -28,6 +28,8 @@ router.get("/pets", fetchPets);
 // Route to get pet by id
 router.get("/pets/:id", getPetById);
 
+router.post("/pets/:id", getPetById);
+
 // Route to add a pet
 router.post("/add-pet", addPet);
 
