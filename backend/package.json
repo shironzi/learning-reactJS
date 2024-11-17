@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
-    "test": "jest ./__tests__/pet.test.js",
+    "test": "jest ./__tests__",
     "start": "nodemon src/index.js"
   },
   "author": "",
