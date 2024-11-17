@@ -42,6 +42,8 @@ const petAdoptionList = async (req, res, next) => {
       adoptionRequests: { $exists: true, $ne: [] },
     })
       .populate("adoptionRequests")
+      .select("email firstName lastName adoptionRequests")
+      .lean()
       .exec();
 
     res.status(200).json({ adoptionRequest });
