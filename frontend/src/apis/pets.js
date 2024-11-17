@@ -107,3 +107,21 @@ export const requestAdoptPet = async (petId) => {
     throw error;
   }
 };
+
+export const fetchAdoptionRequests = async () => {
+  try {
+    const response = await fetchWithAuth(
+      `http://localhost:5000/adoption-request`,
+      {
+        method: "GET",
+      }
+    );
+
+    const data = await response.json();
+    console.log(data);
+    return data;
+  } catch (error) {
+    console.error("Error:", error);
+    throw error;
+  }
+};
