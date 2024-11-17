@@ -18,6 +18,7 @@ const LazyHeader = React.lazy(() => import("../Header"));
 const LazyPetAdoptionReqeuest = React.lazy(() =>
   import("../admin/PetAdoptionRequset")
 );
+const LazyRequest = React.lazy(() => import("../Requests"));
 
 function App() {
   return (
@@ -53,6 +54,7 @@ function MainRoutes() {
         <Route path="/favorites" element={<LazyFavorites />} />
         <Route path="/add-pet" element={<LazyAddPet />} />
         <Route path="/pets/:id" element={<LazyDetails />} />
+        <Route path="/adoption-request" element={<LazyRequest />} />
         <Route path="/auth/login" element={<LazyLogin />} />
         <Route path="/auth/register" element={<LazyRegister />} />
         <Route path="/admin" element={<Admin />} />

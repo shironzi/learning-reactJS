@@ -49,6 +49,9 @@ const Header = () => {
       <div>
         {isAuthenticated ? (
           <div className="header-button-container">
+            <Link className="header-favorites" to="/adoption-request">
+              Adoption Request
+            </Link>
             <Link className="header-favorites" to="/favorites">
               Favorites
             </Link>
