@@ -35,6 +35,42 @@ body {
   width: 150px;
 }
 
+.header-button-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.header-favorites {
+  position: relative;
+  margin: 0 30px;
+  text-decoration: none;
+  color: #03346e;
+  font-weight: bold;
+  transition: color 0.3s;
+}
+
+.header-favorites::after {
+  content: "";
+  position: absolute;
+  bottom: -2px; /* Adjust as needed */
+  left: 0;
+  width: 100%;
+  height: 2px;
+  background-color: #021526;
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.3s ease;
+}
+
+.header-favorites:hover::after {
+  transform: scaleX(1);
+}
+
+.header-favorites:hover {
+  color: #021526;
+}
+
 .header-container Link {
   color: white;
   text-decoration: none;
@@ -124,7 +160,7 @@ body {
   border: 1px solid #ccc;
   border-radius: 10px;
   padding: 20px;
-  max-width: 65%;
+  width: 65%;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
   text-align: center;
   display: flex;
@@ -460,6 +496,54 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
+}
+
+.favorites-container {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  margin: 50px auto;
+  gap: 20px;
+}
+
+.favoritePetLists-container {
+  background-color: #f3f7ec;
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  padding: 20px;
+  width: 65%;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+}
+
+.favoritePet-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  width: 90%;
+  margin: 10px 0;
+}
+
+.favoritePet-container img {
+  width: 200px;
+  height: 200px;
+  object-fit: cover;
+  border-radius: 10px;
+}
+
+.favoritePet-remove {
+  color: #ff0000;
+  border: 1px solid #ff0000;
+  border-radius: 3px;
+  cursor: pointer;
 }
 
 @media (max-width: 1200px) {

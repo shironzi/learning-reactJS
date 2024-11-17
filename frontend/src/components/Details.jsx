@@ -5,7 +5,7 @@ import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 
 import CustomDialog from "./CustomDialog";
-import { fetchPetById } from "../apis/pets";
+import { fetchPetById, updatefavoritesPets } from "../apis/pets";
 
 const Details = () => {
   const { id } = useParams();
@@ -19,13 +19,15 @@ const Details = () => {
 
   const handleFavorite = useCallback(() => {
     setIsFavorite(!isFavorite);
-  }, [isFavorite]);
+    updatefavoritesPets(id);
+  }, [isFavorite, id]);
 
   useEffect(() => {
     const fetchPet = async () => {
       try {
         const data = await fetchPetById(id);
-        setPet(data);
+        setIsFavorite(data.isFavorite);
+        setPet(data.pet);
       } catch (error) {
         console.error("Error:", error);
       }

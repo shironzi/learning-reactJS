@@ -8,6 +8,7 @@ import { useDispatch } from "react-redux";
 
 import { getToken, logout } from "../apis/auth";
 import { logout as logoutAction } from "../reducers/userReducer";
+import Favorites from "./Favorites";
 
 const Header = () => {
   const navigate = useNavigate();
@@ -46,52 +47,57 @@ const Header = () => {
           loading="lazy"
         />
       </Link>
-      {isAuthenticated ? (
-        <>
-          <Fab
-            className="floating-button"
-            id="demo-positioned-button"
-            aria-controls={open ? "demo-positioned-menu" : undefined}
-            aria-haspopup="true"
-            aria-expanded={open ? "true" : undefined}
-            onClick={handleClick}
-            size="small"
-          >
-            <Avatar sx={{ width: 42, height: 42 }} />
-          </Fab>
+      <div>
+        {isAuthenticated ? (
+          <div className="header-button-container">
+            <Link className="header-favorites" to="/favorites">
+              Favorites
+            </Link>
+            <Fab
+              className="floating-button"
+              id="demo-positioned-button"
+              aria-controls={open ? "demo-positioned-menu" : undefined}
+              aria-haspopup="true"
+              aria-expanded={open ? "true" : undefined}
+              onClick={handleClick}
+              size="small"
+            >
+              <Avatar sx={{ width: 42, height: 42 }} />
+            </Fab>
 
-          <Menu
-            id="demo-positioned-menu"
-            aria-labelledby="demo-positioned-button"
-            anchorEl={anchorEl}
-            open={open}
-            onClose={handleClose}
-            anchorOrigin={{
-              vertical: "top",
-              horizontal: "left",
-            }}
-            transformOrigin={{
-              vertical: "top",
-              horizontal: "left",
-            }}
-          >
-            <MenuItem>Profile</MenuItem>
-            <MenuItem>My account</MenuItem>
-            <MenuItem onClick={handleLogout}>Logout</MenuItem>
-          </Menu>
-        </>
-      ) : (
-        <>
-          <div className="auth-Link-Container">
-            <Link to={"/auth/login"} className="auth-Link">
-              Login
-            </Link>
-            <Link to={"/auth/register"} className="auth-Link">
-              Register
-            </Link>
+            <Menu
+              id="demo-positioned-menu"
+              aria-labelledby="demo-positioned-button"
+              anchorEl={anchorEl}
+              open={open}
+              onClose={handleClose}
+              anchorOrigin={{
+                vertical: "top",
+                horizontal: "left",
+              }}
+              transformOrigin={{
+                vertical: "top",
+                horizontal: "left",
+              }}
+            >
+              <MenuItem>Profile</MenuItem>
+              <MenuItem>My account</MenuItem>
+              <MenuItem onClick={handleLogout}>Logout</MenuItem>
+            </Menu>
           </div>
-        </>
-      )}
+        ) : (
+          <>
+            <div className="auth-Link-Container">
+              <Link to={"/auth/login"} className="auth-Link">
+                Login
+              </Link>
+              <Link to={"/auth/register"} className="auth-Link">
+                Register
+              </Link>
+            </div>
+          </>
+        )}
+      </div>
     </header>
   );
 };

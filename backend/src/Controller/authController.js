@@ -86,7 +86,10 @@ const logout = async (req, res, next) => {
     );
     console.log("Logged out successfully");
 
-    res.status(200).json({ message: "Logged out successfully" });
+    res
+      .status(200)
+      .json({ message: "Logged out successfully" })
+      .redirect("/auth/login");
   } catch (error) {
     next(error);
   }

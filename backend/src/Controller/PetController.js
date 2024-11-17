@@ -32,12 +32,17 @@ const fetchPets = async (req, res) => {
 };
 
 const getPetById = async (req, res) => {
+  const petId = req.params.id;
+  const user = req.user;
+
   try {
-    const pet = await Pet.findById(req.params.id);
+    const pet = await Pet.findById(petId);
     if (!pet) {
       res.status(404).json({ message: "Pet not found" });
     }
-    res.status(200).json(pet);
+
+    const isFavorite = user.favoritePets.includes(petId);
+    res.status(200).json({ pet, isFavorite });
   } catch (error) {
     next(error);
   }
@@ -73,15 +78,44 @@ const addPet = [
   },
 ];
 
+const fetchFavoritePets = async (req, res, next) => {
+  const { user } = req;
+  try {
+    const favoritePets = await Pet.find({ _id: { $in: user.favoritePets } })
+      .select("name location animal breed images")
+      .lean()
+      .exec();
+
+    res.status(200).json({ favoritePets });
+  } catch (error) {
+    const customError = new Error("Failed to fetch favorite pets");
+    customError.status = 500;
+    next(customError);
+  }
+};
+
 const addFavoritePet = async (req, res, next) => {
   const { petId } = req.body;
-  const { userId } = req;
+  const { user } = req;
+  const userId = user._id;
 
   try {
     const user = await User.findById(userId);
+    const pet = await Pet.findById(petId);
 
     if (!user) {
       return res.status(404).json({ message: "User not found" });
+    }
+
+    if (!pet) {
+      return res.status(404).json({ message: "Pet not found" });
+    }
+
+    if (user.favoritePets.includes(petId)) {
+      user.favoritePets.pull(petId);
+      await user.save();
+      console.log(user.favoritePets);
+      return res.status(200).json({ message: "Pet removed from favorites" });
     }
 
     user.favoritePets.push(petId);
@@ -96,5 +130,6 @@ module.exports = {
   fetchPets,
   getPetById,
   addPet,
+  fetchFavoritePets,
   addFavoritePet,
 };

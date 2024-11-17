@@ -41,3 +41,45 @@ export const fetchPetById = async (id) => {
     return null;
   }
 };
+
+export const fetchFavoritePets = async () => {
+  try {
+    const response = await fetchWithAuth(`http://localhost:5000/favorites`, {
+      method: "GET",
+    });
+
+    if (!response.ok) {
+      throw new Error("Failed to fetch favorite pets");
+    }
+
+    const data = await response.json();
+    return await data.favoritePets;
+  } catch (error) {
+    console.error("Error:", error);
+    throw error;
+  }
+};
+
+export const updatefavoritesPets = async (petId) => {
+  try {
+    const response = await fetchWithAuth(
+      `http://localhost:5000/updatefavoritesPets/${petId}`,
+      {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ petId }),
+      }
+    );
+
+    if (!response.ok) {
+      throw new Error("Failed to add favorite pet");
+    }
+
+    return response;
+  } catch (error) {
+    console.error("Error:", error);
+    throw error;
+  }
+};

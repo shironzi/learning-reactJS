@@ -7,6 +7,8 @@ const {
   fetchPets,
   getPetById,
   addPet,
+  addFavoritePet,
+  fetchFavoritePets,
 } = require("../Controller/PetController");
 const authenticateToken = require("../middleware/authenticateToken");
 
@@ -28,10 +30,11 @@ router.get("/pets", fetchPets);
 // Route to get pet by id
 router.get("/pets/:id", getPetById);
 
+router.get("/favorites", fetchFavoritePets);
+
 router.post("/pets/:id", getPetById);
 
-// Route to add a pet
-router.post("/add-pet", addPet);
+router.put("/updatefavoritesPets/:id", addFavoritePet);
 
 // Route to serve protected uploads
 router.get("/protected/uploads/:filename", authenticateToken, (req, res) => {

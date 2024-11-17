@@ -9,6 +9,7 @@ import ErrorBoundary from "../ErrorBoundary";
 import Admin from "../admin/Dashboard";
 
 const LazyHome = React.lazy(() => import("../Home"));
+const LazyFavorites = React.lazy(() => import("../Favorites"));
 const LazyDetails = React.lazy(() => import("../Details"));
 const LazyLogin = React.lazy(() => import("../Login"));
 const LazyRegister = React.lazy(() => import("../Register"));
@@ -46,11 +47,12 @@ function MainRoutes() {
       <LazyHeader />
       <Routes>
         <Route path="/" element={<LazyHome />} />
-        <Route path="/admin" element={<Admin />} />
+        <Route path="/favorites" element={<LazyFavorites />} />
         <Route path="/add-pet" element={<LazyAddPet />} />
         <Route path="/pets/:id" element={<LazyDetails />} />
         <Route path="/auth/login" element={<LazyLogin />} />
         <Route path="/auth/register" element={<LazyRegister />} />
+        <Route path="/admin" element={<Admin />} />
       </Routes>
     </>
   );
