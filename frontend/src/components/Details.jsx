@@ -67,8 +67,11 @@ const Details = () => {
           </button>
         </div>
         <h4>Breed: {pet.breed}</h4>
+        <hr className="custom-hr" />
         <h2>Description</h2>
         <p>{pet.description ? pet.description : "No description available"}</p>
+
+        <hr className="custom-hr" />
         <h1>About</h1>
         <h4>HEALTH</h4>
         <p>Vaccinations up to date, spayed / neutered.</p>
