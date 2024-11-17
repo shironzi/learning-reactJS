@@ -54,6 +54,8 @@ const login = async (req, res, next) => {
       process.env.JWT_SECRET
     );
 
+    console.log(token);
+
     user.lastLogin = new Date();
     await user.save();
     res.json({ message: "Login successful", token });
