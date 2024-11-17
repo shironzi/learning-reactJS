@@ -6,4 +6,6 @@ const { getData } = require("../Controller/adminController");
 
 router.get("/getData", getData);
 
+router.get("/adoptionRequest");
+
 module.exports = router;

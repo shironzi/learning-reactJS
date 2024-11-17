@@ -38,6 +38,10 @@ const UserSchema = new Schema({
     type: [Schema.Types.ObjectId],
     ref: "Pet",
   },
+  adoptionRequests: {
+    type: [Schema.Types.ObjectId],
+    ref: "Pet",
+  },
 });
 
 module.exports = mongoose.model("User", UserSchema);

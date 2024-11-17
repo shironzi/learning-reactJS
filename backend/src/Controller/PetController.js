@@ -2,6 +2,7 @@ const multer = require("multer");
 
 const Pet = require("../model/petSchema");
 const User = require("../model/userSchema");
+const { request } = require("http");
 
 const upload = multer({ dest: "uploads/" });
 
@@ -114,7 +115,6 @@ const addFavoritePet = async (req, res, next) => {
     if (user.favoritePets.includes(petId)) {
       user.favoritePets.pull(petId);
       await user.save();
-      console.log(user.favoritePets);
       return res.status(200).json({ message: "Pet removed from favorites" });
     }
 
@@ -126,10 +126,42 @@ const addFavoritePet = async (req, res, next) => {
   }
 };
 
+// pet adoption request for the admin
+const requestAdoptPet = async (req, res, next) => {
+  const { petId } = req.body;
+  const { user } = req;
+  const userId = user._id;
+
+  try {
+    const user = await User.findById(userId);
+
+    if (!user) {
+      return res.status(404).json({ message: "User not found" });
+    }
+
+    const pet = await Pet.findById(petId);
+
+    if (!pet) {
+      return res.status(404).json({ message: "Pet not found" });
+    }
+
+    if (pet.status === "Adopted") {
+      return res.status(400).json({ message: "Pet already adopted" });
+    }
+
+    user.adoptionRequests.push(petId);
+    await user.save();
+    res.status(200).json({ message: "Adoption request sent" });
+  } catch (error) {
+    next(error);
+  }
+};
+
 module.exports = {
   fetchPets,
   getPetById,
   addPet,
   fetchFavoritePets,
   addFavoritePet,
+  requestAdoptPet,
 };

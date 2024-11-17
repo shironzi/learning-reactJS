@@ -22,6 +22,15 @@ const petSchema = new Schema({
     type: [String],
     required: true,
   },
+  description: {
+    type: String,
+    required: true,
+  },
+  status: {
+    type: String,
+    enum: ["available", "pending", "adopted"],
+    default: "available",
+  },
 });
 
 petSchema.index({ animal: 1, breed: 1, location: 1 });
