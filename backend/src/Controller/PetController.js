@@ -149,7 +149,7 @@ const requestAdoptPet = async (req, res, next) => {
       return res.status(400).json({ message: "Pet already adopted" });
     }
 
-    user.adoptionRequests.push(petId);
+    user.adoptionRequests.push({ pet: petId, status: "Pending" });
     await user.save();
     res.status(200).json({ message: "Adoption request sent" });
   } catch (error) {
@@ -167,12 +167,10 @@ const fetchAdoptionRequests = async (req, res, next) => {
       .lean()
       .exec();
 
-    const pet = adoptionRequests.map((request) => request.adoptionRequests.pet);
-    const status = adoptionRequests.map(
-      (request) => request.adoptionRequests.status
-    );
+    const petId = adoptionRequests[0]._id;
+    const status = adoptionRequests[0].adoptionRequests[0].status;
 
-    res.status(200).json({ pet, status });
+    res.status(200).json({ petId, status });
   } catch (error) {
     next(error);
   }

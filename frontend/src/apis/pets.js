@@ -100,7 +100,6 @@ export const requestAdoptPet = async (petId) => {
     if (!response.ok) {
       throw new Error("Failed to request pet adoption");
     }
-
     return response;
   } catch (error) {
     console.error("Error:", error);
@@ -111,7 +110,7 @@ export const requestAdoptPet = async (petId) => {
 export const fetchAdoptionRequests = async () => {
   try {
     const response = await fetchWithAuth(
-      `http://localhost:5000/adoption-request`,
+      `http://localhost:5000/adoption-request-List`,
       {
         method: "GET",
       }
