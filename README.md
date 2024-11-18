@@ -9,9 +9,6 @@ A user-friendly web application for discovering adoptable pets! Search for pets 
 - **Responsive Design**: Optimized for viewing on desktop and mobile devices.
 - **Admin Dashboard**: Manage pet listings, add new pets, and view adoption requests.
 - **User Authentication**: Securely log in and register users with JWT-based authentication.
-
-## Upcoming Features
-
 - **Favorite Pets**: Save pets to a local favorites list for easy access.
 - **Adoption Requests**: Submit and track adoption requests.
 
