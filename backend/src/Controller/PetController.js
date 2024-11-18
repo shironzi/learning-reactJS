@@ -159,6 +159,14 @@ const requestAdoptPet = async (req, res, next) => {
       return res.status(400).json({ message: "Pet already adopted" });
     }
 
+    const existingRequest = user.adoptionRequests.find((userRequest) =>
+      userRequest.pet.equals(petId)
+    );
+
+    if (existingRequest) {
+      return res.status(400).json({ message: "Adoption request already sent" });
+    }
+
     user.adoptionRequests = [
       ...user.adoptionRequests,
       {

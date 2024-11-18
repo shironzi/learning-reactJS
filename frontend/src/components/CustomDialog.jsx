@@ -6,13 +6,14 @@ import DialogActions from "@mui/material/DialogActions";
 import Button from "@mui/material/Button";
 import { requestAdoptPet } from "../apis/pets";
 
-const CustomDialog = ({ open, onClose, pet }) => {
+const CustomDialog = ({ open, onClose, pet, warningAlert }) => {
   const handleRequestAdoptPet = async () => {
     try {
       await requestAdoptPet(pet._id);
       onClose();
     } catch (error) {
-      console.error("Error requesting pet adoption:", error);
+      warningAlert = true;
+      onClose();
     }
   };
 

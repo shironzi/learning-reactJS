@@ -42,7 +42,7 @@ const petAdoptionList = async (req, res, next) => {
       adoptionRequests: { $exists: true, $ne: [] },
     })
       .populate("adoptionRequests")
-      .select("email firstName lastName adoptionRequests")
+      .select("firstName lastName adoptionRequests")
       .lean()
       .exec();
 

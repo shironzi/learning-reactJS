@@ -6,12 +6,14 @@ import FavoriteIcon from "@mui/icons-material/Favorite";
 
 import CustomDialog from "./CustomDialog";
 import { fetchPetById, updatefavoritesPets } from "../apis/pets";
+import { Alert, AlertTitle } from "@mui/material";
 
 const Details = () => {
   const { id } = useParams();
   const [pet, setPet] = useState(null);
   const [open, setOpen] = useState(false);
   const [isFavorite, setIsFavorite] = useState(false);
+  const [warningAlert, setWarningAlert] = useState(false);
 
   const handleAdopt = useCallback(() => {
     setOpen(!open);
@@ -46,6 +48,12 @@ const Details = () => {
 
   return (
     <div className="pet-details">
+      {warningAlert && (
+        <Alert severity="error">
+          <AlertTitle>Error</AlertTitle>
+          Something went wrong, please try again later.
+        </Alert>
+      )}
       <div className="pet-details-image-container">
         {pet.images &&
           pet.images.map((image, index) => (
@@ -83,7 +91,12 @@ const Details = () => {
         <button className="pet-details-adoption-button" onClick={handleAdopt}>
           Adopt Me!
         </button>
-        <CustomDialog open={open} onClose={handleAdopt} pet={pet} />
+        <CustomDialog
+          open={open}
+          onClose={handleAdopt}
+          pet={pet}
+          warningAlert={setWarningAlert}
+        />
       </div>
     </div>
   );
