@@ -24,7 +24,7 @@ router.get("/pets/:id", getPetById);
 router.get("/favorites", fetchFavoritePets);
 router.post("/pets/:id", getPetById);
 router.put("/updatefavoritesPets/:id", addFavoritePet);
-router.get("/adoption-request-List", fetchAdoptionRequests);
+router.get("/adoption-request-list", fetchAdoptionRequests);
 router.post("/requestAdoptPet", requestAdoptPet);
 
 // Route to serve protected uploads

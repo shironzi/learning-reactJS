@@ -4,16 +4,14 @@ import AdoptionRequest from "./AdoptionRequest";
 
 function Requests() {
   const {
-    data: adoptionRequest = [],
+    data: adoptionRequests = [],
     isLoading,
     isError,
     error,
   } = useQuery({
-    queryKey: ["adoptionRequest"],
+    queryKey: ["adoptionRequests"],
     queryFn: () => fetchAdoptionRequests(),
   });
-
-  console.log(adoptionRequest);
 
   if (isLoading) {
     return <div>Loading...</div>;
@@ -30,15 +28,15 @@ function Requests() {
         <h2>status</h2>
       </div>
       <hr className="custom-hr" />
-      {adoptionRequest.length > 0 ? (
-        adoptionRequest.map((request) => (
+      {adoptionRequests.length > 0 ? (
+        adoptionRequests.map((request) => (
           <div className="" key={request.requestId}>
             <AdoptionRequest
-              name={request.name}
-              images={request.images}
-              breed={request.breed}
-              location={request.location}
-              status={request.status}
+              name={request.petName}
+              images={request.petImages}
+              breed={request.petBreed}
+              location={request.petLocation}
+              status={request.petAdoptionStatus}
             />
             <hr className="custom-hr" />
           </div>

@@ -7,7 +7,6 @@ import {
 } from "react-router-dom";
 import React, { Suspense, useEffect } from "react";
 import { useDispatch } from "react-redux";
-import { getToken } from "../../apis/auth";
 import "./App.css";
 import { Provider } from "react-redux";
 import store from "../../store";

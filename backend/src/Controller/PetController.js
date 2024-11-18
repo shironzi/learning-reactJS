@@ -159,11 +159,15 @@ const requestAdoptPet = async (req, res, next) => {
       return res.status(400).json({ message: "Pet already adopted" });
     }
 
-    user.adoptionRequests = {
-      _id: new ObjectId(),
-      pet: petId,
-      status: "Pending",
-    };
+    user.adoptionRequests = [
+      ...user.adoptionRequests,
+      {
+        _id: new ObjectId(),
+        pet: pet,
+        status: "Pending",
+      },
+    ];
+
     await user.save();
     res.status(200).json({ message: "Adoption request sent" });
   } catch (error) {
@@ -184,20 +188,27 @@ const fetchAdoptionRequests = async (req, res, next) => {
       adoptionRequests: { $exists: true, $ne: [] },
     })
       .populate("adoptionRequests.pet")
+      .select("adoptionRequests")
       .lean()
       .exec();
 
-    const adoptionRequests = usersWithAdoptionRequests.flatMap((user) =>
-      user.adoptionRequests.map((request) => ({
-        requestId: request._id,
-        petId: request.pet._id,
-        status: request.status,
-        name: request.pet.name,
-        location: request.pet.location,
-        breed: request.pet.breed,
-        images: request.pet.images,
-      }))
-    );
+    const adoptionRequestList = [];
+
+    const adoptionRequests = usersWithAdoptionRequests.flatMap((user) => {
+      return [
+        ...adoptionRequestList,
+        user.adoptionRequests.map((request) => {
+          return {
+            requestId: request._id,
+            petName: request.pet.name,
+            petImages: request.pet.images,
+            petBreed: request.pet.breed,
+            petLocation: request.pet.location,
+            petAdoptionStatus: request.status,
+          };
+        }),
+      ];
+    });
 
     res.status(200).json({ adoptionRequests });
   } catch (error) {

@@ -1,4 +1,5 @@
 const mongoose = require("mongoose");
+const petSchema = require("./petSchema");
 
 const { Schema } = mongoose;
 
@@ -40,21 +41,24 @@ const UserSchema = new Schema({
     ref: "Pet",
     required: false,
   },
-  adoptionRequests: {
-    _id: {
-      type: Schema.Types.ObjectId,
-      required: true,
+  adoptionRequests: [
+    {
+      _id: {
+        type: Schema.Types.ObjectId,
+        default: () => new mongoose.Types.ObjectId(),
+      },
+      pet: {
+        type: Schema.Types.ObjectId,
+        ref: "Pet",
+        required: true,
+      },
+      status: {
+        type: String,
+        enum: ["Pending", "Approved", "Rejected"],
+        default: "Pending",
+      },
     },
-    pet: {
-      type: Schema.Types.ObjectId,
-      ref: "Pet",
-    },
-    status: {
-      type: String,
-      enum: ["Pending", "Approved", "Rejected"],
-      default: "Pending",
-    },
-  },
+  ],
 });
 
 module.exports = mongoose.model("User", UserSchema);

@@ -110,14 +110,15 @@ export const requestAdoptPet = async (petId) => {
 export const fetchAdoptionRequests = async () => {
   try {
     const response = await fetchWithAuth(
-      `http://localhost:5000/adoption-request-List`,
+      `http://localhost:5000/adoption-request-list`,
       {
         method: "GET",
       }
     );
 
     const data = await response.json();
-    return data.adoptionRequests;
+    console.log(data);
+    return data.adoptionRequests[0];
   } catch (error) {
     console.error("Error:", error);
     throw error;
