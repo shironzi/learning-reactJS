@@ -167,26 +167,22 @@ const fetchAdoptionRequests = async (req, res, next) => {
       adoptionRequests: { $exists: true, $ne: [] },
     })
       .populate("adoptionRequests.pet")
-      .select("adoptionRequests.pet adoptionRequests.status")
       .lean()
       .exec();
 
     const adoptionRequests = usersWithAdoptionRequests.flatMap((user) =>
       user.adoptionRequests.map((request) => ({
+        requestId: request._id,
         petId: request.pet._id,
         status: request.status,
+        name: request.pet.name,
+        location: request.pet.location,
+        breed: request.pet.breed,
+        images: request.pet.images,
       }))
     );
 
-    const petId = adoptionRequests.map((request) => request.petId);
-    const status = adoptionRequests.map((request) => request.status);
-
-    const pets = await Pet.find({ _id: { $in: petId } })
-      .select("name location breed images")
-      .lean()
-      .exec();
-
-    res.status(200).json({ pets, status });
+    res.status(200).json({ adoptionRequests });
   } catch (error) {
     next(error);
   }

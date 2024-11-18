@@ -24,11 +24,20 @@ function Requests() {
 
   return (
     <div>
-      {adoptionRequest.map((item) => (
-        <div key={item.petId}>
-          <h4>{item.name}</h4>
-          <p>Pet ID: {item.petId}</p>
-          <p>Status: {item.status}</p>
+      <h2>Adoption Requests</h2>
+      {adoptionRequest.map((request) => (
+        <div key={request.requestId}>
+          <img
+            src={`http://localhost:5000/${request.images}`}
+            alt={request.name}
+            loading="lazy"
+          />
+          <div>
+            <h1>{request.name}</h1>
+            <h2>{request.breed}</h2>
+            <h3>{request.location}</h3>
+            <h3>{request.status}</h3>
+          </div>
         </div>
       ))}
     </div>
