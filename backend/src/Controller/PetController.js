@@ -192,22 +192,19 @@ const fetchAdoptionRequests = async (req, res, next) => {
       .lean()
       .exec();
 
-    const adoptionRequestList = [];
-
     const adoptionRequests = usersWithAdoptionRequests.flatMap((user) => {
-      return [
-        ...adoptionRequestList,
-        user.adoptionRequests.map((request) => {
-          return {
-            requestId: request._id,
-            petName: request.pet.name,
-            petImages: request.pet.images,
-            petBreed: request.pet.breed,
-            petLocation: request.pet.location,
-            petAdoptionStatus: request.status,
-          };
-        }),
-      ];
+      if (Array.isArray(user.adoptionRequests)) {
+        return user.adoptionRequests.map((request) => ({
+          requestId: request._id,
+          petName: request.pet.name,
+          petImages: request.pet.images,
+          petBreed: request.pet.breed,
+          petLocation: request.pet.location,
+          petAdoptionStatus: request.status,
+        }));
+      } else {
+        return [];
+      }
     });
 
     res.status(200).json({ adoptionRequests });

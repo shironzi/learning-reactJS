@@ -117,8 +117,7 @@ export const fetchAdoptionRequests = async () => {
     );
 
     const data = await response.json();
-    console.log(data);
-    return data.adoptionRequests[0];
+    return data.adoptionRequests;
   } catch (error) {
     console.error("Error:", error);
     throw error;
