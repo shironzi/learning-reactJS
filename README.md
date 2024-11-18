@@ -136,8 +136,8 @@ Open [http://localhost:3000](http://localhost:3000) to view the app in your brow
 
 ## Tech Stack
 
-1. **Frontend Technologies**: The existing frontend technologies are listed under the "Frontend" section.
-2. **Backend Technologies**: The backend technologies are listed under the "Backend" section, including Node.js, Express, MongoDB, Mongoose, JWT, bcrypt, dotenv, express-validator, multer, cors, morgan, and compression.
+1. **Frontend Technologies**: ReactJs, redux, react-query.
+2. **Backend Technologies**: Node.js, Express, MongoDB, Mongoose, JWT, bcrypt, dotenv, express-validator, multer, cors, morgan, and compression.
 
 ---
 
