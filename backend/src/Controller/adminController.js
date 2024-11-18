@@ -1,5 +1,6 @@
 const Pet = require("../model/petSchema");
 const User = require("../model/userSchema");
+const adoptionData = require("../model/adoptionHistory");
 
 const getData = async (req, res) => {
   try {
@@ -52,4 +53,56 @@ const petAdoptionList = async (req, res, next) => {
   }
 };
 
-module.exports = { getData, petAdoptionList };
+const updateAdoptionRequest = async (req, res, next) => {
+  const { user } = req;
+  const { requestId, status, petId, userId } = req.body;
+
+  try {
+    // const admin = await User.findById(user._id)
+    //   .select("role")
+    //   .equals("admin")
+    //   .exec();
+
+    // if (!admin) {
+    //   return res.status(403).json({ message: "Unauthorized" });
+    // }
+
+    const data = {
+      _id: requestId,
+      userId: userId,
+      pet: petId,
+      status: status,
+      date: new Date(),
+    };
+
+    const adoptionUpdate = new adoptionData(data);
+    await adoptionUpdate.save();
+
+    const userUpdateStatus = await User.findOneAndUpdate(
+      { _id: userId, "adoptionRequests._id": requestId },
+      { $set: { "adoptionRequests.$.status": status } }
+    );
+
+    const petUpdateStatus = await Pet.findOneAndUpdate(
+      { _id: petId },
+      { $set: { status: status } }
+    );
+
+    if (!petUpdateStatus) {
+      return res.status(404).json({ message: "Pet not found" });
+    }
+
+    if (!userUpdateStatus) {
+      return res.status(404).json({ message: "Adoption Request not found" });
+    }
+
+    petUpdateStatus.save();
+    userUpdateStatus.save();
+
+    res.status(200).json({ message: "Adoption Request updated" });
+  } catch (error) {
+    next(error);
+  }
+};
+
+module.exports = { getData, petAdoptionList, updateAdoptionRequest };

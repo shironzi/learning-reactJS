@@ -598,7 +598,8 @@ body {
   padding: 5px 10px;
   background-color: transparent;
   cursor: pointer;
-  transition: color 0.3s, transform 0.3s ease, box-shadow 0.3s;
+  border-radius: 50%;
+  transition: color 0.3s, transform 0.3s ease;
   margin: 0 5px;
 }
 
@@ -622,9 +623,10 @@ body {
   color: #ff0000;
   border: 1px solid transparent;
   padding: 5px 10px;
+  border-radius: 50%;
   background-color: transparent;
   cursor: pointer;
-  transition: color 0.3s, transform 0.3s ease, box-shadow 0.3s;
+  transition: color 0.3s, transform 0.3s ease;
   margin: 0 5px;
 }
 
