@@ -1,4 +1,5 @@
 const multer = require("multer");
+const mongoose = require("mongoose");
 
 const Pet = require("../model/petSchema");
 const User = require("../model/userSchema");
@@ -135,6 +136,8 @@ const addFavoritePet = async (req, res, next) => {
 
 // pet adoption request for the admin
 const requestAdoptPet = async (req, res, next) => {
+  const { ObjectId } = mongoose.Types;
+
   const { petId } = req.body;
   const { user } = req;
   const userId = user._id;
@@ -156,7 +159,11 @@ const requestAdoptPet = async (req, res, next) => {
       return res.status(400).json({ message: "Pet already adopted" });
     }
 
-    const adoptionRequest = { pet: petId, status: "Pending" };
+    user.adoptionRequests = {
+      _id: new ObjectId(),
+      pet: petId,
+      status: "Pending",
+    };
     await user.save();
     res.status(200).json({ message: "Adoption request sent" });
   } catch (error) {
@@ -165,8 +172,15 @@ const requestAdoptPet = async (req, res, next) => {
 };
 
 const fetchAdoptionRequests = async (req, res, next) => {
+  const user = req.user;
+  const userId = user._id;
   try {
+    if (!userId) {
+      return res.status(404).json({ message: "User not found" });
+    }
+
     const usersWithAdoptionRequests = await User.find({
+      _id: userId,
       adoptionRequests: { $exists: true, $ne: [] },
     })
       .populate("adoptionRequests.pet")

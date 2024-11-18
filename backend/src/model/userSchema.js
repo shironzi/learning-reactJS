@@ -41,10 +41,18 @@ const UserSchema = new Schema({
     required: false,
   },
   adoptionRequests: {
+    _id: {
+      type: Schema.Types.ObjectId,
+      required: true,
+    },
     pet: {
       type: Schema.Types.ObjectId,
       ref: "Pet",
-      required: false,
+    },
+    status: {
+      type: String,
+      enum: ["Pending", "Approved", "Rejected"],
+      default: "Pending",
     },
   },
 });
