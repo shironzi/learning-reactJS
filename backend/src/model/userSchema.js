@@ -2,19 +2,6 @@ const mongoose = require("mongoose");
 
 const { Schema } = mongoose;
 
-const adoptionRequestSchema = new Schema({
-  pet: {
-    type: Schema.Types.ObjectId,
-    ref: "Pet",
-    required: true,
-  },
-  status: {
-    type: String,
-    enum: ["Pending", "Approved", "Rejected"],
-    default: "Pending",
-  },
-});
-
 const UserSchema = new Schema({
   email: {
     type: String,
@@ -51,7 +38,13 @@ const UserSchema = new Schema({
     type: [Schema.Types.ObjectId],
     ref: "Pet",
   },
-  adoptionRequests: [adoptionRequestSchema],
+  adoptionRequests: {
+    pet: {
+      type: Schema.Types.ObjectId,
+      ref: "Pet",
+      required: true,
+    },
+  },
 });
 
 module.exports = mongoose.model("User", UserSchema);

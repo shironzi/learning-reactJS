@@ -1,6 +1,5 @@
 import { fetchAdoptionRequests } from "../apis/pets";
 import { useQuery } from "@tanstack/react-query";
-import FavoritePet from "./FavoritePet";
 
 function Requests() {
   const {
@@ -13,6 +12,8 @@ function Requests() {
     queryFn: () => fetchAdoptionRequests(),
   });
 
+  console.log(adoptionRequest);
+
   if (isLoading) {
     return <div>Loading...</div>;
   }
@@ -23,11 +24,13 @@ function Requests() {
 
   return (
     <div>
-      {adoptionRequest.length > 0 ? (
-        adoptionRequest.map((request) => <FavoritePet props={request} />)
-      ) : (
-        <div>No adoption requests</div>
-      )}
+      {adoptionRequest.map((item) => (
+        <div key={item.petId}>
+          <h4>{item.name}</h4>
+          <p>Pet ID: {item.petId}</p>
+          <p>Status: {item.status}</p>
+        </div>
+      ))}
     </div>
   );
 }

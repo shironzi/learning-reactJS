@@ -149,7 +149,11 @@ const requestAdoptPet = async (req, res, next) => {
       return res.status(400).json({ message: "Pet already adopted" });
     }
 
-    user.adoptionRequests.push({ pet: petId, status: "Pending" });
+    if (user.adoptionRequests.includes(petId)) {
+      return res.status(400).json({ message: "Adoption request already sent" });
+    }
+
+    user.adoptionRequests.push(petId);
     await user.save();
     res.status(200).json({ message: "Adoption request sent" });
   } catch (error) {
@@ -159,18 +163,30 @@ const requestAdoptPet = async (req, res, next) => {
 
 const fetchAdoptionRequests = async (req, res, next) => {
   try {
-    const adoptionRequests = await User.find({
+    const usersWithAdoptionRequests = await User.find({
       adoptionRequests: { $exists: true, $ne: [] },
     })
-      .populate("adoptionRequests")
-      .select("adoptionRequests")
+      .populate("adoptionRequests.pet")
+      .select("adoptionRequests.pet adoptionRequests.status")
       .lean()
       .exec();
 
-    const petId = adoptionRequests[0]._id;
-    const status = adoptionRequests[0].adoptionRequests[0].status;
+    const adoptionRequests = usersWithAdoptionRequests.flatMap((user) =>
+      user.adoptionRequests.map((request) => ({
+        petId: request.pet._id,
+        status: request.status,
+      }))
+    );
 
-    res.status(200).json({ petId, status });
+    const petId = adoptionRequests.map((request) => request.petId);
+    const status = adoptionRequests.map((request) => request.status);
+
+    const pets = await Pet.find({ _id: { $in: petId } })
+      .select("name location breed images")
+      .lean()
+      .exec();
+
+    res.status(200).json({ pets, status });
   } catch (error) {
     next(error);
   }
