@@ -13,27 +13,56 @@ function AdoptionRequest({ request, name }) {
         </Link>
       </div>
       <hr className="custom-hr" />
-      <div className="adoption-request-content">
-        <img
-          src={`http://localhost:5000/${request.images}`}
-          alt={request.name}
-          loading="lazy"
-          className="adoption-request-image"
-        />
-        <div className="adoption-request-details">
-          <h2>{request.name}</h2>
-          <h4>Breed: {request.breed}</h4>
-          <h4>Location: {request.location}</h4>
+
+      {request.length > 1 ? (
+        request.map((req) => (
+          <div className="adoption-request-content" key={req._id}>
+            <div className="adoptionRequest-details">
+              <img
+                src={`http://localhost:5000/${req.pet.images}`}
+                alt={req.pet.name}
+                loading="lazy"
+                className="adoption-request-image"
+              />
+              <div className="adoption-request-details">
+                <h2>{req.pet.name}</h2>
+                <h4>Breed: {req.pet.breed}</h4>
+                <h4>Location: {req.pet.location}</h4>
+              </div>
+            </div>
+            <div className="adoption-request-button-container">
+              <button className="adoption-request-approve">
+                <CheckIcon fontSize="large" />
+              </button>
+              <button className="adoption-request-reject">
+                <CloseIcon fontSize="large" />
+              </button>
+            </div>
+          </div>
+        ))
+      ) : (
+        <div className="adoption-request-content" key={request._id}>
+          <img
+            src={`http://localhost:5000/${request.pet.images}`}
+            alt={request.pet.name}
+            loading="lazy"
+            className="adoption-request-image"
+          />
+          <div className="adoption-request-details">
+            <h2>{request.pet.name}</h2>
+            <h4>Breed: {request.pet.breed}</h4>
+            <h4>Location: {request.pet.location}</h4>
+          </div>
+          <div className="adoption-request-button-container">
+            <button className="adoption-request-approve">
+              <CheckIcon fontSize="large" />
+            </button>
+            <button className="adoption-request-reject">
+              <CloseIcon fontSize="large" />
+            </button>
+          </div>
         </div>
-        <div className="adoption-request-button-container">
-          <button className="adoption-request-approve">
-            <CheckIcon fontSize="large" />
-          </button>
-          <button className="adoption-request-reject">
-            <CloseIcon fontSize="large" />
-          </button>
-        </div>
-      </div>
+      )}
     </div>
   );
 }

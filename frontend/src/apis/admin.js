@@ -10,7 +10,6 @@ const getData = async () => {
     );
 
     const data = await response.json();
-    console.log(data);
     return data;
   } catch (error) {
     console.log(error);
@@ -27,7 +26,6 @@ const getAdoptionRequests = async () => {
     );
 
     const data = await response.json();
-    console.log(data.adoptionRequest);
     return data.adoptionRequest;
   } catch (error) {
     console.log(error);

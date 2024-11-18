@@ -33,7 +33,7 @@ function PetAdoptionReqeuest() {
                 name={
                   adoptionRequest.firstName + " " + adoptionRequest.lastName
                 }
-                request={adoptionRequest.adoptionRequests[0]}
+                request={adoptionRequest.adoptionRequests}
               />
             );
           })}

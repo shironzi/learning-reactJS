@@ -41,7 +41,7 @@ const petAdoptionList = async (req, res, next) => {
     const adoptionRequest = await User.find({
       adoptionRequests: { $exists: true, $ne: [] },
     })
-      .populate("adoptionRequests")
+      .populate("adoptionRequests.pet")
       .select("firstName lastName adoptionRequests")
       .lean()
       .exec();
