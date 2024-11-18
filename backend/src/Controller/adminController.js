@@ -85,7 +85,7 @@ const updateAdoptionRequest = async (req, res, next) => {
 
     const petUpdateStatus = await Pet.findOneAndUpdate(
       { _id: petId },
-      { $set: { status: status } }
+      { $set: { status: status === "Approved" ? "adopted" : "available" } }
     );
 
     if (!petUpdateStatus) {
