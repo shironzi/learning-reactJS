@@ -123,3 +123,21 @@ export const fetchAdoptionRequests = async () => {
     throw error;
   }
 };
+
+export const addPet = async (petData) => {
+  try {
+    const response = await fetchWithAuth(`http://localhost:5000/add-pet`, {
+      method: "POST",
+      body: petData,
+    });
+
+    if (!response.ok) {
+      throw new Error("Failed to add pet");
+    }
+
+    return response;
+  } catch (error) {
+    console.error("Error:", error);
+    throw error;
+  }
+};

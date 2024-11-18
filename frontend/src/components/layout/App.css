@@ -7,6 +7,9 @@ body {
   margin: 0;
   font-family: "Roboto", sans-serif;
   font: #000000;
+  width: 100%;
+  height: 100%;
+  box-sizing: border-box;
 }
 
 .custom-hr {
@@ -53,7 +56,7 @@ body {
 .header-favorites::after {
   content: "";
   position: absolute;
-  bottom: -2px; /* Adjust as needed */
+  bottom: 13px;
   left: 0;
   width: 100%;
   height: 2px;
@@ -160,6 +163,7 @@ body {
   border: 1px solid #ccc;
   border-radius: 10px;
   padding: 20px;
+  margin: 0 auto;
   width: 65%;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
   text-align: center;
@@ -208,7 +212,7 @@ body {
 .pet-more-info {
   background-color: #03346e;
   color: white;
-  padding: 10px 20px;
+  padding: 10px 50px;
   margin: 10px 0;
   border: none;
   border-radius: 5px;
@@ -633,6 +637,55 @@ body {
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 
+.form-container-textarea {
+  width: 100%;
+  padding: 10px;
+  margin: 10px 0;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  box-sizing: border-box;
+}
+
+.AdoptionRequestList {
+  background-color: #f3f7ec;
+  width: 60%;
+  margin: 30px auto;
+  border-radius: 10px;
+  padding: 25px 50px;
+}
+
+.AdoptionRequestList-header {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 25px;
+}
+
+.adoptionRequest-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  margin-bottom: 20px;
+  padding: 0 25px;
+  align-items: center;
+}
+
+.adoptionRequest-details {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.adoptionRequest-details img {
+  width: 200px;
+  height: 200px;
+  object-fit: cover;
+  border-radius: 10px;
+  margin-right: 1.5rem;
+}
+
 @media (max-width: 1200px) {
   .searchResults {
     max-width: 80%;
@@ -644,18 +697,51 @@ body {
     max-width: 90%;
     padding: 15px;
   }
+  .searchForm {
+    padding-top: 25px;
+    display: block;
+    margin: 0 auto;
+    flex-direction: column;
+  }
+  .searchForm form {
+    width: auto;
+    margin: 0 auto;
+  }
 }
 
 @media (max-width: 768px) {
   .searchResults {
     max-width: 100%;
     padding: 10px;
-    flex-direction: column; /* Stack items vertically */
+    flex-direction: column;
   }
 }
 
 @media (max-width: 576px) {
   .searchResults {
-    padding: 5px;
+    width: fit-content;
+  }
+  .header-logo {
+    width: 50px;
+  }
+  h4 {
+    font-size: 0.7em;
+  }
+  h1 {
+    font-size: 0.9em;
+  }
+  label {
+    font-size: 0.8em;
+  }
+  .pet img {
+    width: 150px;
+    height: 150px;
+  }
+
+  .pet h1 {
+    font-size: 1em;
+  }
+  .pet-more-info {
+    font-size: 0.7em;
   }
 }

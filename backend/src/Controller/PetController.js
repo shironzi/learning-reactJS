@@ -2,8 +2,6 @@ const multer = require("multer");
 
 const Pet = require("../model/petSchema");
 const User = require("../model/userSchema");
-const { request } = require("http");
-
 const upload = multer({ dest: "uploads/" });
 
 const fetchPets = async (req, res) => {
@@ -50,16 +48,25 @@ const getPetById = async (req, res) => {
 };
 
 const addPet = [
-  upload.array("images"),
-  async (req, res) => {
-    const { name, location, animal, breed } = req.body;
+  upload.array("images", 5),
+  async (req, res, next) => {
+    // console.log("Request files:", req.files); // Debugging information
+
+    const { name, location, animal, breed, description } = req.body;
     const images = req.files.map((file) => file.path);
 
-    if (!name || !location || !animal || !breed || !images.length) {
+    if (
+      !name ||
+      !location ||
+      !animal ||
+      !breed ||
+      images.length === 0 ||
+      !description
+    ) {
       return res.status(400).json({ message: "All fields are required" });
     }
 
-    const trimmedFields = { name, location, animal, breed };
+    const trimmedFields = { name, location, animal, breed, description };
     Object.keys(trimmedFields).forEach((key) => {
       trimmedFields[key] = trimmedFields[key].trim();
     });
@@ -68,12 +75,12 @@ const addPet = [
       ...trimmedFields,
       images,
     });
-
     try {
-      const pet = await newPet.save();
-      res.status(201).json(pet);
+      await newPet.save();
+      res.status(201).json({ message: "Pet added successfully" });
       console.log("Pet added successfully");
     } catch (error) {
+      console.error("Error:", error);
       next(error);
     }
   },
@@ -149,11 +156,7 @@ const requestAdoptPet = async (req, res, next) => {
       return res.status(400).json({ message: "Pet already adopted" });
     }
 
-    if (user.adoptionRequests.includes(petId)) {
-      return res.status(400).json({ message: "Adoption request already sent" });
-    }
-
-    user.adoptionRequests.push(petId);
+    const adoptionRequest = { pet: petId, status: "Pending" };
     await user.save();
     res.status(200).json({ message: "Adoption request sent" });
   } catch (error) {

@@ -1,47 +1,68 @@
 import React, { memo, useCallback, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { addPet } from "../apis/pets";
 
 const AddPet = () => {
-  const [name, setName] = useState("");
-  const [location, setLocation] = useState("");
-  const [animal, setAnimal] = useState("");
-  const [breed, setBreed] = useState("");
-  const [images, setImages] = useState([]);
+  const [formData, setFormData] = useState({
+    name: "",
+    location: "",
+    animal: "",
+    breed: "",
+    description: "",
+    images: [],
+  });
+
   const navigate = useNavigate();
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData((prevData) => ({
+      ...prevData,
+      [name]: value,
+    }));
+  };
+
+  const handleFileChange = (e) => {
+    setFormData((prevData) => ({
+      ...prevData,
+      images: Array.from(e.target.files),
+    }));
+  };
 
   const handleSubmit = useCallback(
     async (e) => {
-      e.preventDefault();
-      if (!name || !location || !animal || !breed || images.length === 0) {
-        console.log("Form is incomplete");
-        return;
-      }
-
-      const formData = new FormData();
-      formData.append("name", name);
-      formData.append("location", location);
-      formData.append("animal", animal);
-      formData.append("breed", breed);
-      images.forEach((image) => {
-        formData.append("images", image); // Use "images" as the field name
-      });
-
       try {
-        const response = await fetch("http://localhost:5000/add-pet", {
-          method: "POST",
-          body: formData,
-        });
-        if (response.ok) {
-          console.log("Pet added successfully");
-          navigate("/");
-        } else {
-          console.log("Failed to add pet");
+        e.preventDefault();
+        const { name, location, animal, breed, images, description } = formData;
+        if (
+          !name ||
+          !location ||
+          !animal ||
+          !breed ||
+          !description ||
+          images.length === 0
+        ) {
+          console.log("Form is incomplete");
+          return;
         }
+
+        const formDataToSend = new FormData();
+        formDataToSend.append("name", name);
+        formDataToSend.append("location", location);
+        formDataToSend.append("animal", animal);
+        formDataToSend.append("breed", breed);
+        formDataToSend.append("description", description);
+        images.forEach((image) => {
+          formDataToSend.append("images", image);
+        });
+
+        await addPet(formDataToSend);
+        navigate("/");
       } catch (error) {
         console.error("Error:", error);
       }
     },
-    [name, location, animal, breed, images, navigate]
+    [formData, navigate]
   );
 
   return (
@@ -55,41 +76,49 @@ const AddPet = () => {
         type="text"
         name="name"
         id="name"
-        value={name}
-        onChange={(e) => setName(e.target.value)}
+        value={formData.name}
+        onChange={handleChange}
       />
       <label htmlFor="location">Location: </label>
       <input
         type="text"
         name="location"
         id="location"
-        value={location}
-        onChange={(e) => setLocation(e.target.value)}
+        value={formData.location}
+        onChange={handleChange}
       />
       <label htmlFor="animal">Animal: </label>
       <input
         type="text"
         name="animal"
         id="animal"
-        value={animal}
-        onChange={(e) => setAnimal(e.target.value)}
+        value={formData.animal}
+        onChange={handleChange}
       />
       <label htmlFor="breed">Breed: </label>
       <input
         type="text"
         name="breed"
         id="breed"
-        value={breed}
-        onChange={(e) => setBreed(e.target.value)}
+        value={formData.breed}
+        onChange={handleChange}
       />
-      <label htmlFor="images">Images: </label>
+      <label htmlFor="description">Description: </label>
+      <textarea
+        className="form-container-textarea"
+        name="description"
+        id="description"
+        value={formData.description}
+        onChange={handleChange}
+        rows="5"
+      />
       <input
         type="file"
         name="images"
         className="file-input"
         id="images"
         multiple
-        onChange={(e) => setImages(Array.from(e.target.files))}
+        onChange={handleFileChange}
       />
       <button type="submit" className="form-container-button">
         Add Pet

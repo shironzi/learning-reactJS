@@ -3,6 +3,7 @@ const dotenv = require("dotenv");
 const cors = require("cors");
 const morgan = require("morgan");
 const compression = require("compression");
+const multer = require("multer");
 
 const errorHandler = require("./util/errorHandler");
 const authenticateToken = require("./middleware/authenticateToken");
@@ -20,7 +21,6 @@ app.use(morgan("dev"));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(compression());
-
 // Serve static files from the uploads folder
 app.use(
   "/uploads",

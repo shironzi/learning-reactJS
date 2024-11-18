@@ -18,7 +18,8 @@ const LazyHeader = React.lazy(() => import("../Header"));
 const LazyPetAdoptionReqeuest = React.lazy(() =>
   import("../admin/PetAdoptionRequset")
 );
-const LazyRequest = React.lazy(() => import("../Requests"));
+
+const LazyRequest = React.lazy(() => import("../AdoptionRequestList"));
 
 function App() {
   return (

@@ -50,10 +50,10 @@ const Header = () => {
         {isAuthenticated ? (
           <div className="header-button-container">
             <Link className="header-favorites" to="/adoption-request">
-              Adoption Request
+              <h4>Adoption Request</h4>
             </Link>
             <Link className="header-favorites" to="/favorites">
-              Favorites
+              <h4>Favorites</h4>
             </Link>
             <Fab
               className="floating-button"
@@ -64,7 +64,7 @@ const Header = () => {
               onClick={handleClick}
               size="small"
             >
-              <Avatar sx={{ width: 42, height: 42 }} />
+              <Avatar sx={{ width: 40, height: 40 }} />
             </Fab>
 
             <Menu
