@@ -6,12 +6,12 @@ import MenuItem from "@mui/material/MenuItem";
 import Fab from "@mui/material/Fab";
 import { useDispatch } from "react-redux";
 
-import { getToken, logout } from "../apis/auth";
+import { logout } from "../apis/auth";
 import { logout as logoutAction } from "../reducers/userReducer";
 
 const Header = () => {
   const dispatch = useDispatch();
-  const isAuthenticated = getToken();
+  const isAuthenticated = localStorage.getItem("token") || false;
   const navigate = useNavigate();
 
   const [anchorEl, setAnchorEl] = useState(null);

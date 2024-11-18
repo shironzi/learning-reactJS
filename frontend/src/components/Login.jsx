@@ -1,13 +1,11 @@
-import { memo, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-
 import { useDispatch } from "react-redux";
 import { login, setToken } from "../apis/auth";
 
 function Login() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [loginError, setLoginError] = useState("");
@@ -61,4 +59,4 @@ function Login() {
   );
 }
 
-export default memo(Login);
+export default Login;

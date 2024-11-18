@@ -83,6 +83,7 @@ const logout = async () => {
       localStorage.removeItem("token");
       localStorage.removeItem("expirationTime");
     }
+    window.location.reload();
     return response;
   } catch (error) {
     localStorage.removeItem("token");

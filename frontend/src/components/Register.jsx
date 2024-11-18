@@ -1,4 +1,4 @@
-import React, { useState, useEffect, memo } from "react";
+import React, { useState, memo, useEffect } from "react";
 import { register } from "../apis/auth";
 import { useNavigate } from "react-router-dom";
 
@@ -27,18 +27,23 @@ function Register() {
         formData.lastName
       );
 
-      if (result.status === 200) {
-        navigate("/login");
+      if (result.status === 201) {
+        navigate("/auth/login");
       } else {
-        result.json().then((data) => {
-          setErrorMsg(data["errors"][0]["msg"]);
-        });
+        const data = await result.json();
+        if (data && data.errors) {
+          const error = data.errors.map((error) => error.msg);
+          setErrorMsg(error);
+        } else {
+          setErrorMsg(["Something went wrong, please try again."]);
+        }
         setIsInvalid(true);
       }
     } catch (error) {
       console.log(error);
     }
   };
+
   useEffect(() => {
     const token = localStorage.getItem("token");
     if (token) {
@@ -106,7 +111,7 @@ function Register() {
           }
           required
         />
-        <button>Register</button>
+        <button type="submit">Register</button>
       </form>
     </div>
   );

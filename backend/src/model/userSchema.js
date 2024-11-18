@@ -33,16 +33,18 @@ const UserSchema = new Schema({
   },
   lastLogin: {
     type: Date,
+    required: false,
   },
   favoritePets: {
     type: [Schema.Types.ObjectId],
     ref: "Pet",
+    required: false,
   },
   adoptionRequests: {
     pet: {
       type: Schema.Types.ObjectId,
       ref: "Pet",
-      required: true,
+      required: false,
     },
   },
 });
