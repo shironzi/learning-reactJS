@@ -733,16 +733,17 @@ body {
   display: flex;
   align-items: center;
   border: 1px solid #ccc;
-  padding: 20px;
+  background-color: #f3f7ec;
+  padding: 50px;
   border-radius: 10px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 
 .profile-pic {
-  width: 100px;
-  height: 100px;
+  width: 150px;
+  height: 150px;
   border-radius: 50%;
-  margin-right: 20px;
+  margin-right: 50px;
 }
 
 .profile-details {

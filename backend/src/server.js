@@ -10,6 +10,7 @@ const authenticateToken = require("./middleware/authenticateToken");
 const pets = require("./routes/petRoute");
 const user = require("./routes/authRoute");
 const admin = require("./routes/adminRoutes");
+const userRoute = require("./routes/userRoute");
 
 dotenv.config();
 
@@ -37,7 +38,7 @@ app.use((req, res, next) => {
 });
 
 app.use("/", pets);
-app.use("/user", pets);
+app.use("/user", userRoute);
 app.use("/admin", admin);
 
 // Error handler
