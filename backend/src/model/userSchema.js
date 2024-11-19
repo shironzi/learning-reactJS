@@ -1,5 +1,4 @@
 const mongoose = require("mongoose");
-const petSchema = require("./petSchema");
 
 const { Schema } = mongoose;
 
