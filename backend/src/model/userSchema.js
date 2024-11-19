@@ -46,16 +46,18 @@ const UserSchema = new Schema({
       _id: {
         type: Schema.Types.ObjectId,
         default: () => new mongoose.Types.ObjectId(),
+        required: false,
       },
       pet: {
         type: Schema.Types.ObjectId,
         ref: "Pet",
-        required: true,
+        required: false,
       },
       status: {
         type: String,
         enum: ["Pending", "Approved", "Rejected"],
         default: "Pending",
+        required: false,
       },
     },
   ],
