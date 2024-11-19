@@ -15,7 +15,6 @@ import Admin from "../admin/Dashboard";
 
 const LazyLogin = React.lazy(() => import("../Login"));
 const LazyRegister = React.lazy(() => import("../Register"));
-
 const LazyHome = React.lazy(() => import("../Home"));
 const LazyFavorites = React.lazy(() => import("../Favorites"));
 const LazyDetails = React.lazy(() => import("../Details"));
@@ -24,8 +23,8 @@ const LazyHeader = React.lazy(() => import("../Header"));
 const LazyPetAdoptionReqeuest = React.lazy(() =>
   import("../admin/PetAdoptionRequset")
 );
-
 const LazyRequest = React.lazy(() => import("../AdoptionRequestList"));
+const LazyPageNotFound = React.lazy(() => import("../404"));
 
 function App() {
   return (
@@ -72,7 +71,7 @@ function MainRoutes() {
         <Route path="/auth/logout" element={<LazyLogin />} />
         <Route path="/auth/login" element={<LazyLogin />} />
         <Route path="/auth/register" element={<LazyRegister />} />
-        <Route path="*" element={<div>Not Found</div>} />
+        <Route path="*" element={<LazyPageNotFound />} />
       </Routes>
     </>
   );
