@@ -37,6 +37,7 @@ app.use((req, res, next) => {
 });
 
 app.use("/", pets);
+app.use("/user", pets);
 app.use("/admin", admin);
 
 // Error handler

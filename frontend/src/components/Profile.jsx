@@ -1,13 +1,16 @@
 function Profile() {
   return (
-    <div>
+    <div className="profile-container">
       <h1>Profile</h1>
-      <div className="profile-container">
-        {/* <img src="profile-pic-url" alt="Profile Picture" className="profile-pic" /> */}
+      <div className="profile-content">
+        <img
+          src="profile-pic-url"
+          alt="Profile Picture"
+          className="profile-pic"
+        />
         <div className="profile-details">
-          <h2>Name</h2>
-          <p>Email</p>
-          <p>Bio: A short bio...</p>
+          <h2>John Doe</h2>
+          <p>Email: john.doe@example.com</p>
         </div>
       </div>
     </div>

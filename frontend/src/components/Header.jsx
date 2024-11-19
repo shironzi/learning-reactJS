@@ -25,6 +25,11 @@ const Header = () => {
     setAnchorEl(null);
   };
 
+  const handleProfile = useCallback(() => {
+    navigate("/profile");
+    handleClose();
+  }, [navigate]);
+
   const handleLogout = useCallback(async () => {
     const response = await logout();
     if (response.ok) {
@@ -82,7 +87,7 @@ const Header = () => {
                 horizontal: "left",
               }}
             >
-              <MenuItem>Profile</MenuItem>
+              <MenuItem onClick={handleProfile}>Profile</MenuItem>
               <MenuItem>My account</MenuItem>
               <MenuItem onClick={handleLogout}>Logout</MenuItem>
             </Menu>

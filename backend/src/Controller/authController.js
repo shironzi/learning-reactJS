@@ -3,6 +3,7 @@ const jwt = require("jsonwebtoken");
 
 const tokenBlacklist = require("../util/tokenBlacklist");
 const userSchema = require("../model/userSchema");
+const { get } = require("http");
 
 const register = async (req, res, next) => {
   const User = require("../model/userSchema");

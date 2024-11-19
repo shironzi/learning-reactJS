@@ -18,6 +18,7 @@ const LazyRegister = React.lazy(() => import("../Register"));
 const LazyHome = React.lazy(() => import("../Home"));
 const LazyFavorites = React.lazy(() => import("../Favorites"));
 const LazyDetails = React.lazy(() => import("../Details"));
+const LazyProfile = React.lazy(() => import("../Profile"));
 const LazyAddPet = React.lazy(() => import("../AddPet"));
 const LazyHeader = React.lazy(() => import("../Header"));
 const LazyPetAdoptionReqeuest = React.lazy(() =>
@@ -61,16 +62,25 @@ function MainRoutes() {
     <>
       <LazyHeader />
       <Routes>
+        {/* Public routes */}
         <Route path="/" element={<LazyHome />} />
         <Route path="/favorites" element={<LazyFavorites />} />
         <Route path="/add-pet" element={<LazyAddPet />} />
         <Route path="/pets/:id" element={<LazyDetails />} />
         <Route path="/adoption-request" element={<LazyRequest />} />
+        <Route path="/profile" element={<LazyProfile />} />
+
+        {/* Admin routes */}
+
         <Route path="/admin" element={<Admin />} />
         <Route path="/admin/requests" element={<LazyPetAdoptionReqeuest />} />
+
+        {/* Authentication routes */}
         <Route path="/auth/logout" element={<LazyLogin />} />
         <Route path="/auth/login" element={<LazyLogin />} />
         <Route path="/auth/register" element={<LazyRegister />} />
+
+        {/* 404 */}
         <Route path="*" element={<LazyPageNotFound />} />
       </Routes>
     </>
