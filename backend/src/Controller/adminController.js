@@ -69,6 +69,11 @@ const updateAdoptionRequest = async (req, res, next) => {
 
     const cleaned_status = status.charAt(0).toUpperCase() + status.slice(1);
 
+    const userUpdate = await User.updateOne(
+      { _id: userId, "adoptionRequests._id": requestId },
+      { $set: { "adoptionRequests.$.status": cleaned_status } }
+    );
+
     const adoptionUpdate = new adoptionHistory({
       requestId: requestId,
       userId: userId,
@@ -79,11 +84,6 @@ const updateAdoptionRequest = async (req, res, next) => {
 
     await adoptionUpdate.save();
 
-    const userUpdateStatus = await User.findOneAndUpdate(
-      { _id: userId, "adoptionRequests._id": requestId },
-      { $set: { "adoptionRequests.$.status": status } }
-    );
-
     const petUpdateStatus = await Pet.findOneAndUpdate(
       { _id: petId },
       { $set: { status: status === "Approved" ? "adopted" : "available" } }
@@ -92,13 +92,6 @@ const updateAdoptionRequest = async (req, res, next) => {
     if (!petUpdateStatus) {
       return res.status(404).json({ message: "Pet not found" });
     }
-
-    if (!userUpdateStatus) {
-      return res.status(404).json({ message: "Adoption Request not found" });
-    }
-
-    petUpdateStatus.save();
-    userUpdateStatus.save();
 
     res.status(200).json({ message: "Adoption Request updated" });
   } catch (error) {
