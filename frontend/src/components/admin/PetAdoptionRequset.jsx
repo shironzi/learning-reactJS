@@ -24,19 +24,20 @@ function PetAdoptionReqeuest() {
 
   return (
     <>
-      {adoptionRequests.length > 0 ? (
+      {adoptionRequests.adoptionRequest.length > 0 ? (
         <>
-          {adoptionRequests.map((adoptionRequest) => {
-            return (
+          {adoptionRequests.adoptionRequest.length > 1 ? (
+            adoptionRequests.adoptionRequest.map((request) => (
               <AdoptionRequest
-                key={adoptionRequest._id}
-                name={
-                  adoptionRequest.firstName + " " + adoptionRequest.lastName
-                }
-                request={adoptionRequest.adoptionRequests}
+                request={request.adoptionRequests}
+                name={`${request.firstName} ${request.lastName}`}
+                userId={request._id}
+                key={request._id}
               />
-            );
-          })}
+            ))
+          ) : (
+            <h1>two</h1>
+          )}
         </>
       ) : (
         <div>

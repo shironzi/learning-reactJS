@@ -1,8 +1,14 @@
+const { request } = require("http");
 const mongoose = require("mongoose");
 
 const { Schema } = mongoose;
 
-const adoptionData = new Schema({
+const adoptionHistory = new Schema({
+  requestId: {
+    type: Schema.Types.ObjectId,
+    ref: "AdoptionRequest",
+    required: true,
+  },
   userId: {
     type: Schema.Types.ObjectId,
     ref: "User",
@@ -25,4 +31,4 @@ const adoptionData = new Schema({
   },
 });
 
-module.exports = mongoose.model("AdoptionData", adoptionData);
+module.exports = mongoose.model("adoptionHistory", adoptionHistory);

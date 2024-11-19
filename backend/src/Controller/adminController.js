@@ -1,6 +1,6 @@
 const Pet = require("../model/petSchema");
 const User = require("../model/userSchema");
-const adoptionData = require("../model/adoptionHistory");
+const adoptionHistory = require("../model/adoptionHistory");
 
 const getData = async (req, res) => {
   try {
@@ -67,15 +67,16 @@ const updateAdoptionRequest = async (req, res, next) => {
     //   return res.status(403).json({ message: "Unauthorized" });
     // }
 
-    const data = {
-      _id: requestId,
+    const cleaned_status = status.charAt(0).toUpperCase() + status.slice(1);
+
+    const adoptionUpdate = new adoptionHistory({
+      requestId: requestId,
       userId: userId,
       pet: petId,
-      status: status,
+      status: cleaned_status,
       date: new Date(),
-    };
+    });
 
-    const adoptionUpdate = new adoptionData(data);
     await adoptionUpdate.save();
 
     const userUpdateStatus = await User.findOneAndUpdate(

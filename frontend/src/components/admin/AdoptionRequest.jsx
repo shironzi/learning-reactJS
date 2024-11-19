@@ -3,7 +3,17 @@ import { Link } from "react-router-dom";
 import CheckIcon from "@mui/icons-material/Check";
 import CloseIcon from "@mui/icons-material/Close";
 
-function AdoptionRequest({ request, name }) {
+import { updateAdoptionRequest } from "../../apis/admin";
+
+function AdoptionRequest({ request, name, userId }) {
+  const handleApprove = (req) => async () => {
+    await updateAdoptionRequest(req._id, "approved", req.pet._id, userId);
+  };
+
+  const handleReject = (req) => async () => {
+    await updateAdoptionRequest(req._id, "rejected", req.pet._id, userId);
+  };
+
   return (
     <div className="adoption-request-card">
       <div className="adoption-request-header">
@@ -31,10 +41,16 @@ function AdoptionRequest({ request, name }) {
               </div>
             </div>
             <div className="adoption-request-button-container">
-              <button className="adoption-request-approve">
+              <button
+                className="adoption-request-approve"
+                onClick={handleApprove(req, request.firstName)}
+              >
                 <CheckIcon fontSize="large" />
               </button>
-              <button className="adoption-request-reject">
+              <button
+                className="adoption-request-reject"
+                onClick={handleReject(req, request.firstName)}
+              >
                 <CloseIcon fontSize="large" />
               </button>
             </div>
@@ -54,10 +70,13 @@ function AdoptionRequest({ request, name }) {
             <h4>Location: {request.pet.location}</h4>
           </div>
           <div className="adoption-request-button-container">
-            <button className="adoption-request-approve">
+            <button
+              className="adoption-request-approve"
+              onClick={handleApprove}
+            >
               <CheckIcon fontSize="large" />
             </button>
-            <button className="adoption-request-reject">
+            <button className="adoption-request-reject" onClick={handleApprove}>
               <CloseIcon fontSize="large" />
             </button>
           </div>
