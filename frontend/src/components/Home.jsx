@@ -1,6 +1,7 @@
 import { lazy, memo, useCallback, Suspense } from "react";
 import { fetchPets } from "../apis/pets";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
+import Loading from "./Loading";
 
 const SearchResults = lazy(() => import("./SearchResult"));
 const SearchForm = lazy(() => import("./SearchForm"));
@@ -42,7 +43,7 @@ const Home = () => {
     [queryClient, animalsAndBreeds]
   );
 
-  if (isLoading) return <div>Loading...</div>;
+  if (isLoading) return <Loading />;
   if (error) return <div>Error: {error.message}</div>;
 
   return (

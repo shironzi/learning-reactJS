@@ -1,6 +1,7 @@
 import { fetchAdoptionRequests } from "../apis/pets";
 import { useQuery } from "@tanstack/react-query";
 import AdoptionRequest from "./AdoptionRequest";
+import Loading from "./Loading";
 
 function Requests() {
   const {
@@ -14,7 +15,7 @@ function Requests() {
   });
 
   if (isLoading) {
-    return <div>Loading...</div>;
+    return <Loading />;
   }
 
   if (isError) {

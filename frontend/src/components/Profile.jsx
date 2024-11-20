@@ -2,11 +2,12 @@ import { useQuery } from "@tanstack/react-query";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 
 import getProfile from "../apis/user";
+import Loading from "./Loading";
 
 function Profile() {
   const {
     data: userData = [],
-    isLoaded,
+    isLoading,
     isError,
     error,
   } = useQuery({
@@ -16,8 +17,8 @@ function Profile() {
 
   console.log(userData);
 
-  if (isLoaded) {
-    return <span>Loading...</span>;
+  if (isLoading) {
+    return <Loading />;
   }
 
   if (isError) {

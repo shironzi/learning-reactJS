@@ -2,6 +2,7 @@ import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { fetchFavoritePets, updatefavoritesPets } from "../apis/pets";
 import FavoritePetLists from "./FavoritePetLists";
 import { useCallback, memo } from "react";
+import Loading from "./Loading";
 
 function Favorites() {
   const queryClient = useQueryClient();
@@ -33,7 +34,7 @@ function Favorites() {
   );
 
   if (isPending) {
-    return <span>Loading...</span>;
+    return <Loading />;
   }
 
   if (isError) {

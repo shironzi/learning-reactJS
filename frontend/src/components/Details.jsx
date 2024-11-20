@@ -3,10 +3,11 @@ import { memo, useCallback, useEffect, useState } from "react";
 
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 import FavoriteIcon from "@mui/icons-material/Favorite";
+import { Alert, AlertTitle } from "@mui/material";
 
 import CustomDialog from "./CustomDialog";
 import { fetchPetById, updatefavoritesPets } from "../apis/pets";
-import { Alert, AlertTitle } from "@mui/material";
+import Loading from "./Loading";
 
 const Details = () => {
   const { id } = useParams();
@@ -39,11 +40,7 @@ const Details = () => {
   }, [id]);
 
   if (!pet) {
-    return (
-      <div className="loading-container">
-        <img src="/loading-paws.gif" alt="Loading" className="loading-image" />
-      </div>
-    );
+    return <Loading />;
   }
 
   return (
