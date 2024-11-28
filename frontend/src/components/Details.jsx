@@ -25,23 +25,17 @@ const Details = () => {
     updatefavoritesPets(id);
   }, [isFavorite, id]);
 
+  const { isLoading, error, data } = useQuery("pet", () => fetchPetById(id));
+
   useEffect(() => {
-    const fetchPet = async () => {
-      try {
-        const data = await fetchPetById(id);
-        setIsFavorite(data.isFavorite);
-        setPet(data.pet);
-      } catch (error) {
-        console.error("Error:", error);
-      }
-    };
+    if (data) {
+      setIsFavorite(data.isFavorite);
+      setPet(data.pet);
+    }
+  }, [data]);
 
-    fetchPet();
-  }, [id]);
-
-  if (!pet) {
-    return <Loading />;
-  }
+  if (isLoading) return <Loading />;
+  if (error) return <div>Error: {error.message}</div>;
 
   return (
     <div className="pet-details">
