@@ -50,10 +50,12 @@ const login = async (req, res, next) => {
       return res.status(200).json({ message: "Invalid credentials" });
     }
 
-    const token = jwt.sign(
-      { userId: user._id, role: user.role },
-      process.env.JWT_SECRET
-    );
+    const jwtSecret = process.env.JWT_SECRET;
+    if (!jwtSecret) {
+      throw new Error("JWT_SECRET is not defined");
+    }
+
+    const token = jwt.sign({ userId: user._id, role: user.role }, jwtSecret);
 
     console.log(token);
 
