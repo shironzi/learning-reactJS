@@ -1,4 +1,4 @@
-import React, { useState, memo, useEffect } from "react";
+import React, { useState, memo, useEffect, useCallback } from "react";
 import { register } from "../apis/auth";
 import { useNavigate } from "react-router-dom";
 
@@ -15,34 +15,37 @@ function Register() {
   const [isInvalid, setIsInvalid] = useState(false);
   const [errorMsg, setErrorMsg] = useState("");
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
+  const handleSubmit = useCallback(
+    async (e) => {
+      e.preventDefault();
 
-    try {
-      const result = await register(
-        formData.email,
-        formData.password,
-        formData.confirmPassword,
-        formData.firstName,
-        formData.lastName
-      );
+      try {
+        const result = await register(
+          formData.email,
+          formData.password,
+          formData.confirmPassword,
+          formData.firstName,
+          formData.lastName
+        );
 
-      if (result.status === 201) {
-        navigate("/auth/login");
-      } else {
-        const data = await result.json();
-        if (data && data.errors) {
-          const error = data.errors.map((error) => error.msg);
-          setErrorMsg(error);
+        if (result.status === 201) {
+          navigate("/auth/login");
         } else {
-          setErrorMsg(["Something went wrong, please try again."]);
+          const data = await result.json();
+          if (data && data.errors) {
+            const error = data.errors.map((error) => error.msg);
+            setErrorMsg(error);
+          } else {
+            setErrorMsg(["Something went wrong, please try again."]);
+          }
+          setIsInvalid(true);
         }
-        setIsInvalid(true);
+      } catch (error) {
+        console.log(error);
       }
-    } catch (error) {
-      console.log(error);
-    }
-  };
+    },
+    [formData, navigate]
+  );
 
   useEffect(() => {
     const token = localStorage.getItem("token");

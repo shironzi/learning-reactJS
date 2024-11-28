@@ -1,4 +1,4 @@
-import React, { useEffect, useState, memo } from "react";
+import React, { useEffect, useState, memo, useCallback } from "react";
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { login, setToken } from "../apis/auth";
@@ -10,22 +10,25 @@ function Login() {
   const [password, setPassword] = useState("");
   const [loginError, setLoginError] = useState("");
 
-  const handleSubmit = async (event) => {
-    event.preventDefault();
-    try {
-      const result = await login(email, password);
-      if (result.token) {
-        setToken(result.token, result.expiresIn);
-        dispatch({ type: "user/login", payload: result });
-        navigate("/");
-      } else {
-        const errorData = await result.message;
-        setLoginError(errorData);
+  const handleSubmit = useCallback(
+    async (event) => {
+      event.preventDefault();
+      try {
+        const result = await login(email, password);
+        if (result.token) {
+          setToken(result.token, result.expiresIn);
+          dispatch({ type: "user/login", payload: result });
+          navigate("/");
+        } else {
+          const errorData = await result.message;
+          setLoginError(errorData);
+        }
+      } catch (error) {
+        setLoginError("An unexpected error occurred. Please try again.");
       }
-    } catch (error) {
-      setLoginError("An unexpected error occurred. Please try again.");
-    }
-  };
+    },
+    [dispatch, email, password, navigate]
+  );
 
   useEffect(() => {
     const token = localStorage.getItem("token");

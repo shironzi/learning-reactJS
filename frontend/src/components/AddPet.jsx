@@ -14,20 +14,20 @@ const AddPet = () => {
 
   const navigate = useNavigate();
 
-  const handleChange = (e) => {
+  const handleChange = useCallback((e) => {
     const { name, value } = e.target;
     setFormData((prevData) => ({
       ...prevData,
       [name]: value,
     }));
-  };
+  }, []);
 
-  const handleFileChange = (e) => {
+  const handleFileChange = useCallback((e) => {
     setFormData((prevData) => ({
       ...prevData,
       images: Array.from(e.target.files),
     }));
-  };
+  }, []);
 
   const handleSubmit = useCallback(
     async (e) => {

@@ -1,10 +1,10 @@
 import CloseIcon from "@mui/icons-material/Close";
-import { memo } from "react";
+import { memo, useCallback } from "react";
 
 function FavoritePet(props) {
-  const handleRemovePet = async () => {
+  const handleRemovePet = useCallback(async () => {
     props.onRemovePet(props.id);
-  };
+  }, [props]);
 
   return (
     <div className="favoritePet-container">

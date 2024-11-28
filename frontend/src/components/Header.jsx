@@ -17,13 +17,14 @@ const Header = () => {
   const [anchorEl, setAnchorEl] = useState(null);
 
   const open = Boolean(anchorEl);
-  const handleClick = (event) => {
-    setAnchorEl(event.currentTarget);
-  };
 
-  const handleClose = () => {
+  const handleClick = useCallback((event) => {
+    setAnchorEl(event.currentTarget);
+  }, []);
+
+  const handleClose = useCallback(() => {
     setAnchorEl(null);
-  };
+  }, []);
 
   const handleProfile = useCallback(() => {
     navigate("/profile");

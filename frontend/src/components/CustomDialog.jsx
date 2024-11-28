@@ -1,4 +1,4 @@
-import React, { memo } from "react";
+import React, { memo, useCallback } from "react";
 import Dialog from "@mui/material/Dialog";
 import DialogTitle from "@mui/material/DialogTitle";
 import DialogContent from "@mui/material/DialogContent";
@@ -7,7 +7,7 @@ import Button from "@mui/material/Button";
 import { requestAdoptPet } from "../apis/pets";
 
 const CustomDialog = ({ open, onClose, pet, warningAlert }) => {
-  const handleRequestAdoptPet = async () => {
+  const handleRequestAdoptPet = useCallback(async () => {
     try {
       await requestAdoptPet(pet._id);
       onClose();
@@ -15,7 +15,7 @@ const CustomDialog = ({ open, onClose, pet, warningAlert }) => {
       warningAlert = true;
       onClose();
     }
-  };
+  }, [onClose, pet._id]);
 
   return (
     <Dialog open={open} onClose={onClose}>

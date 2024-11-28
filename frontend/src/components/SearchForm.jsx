@@ -20,7 +20,6 @@ function SearchForm({ pets, onSubmit }) {
     return animalList;
   }, [memoizedPets]);
 
-  // Get unique breeds for selected animal
   const breeds = useCallback(() => {
     if (!animal) return [];
     const uniqueBreeds = new Set();
@@ -33,7 +32,6 @@ function SearchForm({ pets, onSubmit }) {
     setAvailableBreeds(breedList);
   }, [animal, memoizedPets]);
 
-  // Fetch breeds when animal changes
   useEffect(() => {
     breeds();
   }, [breeds]);
