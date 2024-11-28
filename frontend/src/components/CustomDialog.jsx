@@ -12,10 +12,10 @@ const CustomDialog = ({ open, onClose, pet, warningAlert }) => {
       await requestAdoptPet(pet._id);
       onClose();
     } catch (error) {
-      warningAlert = true;
+      warningAlert(true);
       onClose();
     }
-  }, [onClose, pet._id]);
+  }, [onClose, pet._id, warningAlert]);
 
   return (
     <Dialog open={open} onClose={onClose}>

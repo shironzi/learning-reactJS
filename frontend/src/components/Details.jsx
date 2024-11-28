@@ -1,6 +1,5 @@
 import { useParams } from "react-router-dom";
 import { memo, useCallback, useEffect, useState } from "react";
-import { useQuery } from "@tanstack/react-query";
 
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 import FavoriteIcon from "@mui/icons-material/Favorite";
@@ -26,17 +25,24 @@ const Details = () => {
     updatefavoritesPets(id);
   }, [isFavorite, id]);
 
-  const { isLoading, error, data } = useQuery("pet", () => fetchPetById(id));
-
   useEffect(() => {
-    if (data) {
-      setIsFavorite(data.isFavorite);
-      setPet(data.pet);
-    }
-  }, [data]);
+    const fetchData = async () => {
+      try {
+        const data = await fetchPetById(id);
+        if (data) {
+          setIsFavorite(data.isFavorite);
+          setPet(data.pet);
+        }
+      } catch (error) {
+        console.error("Error fetching pet data:", error);
+        setWarningAlert(true);
+      }
+    };
 
-  if (isLoading) return <Loading />;
-  if (error) return <div>Error: {error.message}</div>;
+    fetchData();
+  }, [id]);
+
+  if (!pet) return <Loading />;
 
   return (
     <div className="pet-details">
