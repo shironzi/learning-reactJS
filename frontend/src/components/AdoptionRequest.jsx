@@ -1,3 +1,5 @@
+import React, { memo } from "react";
+
 function AdoptionRequest(props) {
   return (
     <div className="adoptionRequest-container">
@@ -19,4 +21,4 @@ function AdoptionRequest(props) {
   );
 }
 
-export default AdoptionRequest;
+export default memo(AdoptionRequest);

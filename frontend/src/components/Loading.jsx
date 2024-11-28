@@ -1,3 +1,5 @@
+import React, { memo } from "react";
+
 function Loading() {
   return (
     <div className="loading-container">
@@ -6,4 +8,4 @@ function Loading() {
   );
 }
 
-export default Loading;
+export default memo(Loading);

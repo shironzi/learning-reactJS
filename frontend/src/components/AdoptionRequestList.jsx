@@ -1,3 +1,4 @@
+import React, { memo } from "react";
 import { fetchAdoptionRequests } from "../apis/pets";
 import { useQuery } from "@tanstack/react-query";
 import AdoptionRequest from "./AdoptionRequest";
@@ -54,4 +55,4 @@ function Requests() {
   );
 }
 
-export default Requests;
+export default memo(Requests);

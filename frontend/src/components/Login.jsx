@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, memo } from "react";
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { login, setToken } from "../apis/auth";
@@ -59,4 +59,4 @@ function Login() {
   );
 }
 
-export default Login;
+export default memo(Login);

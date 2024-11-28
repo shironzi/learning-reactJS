@@ -1,5 +1,5 @@
+import React, { memo } from "react";
 import { useQuery } from "@tanstack/react-query";
-import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 
 import getProfile from "../apis/user";
 import Loading from "./Loading";
@@ -43,4 +43,4 @@ function Profile() {
   );
 }
 
-export default Profile;
+export default memo(Profile);
