@@ -1,5 +1,6 @@
 import { useParams } from "react-router-dom";
 import { memo, useCallback, useEffect, useState } from "react";
+import { useQuery } from "@tanstack/react-query";
 
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 import FavoriteIcon from "@mui/icons-material/Favorite";
