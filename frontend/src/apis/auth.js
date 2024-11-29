@@ -83,7 +83,6 @@ const logout = async () => {
       localStorage.removeItem("token");
       localStorage.removeItem("expirationTime");
     }
-    window.location.reload();
     return response;
   } catch (error) {
     localStorage.removeItem("token");
@@ -97,6 +96,7 @@ export async function fetchWithAuth(url, options = {}) {
   const token = getToken();
   if (!token) {
     await logout();
+    window.location.reload();
     return;
   }
 
@@ -108,6 +108,7 @@ export async function fetchWithAuth(url, options = {}) {
   const response = await fetch(url, { ...options, headers });
   if (response.status === 401) {
     await logout();
+    window.location.reload();
   }
 
   return response;
